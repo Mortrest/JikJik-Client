@@ -1,5 +1,10 @@
-9:31:49 - ModelLoader-Tweets Loaded
-9:31:49 - ModelLoader-Notifs Loaded
-9:31:49 - ModelLoader-Rooms Loaded
-9:31:49 - ModelLoader-Chats Loaded
-9:31:49 - ModelLoader-Users Loaded
+22:35:2 - ModelLoader-Tweets Loaded
+22:35:2 - ModelLoader-Notifs Loaded
+22:35:2 - ModelLoader-Rooms Loaded
+22:35:2 - ModelLoader-Chats Loaded
+22:35:2 - ModelLoader-Users Loaded
+22:36:59 - Tweets-morty Unfollowed jojo
+22:36:59 - ModelLoader saved
+22:36:59 - Notifs-Notification morty Stopped following you! Created
+22:36:59 - ModelLoader saved
+22:36:59 - ModelLoader saved

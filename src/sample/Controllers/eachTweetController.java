@@ -4,8 +4,11 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Circle;
 import sample.Models.Tweet;
 import sample.Models.Tweets;
 import sample.Models.User;
@@ -27,6 +30,8 @@ public class eachTweetController {
     @FXML
     private TextArea textArea;
     @FXML
+    private Circle profilePicture;
+    @FXML
     private Button backBtn;
     @FXML
     private TextArea overlayText;
@@ -40,6 +45,7 @@ public class eachTweetController {
             User owner = Users.searchUsername(tweet.getOwner());
             nameLabel.setText("@" + owner.getUsername() + " - " + owner.getName());
             tweetLabel.setText(tweet.getText());
+            profilePicture.setFill(new ImagePattern(new Image(owner.getProfilePic())));
             loadData();
         }
     }

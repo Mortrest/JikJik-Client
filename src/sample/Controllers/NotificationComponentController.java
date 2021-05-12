@@ -4,7 +4,8 @@ package sample.Controllers;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
-import sample.Models.Notif;
+        import javafx.scene.shape.Circle;
+        import sample.Models.Notif;
 
 public class NotificationComponentController {
 
@@ -14,7 +15,8 @@ public class NotificationComponentController {
 
     @FXML
     private Label name;
-
+    @FXML
+    private Circle profilePicture;
     @FXML
     private Label text;
 
@@ -56,4 +58,7 @@ public class NotificationComponentController {
         mute.setVisible(false);
     }
 
+    public Circle getProfilePicture() {
+        return profilePicture;
+    }
 }

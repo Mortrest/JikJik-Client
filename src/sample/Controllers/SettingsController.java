@@ -10,9 +10,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import sample.Models.Chats;
 import sample.Models.Tweets;
-import sample.Models.User;
 import sample.Models.Users;
-import sample.utils.ChangeScene;
+import sample.utils.Pages;
 
 import java.io.IOException;
 
@@ -81,8 +80,10 @@ public class SettingsController {
     public void backToReality() throws IOException {
         Users.setCurrentUser(null);
         Chats.setRoomID(null);
+        Users.setProfile(null);
         Tweets.setTweetID(null);
         FXMLLoader fxmlLoader = new FXMLLoader();
+        Pages.getPages().clear();
         Parent root = fxmlLoader.load(getClass().getResource("../FXML/SignIn.fxml"));
         Stage window = (Stage) Salam.getScene().getWindow();
         window.setScene(new Scene(root));

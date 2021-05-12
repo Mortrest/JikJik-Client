@@ -58,7 +58,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </FontAwesomeIconView>
-            <FontAwesomeIconView fx:id="block" fill="#e12929" glyphName="BAN" layoutX="615.0" layoutY="240.0" size="20">
+            <FontAwesomeIconView fx:id="block" fill="#7c7c7c" glyphName="BAN" layoutX="615.0" layoutY="240.0" size="20" text="">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
@@ -93,6 +93,18 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </FontAwesomeIconView>
+            <Pane fx:id="goToProfile" layoutX="42.0" layoutY="8.0" prefHeight="35.0" prefWidth="688.0">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <children>
+                  <ImageView fx:id="imageView1" fitHeight="161.0" fitWidth="196.0" layoutX="529.0" layoutY="24.0" pickOnBounds="true">
+                     <image>
+                        <Image url="@../../../../../a.jpg" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
 
 
 
@@ -101,12 +113,12 @@
 
          </children>
       </Pane>
-      <Pane fx:id="idPane" layoutX="12.0" layoutY="17.0" prefHeight="209.0" prefWidth="765.0">
+      <Pane fx:id="idPane" layoutX="12.0" layoutY="57.0" prefHeight="169.0" prefWidth="765.0">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
          <children>
-            <ImageView fx:id="imageView" fitHeight="161.0" fitWidth="196.0" layoutX="529.0" layoutY="24.0" pickOnBounds="true">
+            <ImageView fx:id="imageView" fitHeight="155.0" fitWidth="196.0" layoutX="529.0" layoutY="7.0" pickOnBounds="true">
                <image>
                   <Image url="@../../../../../a.jpg" />
                </image>

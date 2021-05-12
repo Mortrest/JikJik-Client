@@ -11,6 +11,7 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Circle;
 import sample.Models.*;
 import sample.utils.ChangeProfilePicture;
 import sample.utils.ChangeScene;
@@ -27,6 +28,8 @@ public class ChatController {
     @FXML
     private Button backBtn, submit, closeBtn;
     @FXML
+    private Circle profilePicture;
+    @FXML
     private GridPane grid;
     @FXML
     private Label fName, lastSeen;
@@ -40,6 +43,7 @@ public class ChatController {
 
     public void back() throws IOException {
         overlay.setVisible(false);
+        Chats.setRoomID(null);
         new ChangeScene("../FXML/sample.fxml", grid);
     }
 
@@ -57,23 +61,23 @@ public class ChatController {
         loadData();
     }
 
-    public void ownChat(AnchorPane anchorPane, ChatComponentController item) {
-        item.getCircle().setLayoutX(item.getCircle().getLayoutX() + 895);
-        Label text = item.getText();
-        Label name = item.getName();
-        text.setLayoutX(text.getLayoutX() + 700);
-        if (text.getLayoutX() + text.getText().length() * 4 > 878) {
-            int len = text.getText().length() - "salam iman".length();
-            text.setLayoutX(text.getLayoutX() - len * 4 - 10);
-        }
-        if (text.getLayoutX() + text.getText().length() * 4 < 878) {
-            int len = text.getText().length() - "salam iman".length();
-            text.setLayoutX(text.getLayoutX() - len * 4 + 10);
-        }
-        name.setLayoutX(name.getLayoutX() + 700);
-        grid.add(anchorPane, 1, grid.getRowCount() + 1);
-        grid.setLayoutX(-40);
-    }
+//    public void ownChat(AnchorPane anchorPane, ChatComponentController item) {
+//        item.getCircle().setLayoutX(item.getCircle().getLayoutX() + 895);
+//        Label text = item.getText();
+//        Label name = item.getName();
+//        text.setLayoutX(text.getLayoutX() + 700);
+//        if (text.getLayoutX() + text.getText().length() * 4 > 878) {
+//            int len = text.getText().length() - "salam iman".length();
+//            text.setLayoutX(text.getLayoutX() - len * 4 - 10);
+//        }
+//        if (text.getLayoutX() + text.getText().length() * 4 < 878) {
+//            int len = text.getText().length() - "salam iman".length();
+//            text.setLayoutX(text.getLayoutX() - len * 4 + 10);
+//        }
+//        name.setLayoutX(name.getLayoutX() + 700);
+//        grid.add(anchorPane, 1, grid.getRowCount() + 1);
+//        grid.setLayoutX(-40);
+//    }
 
     public void loadData() throws IOException {
         grid.getChildren().clear();
@@ -81,12 +85,29 @@ public class ChatController {
         if (room != null && room.getType().equals("pv")) {
             if (room.getOwner1().equals(room.getOwner2())){
                 fName.setText("Saved Messages");
+                if (Users.getCurrentUser().getProfilePic() != null) {
+                    profilePicture.setFill(new ImagePattern(new Image(Users.getCurrentUser().getProfilePic())));
+                }
             }
             else if (room.getOwner1().equals(Users.getCurrentUser().getUsername())) {
+                User user = Users.searchUsername(room.getOwner2());
+                if (user.getProfilePic() == null) {
+                    profilePicture.setVisible(true);
+                } else {
+                    profilePicture.setFill(new ImagePattern(new Image(user.getProfilePic())));
+                }
                 fName.setText(room.getOwner2());
+
             } else {
+                User user = Users.searchUsername(room.getOwner1());
+                if (user.getProfilePic() != null){
+                    profilePicture.setFill(new ImagePattern(new Image(user.getProfilePic())));
+                }
                 fName.setText(room.getOwner1());
             }
+        } else if (room != null && room.getType().equals("gp")){
+            fName.setText(room.getGroupName());
+            lastSeen.setText(room.getMembers().size() + " Members");
         }
 
         LinkedList<Chat> tw = Users.getChats().showChats(Chats.getRoomID());
@@ -103,8 +124,9 @@ public class ChatController {
             ChatComponentController itemController = fxmlLoader.getController();
             itemController.setName(tw.get(i).getOwner());
             User user = Users.searchUsername(tw.get(i).getOwner());
+            assert user != null;
             if (user.getProfilePic() != null){
-                itemController.getCircle().setFill(new ImagePattern(new Image("/sample/images/ali.PNG")));
+                itemController.getCircle().setFill(new ImagePattern(new Image(user.getProfilePic())));
             }
             int finalI = i;
             if (!c) {
@@ -173,4 +195,7 @@ public class ChatController {
         Chats.setEditID(null);
     }
 
+    public Circle getProfilePicture() {
+        return profilePicture;
+    }
 }

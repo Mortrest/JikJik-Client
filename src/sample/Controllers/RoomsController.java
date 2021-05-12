@@ -4,9 +4,11 @@ import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.ImagePattern;
 import sample.Models.Chat;
 import sample.Models.Chats;
 import sample.Models.Room;
@@ -84,6 +86,7 @@ public class RoomsController {
             LoadComponent loadComponent = new LoadComponent("../FXML/roomProfileComponent.fxml");
             AnchorPane anchorPane = loadComponent.loadAnchor();
             RoomProfileComponentController itemController = loadComponent.loadFxml().getController();
+
             int finalI = i;
             itemController.getPane().setOnMouseClicked(e -> {
                 try {
@@ -95,8 +98,14 @@ public class RoomsController {
             if (tw.get(i).getType().equals("pv")) {
                 if (tw.get(i).getOwner1().equals(Users.getCurrentUser().getUsername())) {
                     itemController.setNameLabel(tw.get(i).getOwner2());
+                    if (Users.searchUsername(tw.get(i).getOwner2()).getProfilePic() != null){
+                        itemController.getProfilePicture().setFill(new ImagePattern(new Image(Users.searchUsername(tw.get(i).getOwner2()).getProfilePic())));
+                    }
                 } else {
                     itemController.setNameLabel(tw.get(i).getOwner1());
+                    if (Users.searchUsername(tw.get(i).getOwner1()).getProfilePic() != null){
+                        itemController.getProfilePicture().setFill(new ImagePattern(new Image(Users.searchUsername(tw.get(i).getOwner1()).getProfilePic())));
+                    }
                 }
             }
             else {

@@ -17,3 +17,5 @@
 {"text":"Mano Erfan","ID":"17","parent":"0","image":"file:/C:/Users/ali80/Desktop/Tokyo/Phase2/src/sample/images/1465.jpg","date":"1620573555514","owner":"morty","reported":2,"users":["jojo","Mojo","gojo","sojo","lojo","mojo","rojo"],"likes":["morty"],"isRet":true}
 {"text":"joon baba","ID":"27096","parent":"17","date":"1620573908562","owner":"morty","reported":0,"users":["jojo","Mojo","gojo","sojo","lojo","mojo","rojo"],"likes":[],"isRet":false}
 {"text":"sd","ID":"39207","parent":"0","date":"1620574536690","owner":"morty","reported":0,"users":["jojo","Mojo","gojo","sojo","lojo","mojo","rojo"],"likes":[],"isRet":false}
+{"text":"salam","ID":"15246","parent":"0","image":"file:/C:/Users/ali80/Desktop/Tokyo/Phase2/src/sample/images/2880.jpg","date":"1620636810756","owner":"morty","reported":0,"users":["jojo","Mojo","gojo","sojo","lojo","mojo","rojo"],"likes":[],"isRet":false}
+{"text":"Salom","ID":"130","parent":"0","date":"161949608647934","owner":"jojo","reported":0,"users":["Mojo","gojo"],"likes":[],"isRet":true}

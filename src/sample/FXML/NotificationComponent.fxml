@@ -17,7 +17,7 @@
             <Pane fx:id="TweetPane111" layoutX="-77.0" prefHeight="124.0" prefWidth="893.0">
                <children>
                   <Rectangle arcHeight="2.0" arcWidth="5.0" fill="#dcdedd" height="81.0" layoutX="139.0" layoutY="35.0" stroke="#dcdedd" strokeLineCap="ROUND" strokeType="OUTSIDE" style="-fx-arc-height: 30; -fx-arc-width: 30;" width="553.0" />
-                  <Circle fill="#ff7676" layoutX="141.0" layoutY="62.0" radius="29.0" stroke="WHITE" strokeType="INSIDE" />
+                  <Circle fx:id="profilePicture" fill="#ff7676" layoutX="141.0" layoutY="62.0" radius="29.0" stroke="WHITE" strokeType="INSIDE" />
                   <Label fx:id="name" layoutX="170.0" layoutY="43.0" prefHeight="7.0" prefWidth="266.0" style="-fx-background-color: #dcdedd; -fx-background-radius: 30;" text="Ali Falahati - @Mortrest - 9min ago" textFill="#6f6e6e">
                      <font>
                         <Font name="System Bold" size="13.0" />

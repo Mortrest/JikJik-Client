@@ -2,10 +2,13 @@ package sample.Controllers;
 
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.ImagePattern;
 import sample.Models.Notif;
 import sample.Models.Notifs;
+import sample.Models.User;
 import sample.Models.Users;
 import sample.utils.LoadComponent;
 
@@ -28,7 +31,12 @@ public class NotificationController {
             LoadComponent loadComponent = new LoadComponent("../FXML/NotificationComponent.fxml");
             AnchorPane anchorPane = loadComponent.loadAnchor();
             NotificationComponentController itemController = loadComponent.loadFxml().getController();
-            itemController.setName(notif.getOwner());
+            User user = Users.searchUsername(notif.getOwner());
+            assert user != null;
+            itemController.setName("@" + user.getUsername() + " - " + user.getName());
+            if (user.getProfilePic() != null){
+                itemController.getProfilePicture().setFill(new ImagePattern(new Image(user.getProfilePic())));
+            }
             itemController.setText(notif.getText());
             if (notif.getType().equals("1")) {
                 itemController.hide();

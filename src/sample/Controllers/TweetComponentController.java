@@ -17,17 +17,15 @@ public class TweetComponentController {
     @FXML
     public FontAwesomeIconView ret,comment,forward,report,block,mute,block1,mute1,report1;
 
-    public Pane getIdPane() {
-        return idPane;
-    }
     @FXML
     private Label likeCount,commentCount;
     @FXML
-    private Pane idPane;
+    private Pane idPane,goToProfile;
     @FXML
     private Circle profilePic;
     @FXML
     private Label nameLabel;
+
 
     @FXML
     private Label tweetLabel;
@@ -86,6 +84,11 @@ public class TweetComponentController {
         this.likeCount = likeCount;
     }
 
+    public Pane getIdPane() {
+        return idPane;
+    }
+
+
     public void likeTweet() throws IOException {
         int likeCo = Integer.parseInt(likeCount.getText());
         if (liked.isVisible()){
@@ -125,5 +128,9 @@ public class TweetComponentController {
             System.out.println(report1.isVisible());
             report1.setVisible(!report1.isVisible());
                 });
+    }
+
+    public Pane getGoToProfile() {
+        return goToProfile;
     }
 }

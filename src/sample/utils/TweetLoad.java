@@ -1,5 +1,6 @@
 package sample.utils;
 
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
@@ -18,6 +19,7 @@ import java.io.IOException;
 import java.util.LinkedList;
 
 public class TweetLoad {
+    @FXML
     GridPane grid;
     TextArea textArea;
     Pane overlay;
@@ -64,10 +66,20 @@ public class TweetLoad {
                 fxmlLoader.setLocation(getClass().getResource("../FXML/TweetComponent.fxml"));
                 AnchorPane anchorPane = fxmlLoader.load();
                 TweetComponentController itemController = fxmlLoader.getController();
-                itemController.getProfilePic().setFill(new ImagePattern(new Image("/sample/images/iman.JPG")));
+                if (Users.searchUsername(tw.get(i-1).getOwner()).getProfilePic() != null) {
+                    itemController.getProfilePic().setFill(new ImagePattern(new Image(Users.searchUsername(tw.get(i - 1).getOwner()).getProfilePic())));
+                }
                 int finalI = i - 1;
                 itemController.setTweetID(tw.get(i - 1).getID());
                 itemController.loadData();
+                int finalI1 = i;
+                itemController.getGoToProfile().setOnMouseClicked(e -> {
+                    try {
+                        goToProfile(tw.get(finalI1 -1).getOwner(),anchorPane);
+                    } catch (IOException ioException) {
+                        ioException.printStackTrace();
+                    }
+                });
                 itemController.getLikeCount().setText(Integer.toString(tw.get(i - 1).getLikes().size()));
                 itemController.getRet().setOnMouseClicked(e -> {
                     try {
@@ -105,7 +117,8 @@ public class TweetLoad {
                 fxmlLoader.setLocation(getClass().getResource("../FXML/TweetComponentImage.fxml"));
                 AnchorPane anchorPane = fxmlLoader.load();
                 TweetComponentImageController itemController = fxmlLoader.getController();
-                itemController.getProfilePic().setFill(new ImagePattern(new Image("/sample/images/iman.JPG")));
+
+                itemController.getProfilePic().setFill(new ImagePattern(new Image(Users.searchUsername(tw.get(i-1).getOwner()).getProfilePic())));
                 int finalI = i - 1;
                 itemController.setTweetID(tw.get(i - 1).getID());
                 itemController.loadData();
@@ -118,7 +131,14 @@ public class TweetLoad {
                         ioException.printStackTrace();
                     }
                 });
-
+                int finalI2 = i;
+                itemController.getGoToProfile().setOnMouseClicked(e -> {
+                    try {
+                        goToProfile(tw.get(finalI2 -1).getOwner(),anchorPane);
+                    } catch (IOException ioException) {
+                        ioException.printStackTrace();
+                    }
+                });
                 itemController.getRet().setOnMouseClicked(e -> {
                     try {
                         retweet(tw.get(finalI).getID());
@@ -233,5 +253,11 @@ public class TweetLoad {
         Tweets.reTweet(Tweets.search(ID), Users.getCurrentUser());
         grid.getChildren().clear();
         load();
+    }
+
+    public void goToProfile(String owner,AnchorPane anchorPane) throws IOException {
+        Users.setProfile(Users.searchUsername(owner));
+        new ChangeScene("../FXML/sample.fxml",anchorPane);
+
     }
 }

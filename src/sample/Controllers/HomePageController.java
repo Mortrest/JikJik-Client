@@ -49,6 +49,8 @@ public class HomePageController {
             loadData();
             textArea.setText("");
         } else {
+            System.out.println(Tweets.getImage());
+
             File file = new File(Tweets.getImage());
             Image image = new Image(file.toURI().toString());
             Tweets.makeTweetImage(textArea.getText(), image.getUrl(), "0", Users.getCurrentUser().getUsername(), Users.getCurrentUser().getFollowers());

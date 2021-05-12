@@ -17,6 +17,7 @@ import sample.Models.Users;
 import sample.utils.ChangeScene;
 import sample.utils.LoadComponent;
 import sample.utils.TweetLoad;
+
 import java.io.IOException;
 import java.util.LinkedList;
 
@@ -32,6 +33,7 @@ public class ProfileController {
     public AnchorPane Salam;
     @FXML
     public AnchorPane profilePage;
+    public Button blockBtn;
     @FXML
     private Label fNames;
 
@@ -80,6 +82,10 @@ public class ProfileController {
             isFollowing.setText("It's you bro");
         } else {
             followBtn.setVisible(true);
+            blockBtn.setVisible(true);
+            if (Users.getCurrentUser().getBlackList().contains(Users.getProfile().getUsername())){
+                blockBtn.setText("Unblock");
+            }
             if (Users.getCurrentUser().getFollowers().contains(user.getUsername())){
                 isFollowing.setText(user.getUsername() + " is Following You!");
             } else {
@@ -172,5 +178,17 @@ public class ProfileController {
         new ChangeScene("../FXML/sample.fxml",grid);
     }
 
+    public void blockProfile() {
+        Users.blockProfile(Users.getCurrentUser(),Users.getProfile().getProfilePic());
+    }
+
+    public void follow() throws IOException {
+        Users.followProfile(Users.getCurrentUser(),Users.getProfile().getUsername());
+        if (followBtn.getText().equals("Unfollow")){
+            followBtn.setText("Follow");
+        } else {
+            followBtn.setText("Unfollow");
+        }
+    }
 }
 

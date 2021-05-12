@@ -89,11 +89,24 @@
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
                               </Button>
-                              <Button fx:id="followBtn" layoutX="638.0" layoutY="48.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="78.0" style="-fx-background-color: #1DA3F3;" text="Follow" textFill="WHITE">
+                              <Button fx:id="followBtn" onAction="#follow" layoutX="638.0" layoutY="48.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="78.0" style="-fx-background-color: #1DA3F3;" text="Follow" textFill="WHITE">
                                  <font>
                                     <Font name="System Bold" size="12.0" />
-                                 </font></Button>
-                              <Button fx:id="followBtn1" layoutX="731.0" layoutY="48.0" mnemonicParsing="false" onAction="#editProfile" prefHeight="39.0" prefWidth="78.0" style="-fx-background-color: #f54787;" text="Edit" textFill="WHITE">
+                                 </font>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+
+                              </Button>
+                              <Button fx:id="editBtn" layoutX="731.0" layoutY="48.0" mnemonicParsing="false" onAction="#editProfile" prefHeight="39.0" prefWidth="78.0" style="-fx-background-color: #f54787;" text="Edit" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </Button>
+                              <Button fx:id="blockBtn" layoutX="731.0" layoutY="48.0" mnemonicParsing="false" onAction="#blockProfile" prefHeight="39.0" prefWidth="78.0" style="-fx-background-color: BLACK;" text="Block" textFill="WHITE" visible="false">
                                  <font>
                                     <Font name="System Bold" size="12.0" />
                                  </font>

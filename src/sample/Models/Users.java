@@ -104,17 +104,16 @@ public class Users {
             tweets.follow(user.getUsername(), target);
             notifs.makeNotif((user.getUsername() + " Started following you!"), target, "1");
             ml.save(users,"Users");
+        } else {
+            user.getFollowing().remove(target);
+            tweets.unfollow(user.getUsername(),target);
+            notifs.makeNotif((user.getUsername() + " Stopped following you!"),target,"1");
+
+            ml.save(users,"Users");
+
         }
     }
 
-    // Unfollowing
-    public static void unFollowProfile(User user,String target){
-        user.getFollowing().remove(target);
-        tweets.unfollow(user.getUsername(),target);
-        notifs.makeNotif((user.getUsername() + " Stopped following you!"),target,"1");
-
-        ml.save(users,"Users");
-    }
 
     // Blocking profiles
     public static void blockProfile(User user, String target){

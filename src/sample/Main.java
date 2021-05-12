@@ -10,6 +10,7 @@ import sample.Models.Chats;
 import sample.Models.Notifs;
 import sample.Models.Tweets;
 import sample.Models.Users;
+import sample.utils.Pages;
 
 public class Main extends Application {
     @Override
@@ -19,7 +20,7 @@ public class Main extends Application {
         Notifs notifs = new Notifs(m);
         Chats chats = new Chats(m);
         Users users = new Users(m,tweets,chats,notifs);
-
+        Pages pages = new Pages();
         Parent root = FXMLLoader.load(getClass().getResource("FXML/SignIn.fxml"));
         primaryStage.setTitle("Jik Jik");
         primaryStage.getIcons().add(new Image("/sample/FXML/download.jpg"));

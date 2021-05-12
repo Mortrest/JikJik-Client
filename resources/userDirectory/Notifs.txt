@@ -1,15 +1,7 @@
-{"owner":"a","owner2":"","text":"ali Started following you!","date":"1615282630698","type":"1","isAccepted":false,"isRead":false}
-{"owner":"a","owner2":"","text":"iman has accepted your following request!","date":"1615283043678","type":"1","isAccepted":false,"isRead":false}
-{"owner":"l","owner2":"","text":"iman Started following you!","date":"1615283496996","type":"1","isAccepted":false,"isRead":false}
-{"owner":"l","owner2":"","text":"iman has accepted your following request!","date":"1615283497006","type":"1","isAccepted":false,"isRead":false}
-{"owner":"c","owner2":"","text":"iman has accepted your following request!","date":"1615283682679","type":"1","isAccepted":false,"isRead":false}
-{"owner":"b","owner2":"","text":"alii Started following you!","date":"1615892085246","type":"1","isAccepted":false,"isRead":false}
-{"owner":"morty","owner2":"","text":"leo Started following you!","date":"1616475469856","type":"1","isAccepted":false,"isRead":false}
-{"owner":"morty","owner2":"","text":"leo Requested to follow you!","date":"1616475469856","type":"2","isAccepted":false,"isRead":false}
-{"owner":"jojo","owner2":"","text":"morty Started following you!","date":"1616602782055","type":"1","isAccepted":false,"isRead":false}
-{"owner":"morty","owner2":"","text":"jojo Started following you!","date":"1616603743938","type":"1","isAccepted":false,"isRead":false}
-{"owner":"jojo","owner2":"","text":"morty Stopped following you!","date":"1616658851424","type":"1","isAccepted":false,"isRead":false}
-{"owner":"morty","owner2":"","text":"jojo has declined your following request!","date":"1616658984023","type":"1","isAccepted":false,"isRead":false}
-{"owner":"jojo","owner2":"","text":"morty Started following you!","date":"1616830291336","type":"1","isAccepted":false,"isRead":false}
-{"owner":"morty","owner2":"","text":"jojo has accepted your following request!","date":"1616830291350","type":"1","isAccepted":false,"isRead":false}
-{"owner":"morty","owner2":"","text":"jojo Started following you!","date":"1616830352130","type":"1","isAccepted":false,"isRead":false}
+{"owner":"morty","owner2":"jojo","text":"leo Started following you!","date":"1616475469856","type":"1","isAccepted":false,"isRead":false}
+{"owner":"morty","owner2":"jojo","text":"leo Requested to follow you!","date":"1616475469856","type":"2","isAccepted":false,"isRead":false}
+{"owner":"jojo","owner2":"jojo","text":"morty Started following you!","date":"1616602782055","type":"2","isAccepted":false,"isRead":false}
+{"owner":"morty","owner2":"jojo\"","text":"jojo Started following you!","date":"1616603743938","type":"2","isAccepted":false,"isRead":false}
+{"owner":"jojo","owner2":"jojo","text":"morty Stopped following you!","date":"1616658851424","type":"1","isAccepted":false,"isRead":false}
+{"owner":"morty","owner2":"jojo","text":"jojo has declined your following request!","date":"1616658984023","type":"1","isAccepted":false,"isRead":false}
+{"owner":"jojo","owner2":"","text":"morty Stopped following you!","date":"1620842819031","type":"1","isAccepted":false,"isRead":false}

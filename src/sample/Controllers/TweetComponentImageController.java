@@ -26,7 +26,7 @@ public class TweetComponentImageController {
     @FXML
     private Label likeCount,commentCount;
     @FXML
-    private Pane idPane;
+    private Pane idPane,goToProfile;
     @FXML
     private Circle profilePic;
     @FXML
@@ -134,5 +134,9 @@ public class TweetComponentImageController {
 
     public void setImageView(ImageView imageView) {
         this.imageView = imageView;
+    }
+
+    public Pane getGoToProfile() {
+        return goToProfile;
     }
 }

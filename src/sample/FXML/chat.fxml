@@ -134,7 +134,7 @@
                   <Font name="System Bold" size="21.0" />
                </font>
             </Label>
-            <Circle fill="#52ddd2" layoutX="37.0" layoutY="35.0" radius="23.0" stroke="WHITE" strokeType="INSIDE" />
+            <Circle fx:id="profilePicture" fill="#52ddd2" layoutX="37.0" layoutY="35.0" radius="23.0" stroke="WHITE" strokeType="INSIDE" />
          </children>
       </Pane>
    </children>

@@ -30,6 +30,7 @@ public class ChangeProfilePicture {
         Random random = new Random();
         File file1 = new File("C:\\Users\\ali80\\Desktop\\Tokyo\\Phase2\\src\\sample\\images\\" + random.nextInt(10000) + ".jpg");
         Files.copy(file.toPath(),file1.toPath());
+
         if (type == 1) {
             Tweets.setImage(file1.toPath().toString());
         } else if (type == 2){
