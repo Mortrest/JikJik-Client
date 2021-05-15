@@ -44,7 +44,7 @@ public class ExploreController {
 
 
     public void loadData() throws IOException {
-        new TweetLoad(grid, textArea,1,overlay,1).load();
+        new TweetLoad(grid, textArea,3,overlay,1).load();
     }
 
     public void closeOverlay(){

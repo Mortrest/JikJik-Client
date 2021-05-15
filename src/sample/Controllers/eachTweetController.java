@@ -45,7 +45,9 @@ public class eachTweetController {
             User owner = Users.searchUsername(tweet.getOwner());
             nameLabel.setText("@" + owner.getUsername() + " - " + owner.getName());
             tweetLabel.setText(tweet.getText());
-            profilePicture.setFill(new ImagePattern(new Image(owner.getProfilePic())));
+            if (owner.getProfilePic()!= null) {
+                profilePicture.setFill(new ImagePattern(new Image(owner.getProfilePic())));
+            }
             loadData();
         }
     }

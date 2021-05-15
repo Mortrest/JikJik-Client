@@ -48,14 +48,14 @@ public class Chats {
         Chats.editID = editID;
     }
 
-    public static Room creatGroupRoom(LinkedList<String> members,String groupName){
+    public static void creatGroupRoom(LinkedList<String> members,String groupName){
         Random random = new Random();
         Date date = new Date();
         String ID = Integer.toString(random.nextInt(100000));
         Room room = new Room(ID,Long.toString(date.getTime()),members,groupName);
         rooms.add(room);
+        System.out.println(rooms.getLast().getMembers() + " Sa");
         ml.save(rooms,"Rooms");
-        return room;
     }
 
     public static void deleteChat(String ID) {
@@ -65,9 +65,11 @@ public class Chats {
 
     public static void editChat(String ID, String text) {
         Chat chat = searchChat(ID);
-        chat.text = text;
-        chat.edited = true;
-        ml.save(chats,"Chats");
+        if (!chat.forwarded && chat.getOwner().equals(Users.getCurrentUser().getUsername())) {
+            chat.text = text;
+            chat.edited = true;
+            ml.save(chats, "Chats");
+        }
     }
 
     public static void createSavedMsg(String username) {
@@ -80,17 +82,21 @@ public class Chats {
 
     public static LinkedList<Room> userRoom(String username) {
         LinkedList<Room> userRooms = new LinkedList<>();
+        ml.loadRooms();
+        System.out.println(rooms.getLast() + " " + rooms.getLast().getMembers());
         for (Room room : rooms) {
             if (room.getOwner1() != null) {
                 if (room.getOwner1().equals(username) || room.getOwner2().equals(username)) {
                     userRooms.add(room);
                 }
             } else {
+                System.out.println(room.getMembers());
                 if (room.getMembers().contains(username)){
                     userRooms.add(room);
                 }
             }
         }
+        System.out.println(userRooms + "user rooms");
         return userRooms;
     }
 
@@ -105,6 +111,13 @@ public class Chats {
 
     public LinkedList<Chat> getChats() {
         return chats;
+    }
+
+    public static void saveChats(){
+        ml.save(chats,"Chats");
+    }
+    public static void saveRooms(){
+        ml.save(rooms,"Rooms");
     }
 
     // Searching rooms
@@ -188,7 +201,7 @@ public class Chats {
         ml.save(chats,"Chats");
     }
 
-    public void seen(String currentUser, String RoomID) {
+    public static void seen(String currentUser, String RoomID) {
         Room room = searchRoomID(RoomID);
         if (room.getOwner1().equals(currentUser)) {
             room.setUnread1(0);
@@ -199,7 +212,7 @@ public class Chats {
     }
 
     // Making rooms
-    public String makeRoom(String o1, String o2) {
+    public static String makeRoom(String o1, String o2) {
         Date date = new Date();
         Random random = new Random();
         Room room = new Room(Integer.toString(random.nextInt(100000)), Long.toString(date.getTime()), o1, o2, 0, 0);

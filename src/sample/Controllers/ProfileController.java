@@ -1,5 +1,6 @@
 package sample.Controllers;
 
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
@@ -11,6 +12,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
+import sample.Models.Chats;
 import sample.Models.Tweets;
 import sample.Models.User;
 import sample.Models.Users;
@@ -23,7 +25,7 @@ import java.util.LinkedList;
 
 public class ProfileController {
     @FXML
-    public Label followersLabel,followingsLabel;
+    public Label followersLabel, followingsLabel;
     public GridPane overlayGrid;
     @FXML
     public Circle profilePic;
@@ -34,6 +36,8 @@ public class ProfileController {
     @FXML
     public AnchorPane profilePage;
     public Button blockBtn;
+    @FXML
+    public FontAwesomeIconView message;
     @FXML
     private Label fNames;
 
@@ -58,12 +62,12 @@ public class ProfileController {
     @FXML
     private GridPane grid;
     @FXML
-    private TextArea textArea,overlayText;
+    private TextArea textArea, overlayText;
 
     @FXML
-    private Pane overlay,overlay1;
-    
-    
+    private Pane overlay, overlay1;
+
+
     public void initialize() throws IOException {
         User user = Users.getProfile();
         username.setText("@" + user.getUsername());
@@ -72,60 +76,75 @@ public class ProfileController {
         } else {
             bio.setText("No bio");
         }
+        message.setOnMouseClicked(e -> sendMsg());
         fNames.setText(user.getFirstName() + " " + user.getLastName());
-        Image image = new Image("/sample/images/ali.PNG");
-        profilePic.setFill(new ImagePattern(image));
+        if (Users.getProfile().getProfilePic() != null) {
+            Image image = new Image(Users.getProfile().getProfilePic());
+            profilePic.setFill(new ImagePattern(image));
+        }
         flwrsCount.setText(Integer.toString(user.getFollowers().size()));
         flwingCount.setText(Integer.toString(user.getFollowing().size()));
-        if (user.getUsername().equals(Users.getCurrentUser().getUsername())){
+        if (user.getUsername().equals(Users.getCurrentUser().getUsername())) {
             followBtn.setVisible(false);
             isFollowing.setText("It's you bro");
         } else {
             followBtn.setVisible(true);
             blockBtn.setVisible(true);
-            if (Users.getCurrentUser().getBlackList().contains(Users.getProfile().getUsername())){
+            if (Users.getCurrentUser().getBlackList().contains(Users.getProfile().getUsername())) {
                 blockBtn.setText("Unblock");
             }
-            if (Users.getCurrentUser().getFollowers().contains(user.getUsername())){
+            if (Users.getCurrentUser().getFollowers().contains(user.getUsername())) {
                 isFollowing.setText(user.getUsername() + " is Following You!");
             } else {
                 isFollowing.setText(user.getUsername() + " isn't Following You!");
             }
-            if (Users.getCurrentUser().getFollowing().contains(user.getUsername())){
+            if (Users.getCurrentUser().getFollowing().contains(user.getUsername())) {
                 followBtn.setText("Unfollow");
             } else {
                 followBtn.setText("Follow");
             }
         }
         loadData();
-            grid.setLayoutY(90);
-            grid.setLayoutX(-40);
+        grid.setLayoutY(90);
+        grid.setLayoutX(-40);
+    }
+
+    private void sendMsg() {
+        if (Chats.searchRoom(Users.getCurrentUser().getUsername(), Users.getProfile().getUsername()) == null) {
+            if (Users.getProfile().isPrivate()) {
+                if (Users.getProfile().getFollowers().contains(Users.getCurrentUser().getUsername())) {
+                    Chats.makeRoom(Users.getCurrentUser().getUsername(), Users.getProfile().getUsername());
+                }
+            } else {
+                Chats.makeRoom(Users.getCurrentUser().getUsername(), Users.getProfile().getUsername());
+            }
         }
+    }
 
     public void back() throws IOException {
         Users.setProfile(Users.getCurrentUser());
-        new ChangeScene("../FXML/sample.fxml",grid);
+        new ChangeScene("../FXML/sample.fxml", grid);
     }
 
     public void loadData() throws IOException {
-        new TweetLoad(grid,textArea,2,overlay,1).load();
+        new TweetLoad(grid, textArea, 4, overlay, 1).load();
     }
 
-    public void closeOverlay(){
+    public void closeOverlay() {
         overlay.setVisible(false);
         overlay1.setVisible(false);
     }
 
     public void sendComment() throws IOException {
-        if (overlayText.getText() != null){
+        if (overlayText.getText() != null) {
             overlay.setVisible(false);
-            Tweets.makeTweet(overlayText.getText(),Tweets.getComment(),Users.getCurrentUser().getUsername(),Users.getCurrentUser().getFollowers());
+            Tweets.makeTweet(overlayText.getText(), Tweets.getComment(), Users.getCurrentUser().getUsername(), Users.getCurrentUser().getFollowers());
             grid.getChildren().clear();
             loadData();
         }
     }
 
-    public void editProfile(){
+    public void editProfile() {
         editPage.setVisible(true);
 //        Salam.setVisible(false);
     }
@@ -138,7 +157,7 @@ public class ProfileController {
         loadFlw(2);
     }
 
-    public void blackOverlay() throws IOException{
+    public void blackOverlay() throws IOException {
         loadFlw(3);
     }
 
@@ -147,18 +166,18 @@ public class ProfileController {
         overlay1.setVisible(true);
         overlayGrid.getChildren().clear();
         LinkedList<String> users;
-        if (type == 1){
+        if (type == 1) {
             users = Users.getCurrentUser().getFollowers();
-        } else if (type == 2){
+        } else if (type == 2) {
             users = Users.getCurrentUser().getFollowing();
         } else {
             users = Users.getCurrentUser().getBlackList();
         }
-        for (String str : users){
+        for (String str : users) {
             LoadComponent loadComponent = new LoadComponent("../FXML/FollowersComponent.fxml");
             AnchorPane anchorPane = loadComponent.loadAnchor();
             FollowerComponentController item = loadComponent.loadFxml().getController();
-            item.setName("@"+str);
+            item.setName("@" + str);
             item.getPane().setOnMouseClicked(e -> {
                 try {
                     goToPage(str);
@@ -166,7 +185,7 @@ public class ProfileController {
                     ioException.printStackTrace();
                 }
             });
-            overlayGrid.add(anchorPane,1,overlayGrid.getRowCount()+1);
+            overlayGrid.add(anchorPane, 1, overlayGrid.getRowCount() + 1);
             overlayGrid.setLayoutX(-150);
             overlayGrid.setLayoutY(-25);
             GridPane.setMargin(anchorPane, new Insets(-25));
@@ -175,16 +194,21 @@ public class ProfileController {
 
     public void goToPage(String str) throws IOException {
         Users.setProfile(Users.searchUsername(str));
-        new ChangeScene("../FXML/sample.fxml",grid);
+        new ChangeScene("../FXML/sample.fxml", grid);
     }
 
     public void blockProfile() {
-        Users.blockProfile(Users.getCurrentUser(),Users.getProfile().getProfilePic());
+        if (blockBtn.getText().equals("Block")) {
+            blockBtn.setText("Unblock");
+        } else {
+            blockBtn.setText("Block");
+        }
+        Users.blockProfile(Users.getCurrentUser(), Users.getProfile().getUsername());
     }
 
     public void follow() throws IOException {
-        Users.followProfile(Users.getCurrentUser(),Users.getProfile().getUsername());
-        if (followBtn.getText().equals("Unfollow")){
+        Users.followProfile(Users.getCurrentUser(), Users.getProfile().getUsername());
+        if (followBtn.getText().equals("Unfollow")) {
             followBtn.setText("Follow");
         } else {
             followBtn.setText("Unfollow");

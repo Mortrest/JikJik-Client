@@ -67,9 +67,22 @@ public class RoomsController {
 
     public void createGroup() throws IOException {
         if (groupName.getText() != null && members.size() != 0){
-            members.add(Users.getCurrentUser().getUsername());
-            Room room = Chats.creatGroupRoom(members,groupName.getText());
-            groups.add(room);
+            if (Chats.searchRoomID(Chats.searchGroup(groupName.getText())) != null){
+                Room room = Chats.searchRoomID(Chats.searchGroup(groupName.getText()));
+                for (String mem : members){
+                    assert room != null;
+                    if (!room.getMembers().contains(mem)){
+                        room.getMembers().add(mem);
+                    }
+                }
+                Chats.saveRooms();
+            } else {
+                members.add(Users.getCurrentUser().getUsername());
+                Chats.creatGroupRoom(members, groupName.getText());
+//                groups.add(room);
+                Chats.saveRooms();
+
+            }
             members.clear();
             grid.getChildren().clear();
             loadData();
@@ -81,7 +94,8 @@ public class RoomsController {
         grid.getChildren().clear();
         grid.setLayoutY(40);
         LinkedList<Room> tw = Chats.userRoom(Users.getCurrentUser().getUsername());
-        tw.addAll(groups);
+        System.out.println(tw);
+//        tw.addAll(groups);
         for (int i = 0; i < tw.size(); i++) {
             LoadComponent loadComponent = new LoadComponent("../FXML/roomProfileComponent.fxml");
             AnchorPane anchorPane = loadComponent.loadAnchor();

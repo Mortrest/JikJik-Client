@@ -15,3 +15,5 @@
 {"ID":"76834","roomID":"80623","text":"awd","date":"1620619791116","owner":"morty","edited":false,"forwarded":false}
 {"ID":"51343","roomID":"80623","text":"awd","date":"1620619791124","owner":"morty","image":"file:/C:/Users/ali80/Desktop/Tokyo/Phase2/src/sample/images/4399.jpg","edited":false,"forwarded":false}
 {"ID":"21088","roomID":"80623","text":"che jigarayi","date":"1620619807301","owner":"morty","edited":false,"forwarded":false}
+{"ID":"50895","roomID":"86962","text":"Salam sadat","date":"1621060005314","owner":"morty","edited":false,"forwarded":false}
+{"ID":"1088","roomID":"86962","text":"Salam","date":"1621060025666","owner":"sadat","edited":false,"forwarded":false}

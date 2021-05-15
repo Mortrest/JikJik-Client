@@ -12,7 +12,9 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import sample.Models.Chats;
 import sample.Models.Tweets;
+import sample.Models.User;
 import sample.Models.Users;
+import sample.utils.ChangeScene;
 import sample.utils.Pages;
 
 import java.io.IOException;
@@ -74,25 +76,31 @@ public class LogInController {
         }
     }
 
+    public void refresh() throws IOException {
+        new ChangeScene("../FXML/sample.fxml",signInBtn);
+    }
 
     public void SignIn() throws IOException {
-        Users.setCurrentUser(Users.searchUsername("morty"));
-        Users.setProfile(Users.getCurrentUser());
-        Parent root = FXMLLoader.load(getClass().getResource("../FXML/sample.fxml"));
-        Stage window = (Stage) signInBtn.getScene().getWindow();
-        window.setScene(new Scene(root));
-        Pages.getPages().add(homePage);
-//        if (signInPassword.getText().equals("1")){
-//            Users.setCurrentUser(Users.searchUsername(signInTextField.getText()));
-//            Parent root = FXMLLoader.load(getClass().getResource("../FXML/sample.fxml"));
-//            Stage window = (Stage) signInBtn.getScene().getWindow();
-//            window.setScene(new Scene(root));
-//
-//        } else {
-//            incorrect.setVisible(true);
-//            signInPassword.setText("");
-//        }
+        if (Users.searchUsername(signInTextField.getText()) != null){
+            User user = Users.searchUsername(signInTextField.getText());
+            if (signInPassword.getText().equals(user.getPassword())){
+                Users.setCurrentUser(user);
+                Users.setProfile(Users.getCurrentUser());
+                Pages.getPages().add(homePage);
+                Parent root = FXMLLoader.load(getClass().getResource("../FXML/sample.fxml"));
+                Stage window = (Stage) signInBtn.getScene().getWindow();
+                window.setScene(new Scene(root));
+            }
+        }
+        else {
+            incorrect.setVisible(true);
+            signInPassword.setText("");
+        }
+    }
 
+
+    public void SignUp() throws IOException {
+        new ChangeScene("../FXML/signUp.fxml",signInBtn);
     }
 
     public void setHomePage() {

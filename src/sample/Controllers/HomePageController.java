@@ -49,8 +49,6 @@ public class HomePageController {
             loadData();
             textArea.setText("");
         } else {
-            System.out.println(Tweets.getImage());
-
             File file = new File(Tweets.getImage());
             Image image = new Image(file.toURI().toString());
             Tweets.makeTweetImage(textArea.getText(), image.getUrl(), "0", Users.getCurrentUser().getUsername(), Users.getCurrentUser().getFollowers());
@@ -65,7 +63,7 @@ public class HomePageController {
     }
 
     public void loadData() throws IOException {
-        new TweetLoad(grid, textArea, 3, overlay,overlay1,overlayGrid,sendMsg,1).load();
+        new TweetLoad(grid, textArea, 1, overlay,overlay1,overlayGrid,sendMsg,1).load();
     }
 
     public void closeOverlay() {

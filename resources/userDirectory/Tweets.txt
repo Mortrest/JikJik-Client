@@ -1,4 +1,4 @@
-{"text":"How\u0027s today","ID":"48787","parent":"0","date":"1616602437718","owner":"morty","reported":1,"users":["jojo","jojo"],"likes":["morty"],"isRet":false}
+{"text":"How\u0027s today","ID":"48787","parent":"0","date":"1616602437718","owner":"morty","reported":2,"users":["jojo","jojo"],"likes":["morty"],"isRet":false}
 {"text":"Heeeey world","ID":"21731","parent":"0","date":"1616659033454","owner":"morty","reported":0,"users":["jojo","jojo"],"likes":[],"isRet":false}
 {"text":"Dickam dahane iman","ID":"217312","parent":"0","date":"1616659033454","owner":"morty","reported":0,"users":["jojo","jojo"],"likes":[],"isRet":false}
 {"text":"Khob ke chi?","ID":"71946","parent":"21731","date":"1616827205471","owner":"morty","reported":0,"users":["jojo","jojo"],"likes":[],"isRet":false}
@@ -19,3 +19,6 @@
 {"text":"sd","ID":"39207","parent":"0","date":"1620574536690","owner":"morty","reported":0,"users":["jojo","Mojo","gojo","sojo","lojo","mojo","rojo"],"likes":[],"isRet":false}
 {"text":"salam","ID":"15246","parent":"0","image":"file:/C:/Users/ali80/Desktop/Tokyo/Phase2/src/sample/images/2880.jpg","date":"1620636810756","owner":"morty","reported":0,"users":["jojo","Mojo","gojo","sojo","lojo","mojo","rojo"],"likes":[],"isRet":false}
 {"text":"Salom","ID":"130","parent":"0","date":"161949608647934","owner":"jojo","reported":0,"users":["Mojo","gojo"],"likes":[],"isRet":true}
+{"text":"Salam hamegi","ID":"76850","parent":"0","date":"1621058334770","owner":"sadat","reported":0,"users":["morty"],"likes":[],"isRet":false}
+{"text":"Salam sotoon","ID":"23510","parent":"76850","date":"1621058437113","owner":"morty","reported":0,"users":["jojo","Mojo","gojo","sojo","lojo","mojo","rojo"],"likes":[],"isRet":false}
+{"text":"Sotooni be mola","ID":"45696","parent":"23510","date":"1621058463458","owner":"sadat","reported":0,"users":["morty"],"likes":[],"isRet":false}

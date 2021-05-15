@@ -3,6 +3,7 @@ package sample.Models;
 import sample.ModelLoader;
 
 import java.util.LinkedList;
+import java.util.Random;
 
 public class Users {
     static Tweets tweets;
@@ -90,9 +91,11 @@ public class Users {
     }
 
     // Sign up user
-    public static void signUp(User user){
+    public static void signUp(String username, String fName,String lName, String email, String password){
+        Random random = new Random();
+        User user = new User(Integer.toString(random.nextInt(10000)),fName,lName,username,password,"","",email,"",null);
         users.add(user);
-        chats.createSavedMsg(user.getUsername());
+        Chats.createSavedMsg(user.getUsername());
         ml.save(users,"Users");
     }
 
@@ -117,16 +120,18 @@ public class Users {
 
     // Blocking profiles
     public static void blockProfile(User user, String target){
+        if (!user.getMuted().contains(target)){
+            user.getMuted().add(target);
+        }
         if (user.getBlackList().contains(target)){
             user.getBlackList().remove(target);
+            user.getMuted().remove(target);
         } else {
             user.getBlackList().add(target);
             user.getFollowing().removeIf(str -> str.equals(target));
             user.getFollowers().removeIf(str -> str.equals(target));
         }
-        if (!user.getMuted().contains(target)){
-            user.getMuted().add(target);
-        }
+
         ml.save(users,"Users");
     }
 

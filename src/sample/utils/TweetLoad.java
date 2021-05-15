@@ -55,110 +55,116 @@ public class TweetLoad {
         }
         LinkedList<Tweet> tw;
         if (isComment == 1) {
-            tw = Users.getTweets().showTweetOwnPage(Users.class, Users.getCurrentUser().getUsername(), type);
+            if (type == 4){
+                tw = Users.getTweets().showTweetOwnPage(Users.class,Users.getProfile().getUsername(), 2);
+            }else {
+                tw = Users.getTweets().showTweetOwnPage(Users.class, Users.getCurrentUser().getUsername(), type);
+            }
         } else {
             tw = Users.getTweets().getComments(Tweets.getTweetID());
         }
 
         for (int i = 1; i < tw.size() + 1; i++) {
-            FXMLLoader fxmlLoader = new FXMLLoader();
-            if (tw.get(i - 1).getImage() == null) {
-                fxmlLoader.setLocation(getClass().getResource("../FXML/TweetComponent.fxml"));
-                AnchorPane anchorPane = fxmlLoader.load();
-                TweetComponentController itemController = fxmlLoader.getController();
-                if (Users.searchUsername(tw.get(i-1).getOwner()).getProfilePic() != null) {
+            if (tw.get(i - 1).getReported() <= 5) {
+                FXMLLoader fxmlLoader = new FXMLLoader();
+                if (tw.get(i - 1).getImage() == null) {
+                    fxmlLoader.setLocation(getClass().getResource("../FXML/TweetComponent.fxml"));
+                    AnchorPane anchorPane = fxmlLoader.load();
+                    TweetComponentController itemController = fxmlLoader.getController();
+                    if (Users.searchUsername(tw.get(i - 1).getOwner()).getProfilePic() != null) {
+                        itemController.getProfilePic().setFill(new ImagePattern(new Image(Users.searchUsername(tw.get(i - 1).getOwner()).getProfilePic())));
+                    }
+                    int finalI = i - 1;
+                    itemController.setTweetID(tw.get(i - 1).getID());
+                    itemController.loadData();
+                    int finalI1 = i;
+                    itemController.getGoToProfile().setOnMouseClicked(e -> {
+                        try {
+                            goToProfile(tw.get(finalI1 - 1).getOwner(), anchorPane);
+                        } catch (IOException ioException) {
+                            ioException.printStackTrace();
+                        }
+                    });
+                    itemController.getLikeCount().setText(Integer.toString(tw.get(i - 1).getLikes().size()));
+                    itemController.getRet().setOnMouseClicked(e -> {
+                        try {
+                            retweet(tw.get(finalI).getID());
+                        } catch (IOException ioException) {
+                            ioException.printStackTrace();
+                        }
+                    });
+                    itemController.getComment().setOnMouseClicked(e -> makeTweet(tw.get(finalI).getID()));
+                    itemController.getForward().setOnMouseClicked(e -> {
+                        try {
+                            Tweets.setForwardTweetID(tw.get(finalI).getID());
+                            loadFlw();
+                        } catch (IOException ioException) {
+                            ioException.printStackTrace();
+                        }
+                    });
+                    itemController.getIdPane().setOnMouseClicked(e -> {
+                        try {
+                            tweetPage(tw.get(finalI).getID());
+                        } catch (IOException ioException) {
+                            ioException.printStackTrace();
+                        }
+                    });
+                    itemController.setNameLabel("@" + tw.get(i - 1).getOwner() + " - " + Users.searchUsername(tw.get(i - 1).getOwner()).getName());
+                    String text = tw.get(i - 1).getText();
+                    if (tw.get(i - 1).isRet()) {
+                        text = "[Retweeted] " + text;
+                    }
+                    itemController.setTweetLabel(text);
+                    grid.add(anchorPane, 1, grid.getRowCount() + 1);
+                    GridPane.setMargin(anchorPane, new Insets(10));
+
+                } else {
+                    fxmlLoader.setLocation(getClass().getResource("../FXML/TweetComponentImage.fxml"));
+                    AnchorPane anchorPane = fxmlLoader.load();
+                    TweetComponentImageController itemController = fxmlLoader.getController();
+
                     itemController.getProfilePic().setFill(new ImagePattern(new Image(Users.searchUsername(tw.get(i - 1).getOwner()).getProfilePic())));
+                    int finalI = i - 1;
+                    itemController.setTweetID(tw.get(i - 1).getID());
+                    itemController.loadData();
+                    itemController.getLikeCount().setText(Integer.toString(tw.get(i - 1).getLikes().size()));
+                    itemController.getForward().setOnMouseClicked(e -> {
+                        try {
+                            Tweets.setForwardTweetID(tw.get(finalI).getID());
+                            loadFlw();
+                        } catch (IOException ioException) {
+                            ioException.printStackTrace();
+                        }
+                    });
+                    int finalI2 = i;
+                    itemController.getGoToProfile().setOnMouseClicked(e -> {
+                        try {
+                            goToProfile(tw.get(finalI2 - 1).getOwner(), anchorPane);
+                        } catch (IOException ioException) {
+                            ioException.printStackTrace();
+                        }
+                    });
+                    itemController.getRet().setOnMouseClicked(e -> {
+                        try {
+                            retweet(tw.get(finalI).getID());
+                        } catch (IOException ioException) {
+                            ioException.printStackTrace();
+                        }
+                    });
+                    itemController.getImageView().setImage(new Image(tw.get(i - 1).getImage()));
+                    itemController.getComment().setOnMouseClicked(e -> makeTweet(tw.get(finalI).getID()));
+                    itemController.getIdPane().setOnMouseClicked(e -> {
+                        try {
+                            tweetPage(tw.get(finalI).getID());
+                        } catch (IOException ioException) {
+                            ioException.printStackTrace();
+                        }
+                    });
+                    itemController.setNameLabel("@" + tw.get(i - 1).getOwner() + " - " + Users.searchUsername(tw.get(i - 1).getOwner()).getName());
+                    itemController.setTweetLabel(tw.get(i - 1).getText());
+                    grid.add(anchorPane, 1, grid.getRowCount() + 1);
+                    GridPane.setMargin(anchorPane, new Insets(10));
                 }
-                int finalI = i - 1;
-                itemController.setTweetID(tw.get(i - 1).getID());
-                itemController.loadData();
-                int finalI1 = i;
-                itemController.getGoToProfile().setOnMouseClicked(e -> {
-                    try {
-                        goToProfile(tw.get(finalI1 -1).getOwner(),anchorPane);
-                    } catch (IOException ioException) {
-                        ioException.printStackTrace();
-                    }
-                });
-                itemController.getLikeCount().setText(Integer.toString(tw.get(i - 1).getLikes().size()));
-                itemController.getRet().setOnMouseClicked(e -> {
-                    try {
-                        retweet(tw.get(finalI).getID());
-                    } catch (IOException ioException) {
-                        ioException.printStackTrace();
-                    }
-                });
-                itemController.getComment().setOnMouseClicked(e -> makeTweet(tw.get(finalI).getID()));
-                itemController.getForward().setOnMouseClicked(e -> {
-                    try {
-                        Tweets.setForwardTweetID(tw.get(finalI).getID());
-                        loadFlw();
-                    } catch (IOException ioException) {
-                        ioException.printStackTrace();
-                    }
-                });
-                itemController.getIdPane().setOnMouseClicked(e -> {
-                    try {
-                        tweetPage(tw.get(finalI).getID());
-                    } catch (IOException ioException) {
-                        ioException.printStackTrace();
-                    }
-                });
-                itemController.setNameLabel("@" + tw.get(i - 1).getOwner() + " - " + Users.searchUsername(tw.get(i - 1).getOwner()).getName());
-                String text = tw.get(i - 1).getText();
-                if (tw.get(i - 1).isRet()) {
-                    text = "[Retweeted] " + text;
-                }
-                itemController.setTweetLabel(text);
-                grid.add(anchorPane, 1, grid.getRowCount() + 1);
-                GridPane.setMargin(anchorPane, new Insets(10));
-
-            } else {
-                fxmlLoader.setLocation(getClass().getResource("../FXML/TweetComponentImage.fxml"));
-                AnchorPane anchorPane = fxmlLoader.load();
-                TweetComponentImageController itemController = fxmlLoader.getController();
-
-                itemController.getProfilePic().setFill(new ImagePattern(new Image(Users.searchUsername(tw.get(i-1).getOwner()).getProfilePic())));
-                int finalI = i - 1;
-                itemController.setTweetID(tw.get(i - 1).getID());
-                itemController.loadData();
-                itemController.getLikeCount().setText(Integer.toString(tw.get(i - 1).getLikes().size()));
-                itemController.getForward().setOnMouseClicked(e -> {
-                    try {
-                        Tweets.setForwardTweetID(tw.get(finalI).getID());
-                        loadFlw();
-                    } catch (IOException ioException) {
-                        ioException.printStackTrace();
-                    }
-                });
-                int finalI2 = i;
-                itemController.getGoToProfile().setOnMouseClicked(e -> {
-                    try {
-                        goToProfile(tw.get(finalI2 -1).getOwner(),anchorPane);
-                    } catch (IOException ioException) {
-                        ioException.printStackTrace();
-                    }
-                });
-                itemController.getRet().setOnMouseClicked(e -> {
-                    try {
-                        retweet(tw.get(finalI).getID());
-                    } catch (IOException ioException) {
-                        ioException.printStackTrace();
-                    }
-                });
-                itemController.getImageView().setImage(new Image(tw.get(i - 1).getImage()));
-                itemController.getComment().setOnMouseClicked(e -> makeTweet(tw.get(finalI).getID()));
-                itemController.getIdPane().setOnMouseClicked(e -> {
-                    try {
-                        tweetPage(tw.get(finalI).getID());
-                    } catch (IOException ioException) {
-                        ioException.printStackTrace();
-                    }
-                });
-                itemController.setNameLabel("@" + tw.get(i - 1).getOwner() + " - " + Users.searchUsername(tw.get(i - 1).getOwner()).getName());
-                itemController.setTweetLabel(tw.get(i - 1).getText());
-                grid.add(anchorPane, 1, grid.getRowCount() + 1);
-                GridPane.setMargin(anchorPane, new Insets(10));
             }
         }
     }
