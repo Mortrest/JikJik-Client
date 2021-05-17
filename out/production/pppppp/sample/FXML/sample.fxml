@@ -65,7 +65,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
-                  <Button fx:id="btnT11111" onAction="#setProfilePage"  layoutX="10.0" layoutY="262.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="215.0" style="-fx-background-radius: 23; -fx-background-color: #eff1f2;" text="Profile" textFill="#41acda">
+                  <Button fx:id="btnT11111" layoutX="10.0" layoutY="262.0" mnemonicParsing="false" onAction="#setProfilePage" prefHeight="64.0" prefWidth="215.0" style="-fx-background-radius: 23; -fx-background-color: #eff1f2;" text="Profile" textFill="#41acda">
                      <font>
                         <Font name="System Bold" size="27.0" />
                      </font>
@@ -76,7 +76,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
-                  <Button fx:id="btnT111111" onAction="#setSettingsPage" layoutX="10.0" layoutY="326.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="215.0" style="-fx-background-radius: 23; -fx-background-color: #eff1f2;" text="Settings" textFill="#41acda">
+                  <Button fx:id="btnT111111" layoutX="10.0" layoutY="326.0" mnemonicParsing="false" onAction="#setSettingsPage" prefHeight="64.0" prefWidth="215.0" style="-fx-background-radius: 23; -fx-background-color: #eff1f2;" text="Settings" textFill="#41acda">
                      <font>
                         <Font name="System Bold" size="27.0" />
                      </font>
@@ -94,7 +94,7 @@
                   <Font size="48.0" />
                </font>
             </Label>
-            <ImageView fitHeight="81.0" fitWidth="105.0" layoutX="59.0" layoutY="105.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="81.0" fitWidth="105.0" layoutX="59.0" layoutY="105.0" onMouseClicked="#refresh" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@download.jpg" />
                </image>

@@ -1,5 +1,6 @@
 package sample.Models;
 
+import sample.Logic.Chats;
 import sample.ModelLoader;
 
 import java.util.LinkedList;
@@ -101,19 +102,23 @@ public class Users {
 
     // Following profiles
     public static void followProfile(User user,String target){
-        if (!user.getFollowing().contains(target)) {
-            user.getFollowing().add(target);
-            searchUsername(target).getFollowers().add(user.getUsername());
-            tweets.follow(user.getUsername(), target);
-            notifs.makeNotif((user.getUsername() + " Started following you!"), target, "1");
-            ml.save(users,"Users");
+        User targetUser = Users.searchUsername(target);
+        if (!targetUser.isPrivate()) {
+            if (!user.getFollowing().contains(target)) {
+                user.getFollowing().add(target);
+                searchUsername(target).getFollowers().add(user.getUsername());
+                tweets.follow(user.getUsername(), target);
+                Notifs.makeNotif((user.getUsername() + " Started following you!"), target, "1");
+                ml.save(users, "Users");
+            } else {
+                user.getFollowing().remove(target);
+                tweets.unfollow(user.getUsername(), target);
+                Notifs.makeNotif((user.getUsername() + " Stopped following you!"), target, "1");
+                ml.save(users, "Users");
+            }
         } else {
-            user.getFollowing().remove(target);
-            tweets.unfollow(user.getUsername(),target);
-            notifs.makeNotif((user.getUsername() + " Stopped following you!"),target,"1");
-
-            ml.save(users,"Users");
-
+            Notifs.makeRequest(target,"2",user.getUsername());
+            Notifs.makeNotif("Your Following Request to " + target + " is pending",user.getUsername(),"1");
         }
     }
 
@@ -203,8 +208,8 @@ public class Users {
         tweets.deleteProfile(user);
         Chats.rooms.removeIf(room -> room.getOwner2().equals(user.getUsername()) || room.getOwner1().equals(user.getUsername()));
         ml.save(Chats.chats,"Chats");
-        notifs.notifs.removeIf(notif -> notif.getOwner().equals(user.getUsername()));
-        ml.save(notifs.notifs,"Notifs");
+        Notifs.notifs.removeIf(notif -> notif.getOwner().equals(user.getUsername()));
+        ml.save(Notifs.notifs,"Notifs");
         ml.log("Users-"+user.getUsername() + " Profile deleted");
     }
 

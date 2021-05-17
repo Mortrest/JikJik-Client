@@ -12,7 +12,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
-import sample.Models.Chats;
+import sample.Logic.Chats;
 import sample.Models.Tweets;
 import sample.Models.User;
 import sample.Models.Users;
@@ -38,6 +38,11 @@ public class ProfileController {
     public Button blockBtn;
     @FXML
     public FontAwesomeIconView message;
+    public FontAwesomeIconView lock;
+    public Label privateAcc;
+    public Pane overlay2;
+    public GridPane overlayGrid1;
+    public Button sendMsg2;
     @FXML
     private Label fNames;
 
@@ -127,12 +132,19 @@ public class ProfileController {
     }
 
     public void loadData() throws IOException {
-        new TweetLoad(grid, textArea, 4, overlay, 1).load();
+        if (Users.getCurrentUser().getFollowing().contains(Users.getProfile().getUsername()) || !Users.getProfile().isPrivate() || Users.getProfile().getUsername().equals(Users.getCurrentUser().getUsername())) {
+            privateAcc.setVisible(false);
+            lock.setVisible(false);
+//            new TweetLoad(grid, textArea, 4, overlay, 1).load();
+            new TweetLoad(grid, textArea, 4, overlay,overlay2,overlayGrid1,sendMsg2,1).load();
+
+        }
     }
 
     public void closeOverlay() {
         overlay.setVisible(false);
         overlay1.setVisible(false);
+        overlay2.setVisible(false);
     }
 
     public void sendComment() throws IOException {
@@ -167,11 +179,11 @@ public class ProfileController {
         overlayGrid.getChildren().clear();
         LinkedList<String> users;
         if (type == 1) {
-            users = Users.getCurrentUser().getFollowers();
+            users = Users.getProfile().getFollowers();
         } else if (type == 2) {
-            users = Users.getCurrentUser().getFollowing();
+            users = Users.getProfile().getFollowing();
         } else {
-            users = Users.getCurrentUser().getBlackList();
+            users = Users.getProfile().getBlackList();
         }
         for (String str : users) {
             LoadComponent loadComponent = new LoadComponent("../FXML/FollowersComponent.fxml");
@@ -206,7 +218,7 @@ public class ProfileController {
         Users.blockProfile(Users.getCurrentUser(), Users.getProfile().getUsername());
     }
 
-    public void follow() throws IOException {
+    public void follow() {
         Users.followProfile(Users.getCurrentUser(), Users.getProfile().getUsername());
         if (followBtn.getText().equals("Unfollow")) {
             followBtn.setText("Follow");

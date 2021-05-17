@@ -19,6 +19,9 @@ import sample.utils.TweetLoad;
 import java.io.IOException;
 
 public class eachTweetController {
+    public Pane overlay1;
+    public GridPane overlayGrid;
+    public Button sendMsg;
     @FXML
     private Label nameLabel;
 
@@ -53,7 +56,9 @@ public class eachTweetController {
     }
 
     public void loadData() throws IOException {
-        new TweetLoad(grid,textArea,2,overlay,2).load();
+//        new TweetLoad(grid,textArea,2,overlay,2).load();
+        new TweetLoad(grid, textArea, 2, overlay,overlay1,overlayGrid,sendMsg,2).load();
+
     }
 
 
@@ -68,6 +73,7 @@ public class eachTweetController {
 
     public void closeOverlay(){
         overlay.setVisible(false);
+        overlay1.setVisible(false);
     }
 
     public void sendComment() throws IOException {

@@ -10,7 +10,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.ImagePattern;
 import sample.Models.Chat;
-import sample.Models.Chats;
+import sample.Logic.Chats;
 import sample.Models.Room;
 import sample.Models.Users;
 import sample.utils.ChangeScene;
@@ -83,7 +83,7 @@ public class RoomsController {
                 Chats.saveRooms();
 
             }
-            members.clear();
+//            members.clear();
             grid.getChildren().clear();
             loadData();
             closeOverlay();
@@ -94,13 +94,11 @@ public class RoomsController {
         grid.getChildren().clear();
         grid.setLayoutY(40);
         LinkedList<Room> tw = Chats.userRoom(Users.getCurrentUser().getUsername());
-        System.out.println(tw);
 //        tw.addAll(groups);
         for (int i = 0; i < tw.size(); i++) {
             LoadComponent loadComponent = new LoadComponent("../FXML/roomProfileComponent.fxml");
             AnchorPane anchorPane = loadComponent.loadAnchor();
             RoomProfileComponentController itemController = loadComponent.loadFxml().getController();
-
             int finalI = i;
             itemController.getPane().setOnMouseClicked(e -> {
                 try {
@@ -112,17 +110,20 @@ public class RoomsController {
             if (tw.get(i).getType().equals("pv")) {
                 if (tw.get(i).getOwner1().equals(Users.getCurrentUser().getUsername())) {
                     itemController.setNameLabel(tw.get(i).getOwner2());
+                    itemController.getUnread().setText(Integer.toString(tw.get(i).getUnread1()));
                     if (Users.searchUsername(tw.get(i).getOwner2()).getProfilePic() != null){
                         itemController.getProfilePicture().setFill(new ImagePattern(new Image(Users.searchUsername(tw.get(i).getOwner2()).getProfilePic())));
                     }
                 } else {
                     itemController.setNameLabel(tw.get(i).getOwner1());
+                    itemController.getUnread().setText(Integer.toString(tw.get(i).getUnread2()));
                     if (Users.searchUsername(tw.get(i).getOwner1()).getProfilePic() != null){
                         itemController.getProfilePicture().setFill(new ImagePattern(new Image(Users.searchUsername(tw.get(i).getOwner1()).getProfilePic())));
                     }
                 }
             }
             else {
+                itemController.getUnread().setVisible(false);
                 itemController.setNameLabel(tw.get(i).getGroupName());
             }
             LinkedList<Chat> chat = Users.getChats().showChats(tw.get(i).getRoomID());
@@ -141,6 +142,7 @@ public class RoomsController {
 //            GridPane.setMargin(anchorPane, new Insets(10));
         }
         loadFollowers();
+//        members.clear();
     }
 
     public void refresh() throws IOException {

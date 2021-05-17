@@ -13,6 +13,7 @@ import javafx.scene.paint.ImagePattern;
 import sample.Controllers.FollowerComponentController;
 import sample.Controllers.TweetComponentController;
 import sample.Controllers.TweetComponentImageController;
+import sample.Logic.Chats;
 import sample.Models.*;
 
 import java.io.IOException;
@@ -195,6 +196,7 @@ public class TweetLoad {
         overlayGrid.getChildren().clear();
         LinkedList<Room> rooms = Chats.userRoom(Users.getProfile().getUsername());
         LinkedList<String> users;
+        LinkedList<LinkedList<String>> catg = Users.getCurrentUser().getCategories();
         users = Users.getCurrentUser().getFollowers();
         for (Room room : rooms) {
             LoadComponent loadComponent = new LoadComponent("../FXML/FollowersComponent.fxml");
@@ -228,13 +230,24 @@ public class TweetLoad {
             overlayGrid.setLayoutX(-150);
             overlayGrid.setLayoutY(-25);
             GridPane.setMargin(anchorPane, new Insets(-25));
-
         }
+//        for (int i = 0; i < catg.size(); i++) {
+//            LoadComponent loadComponent = new LoadComponent("../FXML/FollowersComponent.fxml");
+//            AnchorPane anchorPane = loadComponent.loadAnchor();
+//            FollowerComponentController item = loadComponent.loadFxml().getController();
+//            item.setName("@" + catg.get(i).get(0));
+//            item.getPane().setOnMouseClicked(e -> chooseFlwr(item, str));
+//            overlayGrid.add(anchorPane, 1, overlayGrid.getRowCount() + 1);
+//            overlayGrid.setLayoutX(-150);
+//            overlayGrid.setLayoutY(-25);
+//            GridPane.setMargin(anchorPane, new Insets(-25));
+//        }
     }
 
     LinkedList<String> members = new LinkedList<>();
 
     public void chooseFlwr(FollowerComponentController item, String str) {
+
         if (item.rect1.isVisible()) {
             members.remove(str);
             item.rect1.setVisible(false);

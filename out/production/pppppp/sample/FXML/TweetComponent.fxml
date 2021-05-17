@@ -66,11 +66,6 @@
                   <Font name="System Bold" size="15.0" />
                </font>
             </Label>
-            <Label fx:id="commentCount" layoutX="142.0" layoutY="109.0" prefHeight="29.0" prefWidth="39.0" text="23">
-               <font>
-                  <Font name="System Bold" size="15.0" />
-               </font>
-            </Label>
             <FontAwesomeIconView fx:id="report1" fill="#e1bb14" glyphName="FLAG" layoutX="517.0" layoutY="130.0" size="20" visible="false" wrappingWidth="33.0">
                <cursor>
                   <Cursor fx:constant="HAND" />

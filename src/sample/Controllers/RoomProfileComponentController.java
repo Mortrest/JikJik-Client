@@ -7,7 +7,7 @@ import javafx.scene.shape.Circle;
 
 public class RoomProfileComponentController {
     @FXML
-    private Label name;
+    private Label name,unread;
     @FXML
     private Pane pane;
     @FXML
@@ -28,5 +28,9 @@ public class RoomProfileComponentController {
 
     public Pane getPane() {
         return pane;
+    }
+
+    public Label getUnread() {
+        return unread;
     }
 }

@@ -1,6 +1,7 @@
 package sample.Controllers;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -21,6 +22,9 @@ public class ExploreController {
     public TextArea textArea;
     @FXML
     public Label found;
+    public Pane overlay1;
+    public GridPane overlayGrid;
+    public Button sendMsg;
     @FXML
     private TextArea overlayText;
     @FXML
@@ -44,11 +48,12 @@ public class ExploreController {
 
 
     public void loadData() throws IOException {
-        new TweetLoad(grid, textArea,3,overlay,1).load();
+        new TweetLoad(grid, textArea, 3, overlay,overlay1,overlayGrid,sendMsg,1).load();
     }
 
     public void closeOverlay(){
         overlay.setVisible(false);
+        overlay1.setVisible(false);
     }
 
     public void sendComment() throws IOException {

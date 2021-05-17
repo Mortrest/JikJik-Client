@@ -1,6 +1,9 @@
-package sample.Models;
+package sample.Logic;
 
 import sample.ModelLoader;
+import sample.Models.Chat;
+import sample.Models.Room;
+import sample.Models.Users;
 
 import java.util.Date;
 import java.util.LinkedList;
@@ -65,9 +68,9 @@ public class Chats {
 
     public static void editChat(String ID, String text) {
         Chat chat = searchChat(ID);
-        if (!chat.forwarded && chat.getOwner().equals(Users.getCurrentUser().getUsername())) {
-            chat.text = text;
-            chat.edited = true;
+        if (!chat.isForwarded() && chat.getOwner().equals(Users.getCurrentUser().getUsername())) {
+            chat.setText(text);
+            chat.setEdited(true);
             ml.save(chats, "Chats");
         }
     }
@@ -83,14 +86,15 @@ public class Chats {
     public static LinkedList<Room> userRoom(String username) {
         LinkedList<Room> userRooms = new LinkedList<>();
         ml.loadRooms();
-        System.out.println(rooms.getLast() + " " + rooms.getLast().getMembers());
+        System.out.println(rooms + " rrr");
         for (Room room : rooms) {
+            System.out.println(room);
+            System.out.println(room.getMembers() + "\n");
             if (room.getOwner1() != null) {
                 if (room.getOwner1().equals(username) || room.getOwner2().equals(username)) {
                     userRooms.add(room);
                 }
             } else {
-                System.out.println(room.getMembers());
                 if (room.getMembers().contains(username)){
                     userRooms.add(room);
                 }

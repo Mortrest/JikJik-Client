@@ -33,10 +33,10 @@ public class Notifs {
             owner.getFollowing().add(owner2.getUsername());
             owner2.getFollowers().add(owner.getUsername());
             str = "Accepted";
-            makeNotif(owner2.getUsername() + " Has " + str + "Your Request", owner.getUsername(), "1");
+            makeNotif(owner.getUsername() + " Has " + str + " Your Request", owner2.getUsername(), "1");
         } else if (isAccepted == 2) {
             str = "Declined";
-            makeNotif(owner2.getUsername() + " Has " + str + "Your Request", owner.getUsername(), "1");
+            makeNotif(owner.getUsername() + " Has " + str + "Your Request", owner2.getUsername(), "1");
         }
 
         ml.save(Users.users,"Users");
@@ -48,7 +48,8 @@ public class Notifs {
         ml.save(notifs,"Notifs");
     }
 
-    public void makeRequest(String text,String owner,String type,String owner2){
+    public static void makeRequest(String owner,String type,String owner2){
+        String text = owner2 + " Has Requested to Follow";
         Date date = new Date();
         Notif notif = new Notif(owner,text,Long.toString(date.getTime()),false,type,owner2);
         notifs.add(notif);

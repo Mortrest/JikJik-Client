@@ -41,6 +41,10 @@ public class EditProfileController {
     private TextField lastName;
 
     public void initialize(){
+        loadData();
+    }
+
+    public void loadData(){
         bio.setPromptText(Users.getCurrentUser().getInfo() == null ? "No Bio!" : Users.getCurrentUser().getInfo());
         email.setPromptText(Users.getCurrentUser().getEmail() == null ? "No Email!" : Users.getCurrentUser().getEmail());
         firstName.setPromptText(Users.getCurrentUser().getFirstName() == null ? "No First Name!" : Users.getCurrentUser().getFirstName());
@@ -52,26 +56,32 @@ public class EditProfileController {
         }
     }
 
-
     public void changeBio() {
         Users.getCurrentUser().setInfo(bio.getText());
         bio.setPromptText(bio.getText());
+        Users.save();
     }
 
     public void changeEmail() {
         Users.getCurrentUser().setEmail(email.getText());
         email.setPromptText(email.getText());
+        Users.save();
+
     }
 
     public void changeFName() {
         Users.getCurrentUser().setFirstName(firstName.getText());
         firstName.setPromptText(firstName.getText());
+        Users.save();
+
     }
 
 
     public void changeLName() {
         Users.getCurrentUser().setLastName(lastName.getText());
         lastName.setPromptText(lastName.getText());
+        Users.save();
+
 
     }
 
@@ -79,6 +89,8 @@ public class EditProfileController {
     public void changePhoneNumber() {
         Users.getCurrentUser().setPhoneNumber(phoneNumber.getText());
         phoneNumber.setPromptText(phoneNumber.getText());
+        Users.save();
+
     }
 
 
@@ -94,6 +106,25 @@ public class EditProfileController {
         Stage window = (Stage) proPic.getScene().getWindow();
         window.setScene(new Scene(root));
 
+    }
+
+    public void save(){
+        if (bio.getText() != null){
+            Users.getCurrentUser().setInfo(bio.getText());
+        }
+        if (email.getText() != null){
+            Users.getCurrentUser().setEmail(email.getText());
+        }
+        if (firstName.getText() != null){
+            Users.getCurrentUser().setFirstName(firstName.getText());
+        }
+        if (lastName.getText() != null){
+            Users.getCurrentUser().setLastName(lastName.getText());
+        }
+        if (phoneNumber.getText() != null){
+            Users.getCurrentUser().setPhoneNumber(phoneNumber.getText());
+        }
+        loadData();
     }
 
     public void back() throws IOException {

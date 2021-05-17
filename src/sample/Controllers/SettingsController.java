@@ -8,7 +8,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import sample.Models.Chats;
+import sample.Logic.Chats;
 import sample.Models.Tweets;
 import sample.Models.Users;
 import sample.utils.Pages;
@@ -63,8 +63,8 @@ public class SettingsController {
         } else {
             Users.getCurrentUser().setLastSeenAvailable(true);
             lastSeenText.setText("Currently Last Seen isn't Private");
-
         }
+        Users.save();
     }
     public void changePrivate(){
         if (Users.getCurrentUser().isPrivate()){
@@ -74,10 +74,12 @@ public class SettingsController {
             Users.getCurrentUser().setPrivate(true);
             privateText.setText("Currently Contacts Only");
         }
+        Users.save();
     }
 
 
     public void backToReality() throws IOException {
+        Users.save();
         Users.setCurrentUser(null);
         Chats.setRoomID(null);
         Users.setProfile(null);
@@ -97,5 +99,6 @@ public class SettingsController {
             wrong.setVisible(true);
             pass1.setText("");
         }
+        Users.save();
     }
 }

@@ -10,7 +10,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import sample.Models.Chats;
+import sample.Logic.Chats;
 import sample.Models.Tweets;
 import sample.Models.User;
 import sample.Models.Users;
@@ -34,8 +34,6 @@ public class LogInController {
 
 
     public void initialize() {
-        System.out.println(Pages.getPages());
-        System.out.println(Users.getProfile());
         if (Users.getProfile() != Users.getCurrentUser() && Users.getProfile() != null){
             currentPage = profilePage;
             profilePage.setVisible(true);
@@ -83,6 +81,7 @@ public class LogInController {
     public void SignIn() throws IOException {
         if (Users.searchUsername(signInTextField.getText()) != null){
             User user = Users.searchUsername(signInTextField.getText());
+            assert user != null;
             if (signInPassword.getText().equals(user.getPassword())){
                 Users.setCurrentUser(user);
                 Users.setProfile(Users.getCurrentUser());
@@ -146,9 +145,4 @@ public class LogInController {
         currentPage = profilePage;
     }
 
-//    public void setEachChat(){
-//        currentPage.setVisible(false);
-//        eachChat.setVisible(true);
-//        currentPage = eachChat;
-//    }
 }

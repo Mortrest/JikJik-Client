@@ -12,6 +12,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
+import sample.Logic.Chats;
 import sample.Models.*;
 import sample.utils.ChangeProfilePicture;
 import sample.utils.ChangeScene;
@@ -61,28 +62,11 @@ public class ChatController {
         loadData();
     }
 
-//    public void ownChat(AnchorPane anchorPane, ChatComponentController item) {
-//        item.getCircle().setLayoutX(item.getCircle().getLayoutX() + 895);
-//        Label text = item.getText();
-//        Label name = item.getName();
-//        text.setLayoutX(text.getLayoutX() + 700);
-//        if (text.getLayoutX() + text.getText().length() * 4 > 878) {
-//            int len = text.getText().length() - "salam iman".length();
-//            text.setLayoutX(text.getLayoutX() - len * 4 - 10);
-//        }
-//        if (text.getLayoutX() + text.getText().length() * 4 < 878) {
-//            int len = text.getText().length() - "salam iman".length();
-//            text.setLayoutX(text.getLayoutX() - len * 4 + 10);
-//        }
-//        name.setLayoutX(name.getLayoutX() + 700);
-//        grid.add(anchorPane, 1, grid.getRowCount() + 1);
-//        grid.setLayoutX(-40);
-//    }
-
     public void loadData() throws IOException {
         grid.getChildren().clear();
         Room room = Chats.searchRoomID(Chats.getRoomID());
         if (room != null && room.getType().equals("pv")) {
+            Chats.seen(Users.getCurrentUser().getUsername(),room.getRoomID());
             if (room.getOwner1().equals(room.getOwner2())){
                 fName.setText("Saved Messages");
                 if (Users.getCurrentUser().getProfilePic() != null) {

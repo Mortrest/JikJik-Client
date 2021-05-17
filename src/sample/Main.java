@@ -6,7 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import sample.Models.Chats;
+import sample.Logic.Chats;
 import sample.Models.Notifs;
 import sample.Models.Tweets;
 import sample.Models.Users;
@@ -26,10 +26,7 @@ public class Main extends Application {
         primaryStage.getIcons().add(new Image("/sample/FXML/download.jpg"));
         primaryStage.setScene(new Scene(root, 1069, 673));
         primaryStage.show();
-
     }
-
-
     public static void main(String[] args) {
         launch(args);
     }

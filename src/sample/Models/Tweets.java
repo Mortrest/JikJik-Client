@@ -124,8 +124,11 @@ public class Tweets {
             tw = sortByLike(tw);
         }
         else {
+            User user = Users.searchUsername(username);
             for (Tweet t : tweets) {
-                if (Users.searchUsername(t.owner).isActive && t.getParent().equals("0") && !Users.searchUsername(username).getMuted().contains(t.owner)) {
+                User target = Users.searchUsername(t.getOwner());
+                assert target != null;
+                if (target.isActive && t.getParent().equals("0") && !user.getMuted().contains(target.getUsername())) {
                     if (t.owner.equals(username)) {
                         tw.add(t);
                     }
@@ -203,7 +206,7 @@ public class Tweets {
     public LinkedList<Tweet> sortByDate(LinkedList<Tweet> tweet) {
         for (int i = 0; i < tweet.size(); i++) {
             if (i != 0) {
-                while (Long.parseLong(tweet.get(i).getDate()) < Long.parseLong(tweet.get(i - 1).getDate())) {
+                while (Long.parseLong(tweet.get(i).getDate()) > Long.parseLong(tweet.get(i - 1).getDate())) {
                     Tweet a = tweet.get(i - 1);
                     Tweet b = tweet.get(i);
                     tweet.remove(i - 1);
