@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="272.0" prefWidth="793.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.Controllers.TweetComponentImageController">
+   <children>
+      <Pane layoutX="5.0" layoutY="9.0" prefHeight="259.0" prefWidth="778.0" style="-fx-background-color: #ededed; -fx-background-radius: 15;">
+         <children>
+            <Circle fx:id="profilePic" fill="#45f7c2" layoutX="53.0" layoutY="46.0" radius="32.0" stroke="#50e8e5" strokeType="INSIDE" strokeWidth="0.0" />
+            <Label fx:id="nameLabel" layoutX="100.0" layoutY="3.0" opacity="0.61" text="\@Mortrest - Ali Falahati ">
+               <font>
+                  <Font name="System Bold Italic" size="15.0" />
+               </font>
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+            </Label>
+            <Label fx:id="tweetLabel" layoutX="100.0" layoutY="23.0" prefHeight="75.0" prefWidth="586.0" text="Salam hamegi chetorid doostasn" textFill="#464646">
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Label>
+            <FontAwesomeIconView fx:id="like" fill="#7c7c7c" glyphName="HEART" layoutX="310.0" layoutY="240.0" onMouseClicked="#likeTweet" size="20" wrappingWidth="33.0">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </FontAwesomeIconView>
+            <FontAwesomeIconView fx:id="ret" fill="#51ace1" glyphName="RETWEET" layoutX="220.0" layoutY="240.0" size="20" wrappingWidth="26.785715103149414">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </FontAwesomeIconView>
+            <FontAwesomeIconView fx:id="comment" fill="#7a7a7a" glyphName="COMMENT" layoutX="110.0" layoutY="240.0" selectionFill="#834949" size="20" text="">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </FontAwesomeIconView>
+            <FontAwesomeIconView fx:id="forward" fill="#7c7c7c" glyphName="SHARE" layoutX="423.0" layoutY="240.0" size="20">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </FontAwesomeIconView>
+            <FontAwesomeIconView fx:id="report" fill="#7a7a7a" glyphName="FLAG" layoutX="517.0" layoutY="240.0" size="20" wrappingWidth="33.0">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </FontAwesomeIconView>
+            <FontAwesomeIconView fx:id="block" fill="#7c7c7c" glyphName="BAN" layoutX="615.0" layoutY="240.0" size="20" text="">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </FontAwesomeIconView>
+            <FontAwesomeIconView fx:id="mute" fill="#7c7c7c" glyphName="BELL" layoutX="710.0" layoutY="240.0" size="20" wrappingWidth="33.0">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </FontAwesomeIconView>
+            <Label fx:id="likeCount" layoutX="345.0" layoutY="220.0" prefHeight="29.0" prefWidth="39.0" text="23">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
+            <FontAwesomeIconView fx:id="report1" fill="#e1bb14" glyphName="FLAG" layoutX="517.0" layoutY="240.0" size="20" visible="false" wrappingWidth="33.0">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </FontAwesomeIconView>
+            <FontAwesomeIconView fx:id="block1" fill="#e12929" glyphName="BAN" layoutX="615.0" layoutY="240.0" size="20" visible="false">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </FontAwesomeIconView>
+            <FontAwesomeIconView fx:id="mute1" fill="#460be8" glyphName="BELL" layoutX="710.0" layoutY="240.0" size="20" visible="false" wrappingWidth="33.0">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </FontAwesomeIconView>
+            <Pane fx:id="goToProfile" layoutX="42.0" layoutY="8.0" prefHeight="35.0" prefWidth="688.0">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <children>
+                  <ImageView fx:id="imageView1" fitHeight="161.0" fitWidth="196.0" layoutX="529.0" layoutY="24.0" pickOnBounds="true">
+                     <image>
+                        <Image url="@../../../../../a.jpg" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+
+
+
+
+
+
+         </children>
+      </Pane>
+      <Pane fx:id="idPane" layoutX="12.0" layoutY="57.0" prefHeight="169.0" prefWidth="765.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <children>
+            <ImageView fx:id="imageView" fitHeight="155.0" fitWidth="196.0" layoutX="529.0" layoutY="7.0" pickOnBounds="true">
+               <image>
+                  <Image url="@../../../../../a.jpg" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+      <Line endX="737.0" endY="141.85711669921875" layoutY="110.0" startX="715.0" startY="127.0" stroke="#757575" strokeWidth="2.0" />
+      <FontAwesomeIconView fx:id="liked" fill="#ff4f81" glyphName="HEART" layoutX="315.0" layoutY="249.0" onMouseClicked="#likeTweet" size="20" visible="false" wrappingWidth="33.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </FontAwesomeIconView>
+   </children>
+</AnchorPane>

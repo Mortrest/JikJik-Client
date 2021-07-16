@@ -5,15 +5,15 @@
 {"ID":"31310","roomID":"60807","text":"Dickam dahane iman","date":"1620071559947","owner":"morty","edited":false,"forwarded":false}
 {"ID":"90366","roomID":"16","text":"ggg","date":"1620072989987","owner":"morty","edited":false,"forwarded":false}
 {"ID":"25005","roomID":"60807","text":"ggg","date":"1620072989989","owner":"morty","edited":false,"forwarded":false}
-{"ID":"82405","roomID":"16","text":"","date":"1620196037286","owner":"morty","image":"file:/C:/Users/ali80/Desktop/Tokyo/Phase2/src/sample/images/1494.jpg","edited":false,"forwarded":false}
-{"ID":"54872","roomID":"16","text":"","date":"1620196593833","owner":"morty","image":"file:/C:/Users/ali80/Desktop/Tokyo/Phase2/src/sample/images/1967.jpg","edited":false,"forwarded":false}
+{"ID":"82405","roomID":"16","text":"","date":"1620196037286","owner":"morty","image":"file:/C:/Users/ali80/Desktop/Tokyo/Phase2/src/client/images/1494.jpg","edited":false,"forwarded":false}
+{"ID":"54872","roomID":"16","text":"","date":"1620196593833","owner":"morty","image":"file:/C:/Users/ali80/Desktop/Tokyo/Phase2/src/client/images/1967.jpg","edited":false,"forwarded":false}
 {"ID":"95204","roomID":"16","text":"vay vay\n","date":"1620196600373","owner":"morty","edited":false,"forwarded":false}
 {"ID":"62759","roomID":"60807","text":"salam\n","date":"1620196831486","owner":"morty","edited":false,"forwarded":false}
-{"ID":"99307","roomID":"60807","text":"","date":"1620196838790","owner":"morty","image":"file:/C:/Users/ali80/Desktop/Tokyo/Phase2/src/sample/images/1004.jpg","edited":false,"forwarded":false}
+{"ID":"99307","roomID":"60807","text":"","date":"1620196838790","owner":"morty","image":"file:/C:/Users/ali80/Desktop/Tokyo/Phase2/src/client/images/1004.jpg","edited":false,"forwarded":false}
 {"ID":"29977","roomID":"60807","text":"bah bah","date":"1620196886991","owner":"morty","edited":false,"forwarded":false}
-{"ID":"16309","roomID":"60807","text":"awd","date":"1620619513764","owner":"morty","image":"file:/C:/Users/ali80/Desktop/Tokyo/Phase2/src/sample/images/4399.jpg","edited":false,"forwarded":false}
+{"ID":"16309","roomID":"60807","text":"awd","date":"1620619513764","owner":"morty","image":"file:/C:/Users/ali80/Desktop/Tokyo/Phase2/src/client/images/4399.jpg","edited":false,"forwarded":false}
 {"ID":"76834","roomID":"80623","text":"awd","date":"1620619791116","owner":"morty","edited":false,"forwarded":false}
-{"ID":"51343","roomID":"80623","text":"awd","date":"1620619791124","owner":"morty","image":"file:/C:/Users/ali80/Desktop/Tokyo/Phase2/src/sample/images/4399.jpg","edited":false,"forwarded":false}
+{"ID":"51343","roomID":"80623","text":"awd","date":"1620619791124","owner":"morty","image":"file:/C:/Users/ali80/Desktop/Tokyo/Phase2/src/client/images/4399.jpg","edited":false,"forwarded":false}
 {"ID":"21088","roomID":"80623","text":"che jigarayi","date":"1620619807301","owner":"morty","edited":false,"forwarded":false}
 {"ID":"50895","roomID":"86962","text":"Salam sadat","date":"1621060005314","owner":"morty","edited":false,"forwarded":false}
 {"ID":"1088","roomID":"86962","text":"Salam","date":"1621060025666","owner":"sadat","edited":false,"forwarded":false}
@@ -21,3 +21,5 @@
 {"ID":"6960","roomID":"50032","text":"سلام","date":"1621189915295","owner":"morty","edited":false,"forwarded":false}
 {"ID":"46506","roomID":"50032","text":"چطوری آقا عرفان؟\n","date":"1621189920967","owner":"morty","edited":false,"forwarded":false}
 {"ID":"99661","roomID":"50032","text":"خوبم عزیز","date":"1621190176191","owner":"erfan","edited":false,"forwarded":false}
+{"ID":"36218","roomID":"16","text":"WARNING: Loading FXML document with JavaFX API of version 16 by JavaFX runtime of version 11.0.2\nMay 16, 2021 11:03:39 PM javafx.css.CssParser term\nWARNING: CSS Error parsing \u0027*{-fx-: #;}: Unexpected token \u0027#\u0027 at [1,8]\nMay 16, 2021 11:03:39 PM javafx.css.CssParser declaration\nWARNING: CSS Error parsing \u0027*{-fx-region-border: #fffff;}: Invalid color specification while parsing \u0027-fx-region-border\u0027 at [1,21]\n","date":"1621277429049","owner":"morty","edited":false,"forwarded":false}
+{"ID":"54265","roomID":"63172","text":"WARNING: Loading FXML document with JavaFX API of version 16 by JavaFX runtime of version 11.0.2\nMay 16, 2021 11:03:39 PM javafx.css.CssParser term\nWARNING: CSS Error parsing \u0027*{-fx-: #;}: Unexpected token \u0027#\u0027 at [1,8]\nMay 16, 2021 11:03:39 PM javafx.css.CssParser declaration\nWARNING: CSS Error parsing \u0027*{-fx-region-border: #fffff;}: Invalid color specification while parsing \u0027-fx-region-border\u0027 at [1,21]\n","date":"1621277829007","owner":"morty","edited":false,"forwarded":false}

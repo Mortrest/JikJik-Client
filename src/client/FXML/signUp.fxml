@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="login" prefHeight="673.0" prefWidth="1069.0" style="-fx-background-color: #fcba03;" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.Controllers.SignUp">
+   <children>
+      <Pane fx:id="pne3" layoutX="-18.0" prefHeight="673.0" prefWidth="1086.0" style="-fx-background-color: #f0f4f5;">
+         <children>
+            <Label layoutX="326.0" layoutY="35.0" prefHeight="148.0" prefWidth="435.0" text="Welcome to JikJik" textFill="#1da3f3" textOverrun="WORD_ELLIPSIS">
+               <font>
+                  <Font name="System Bold" size="46.0" />
+               </font>
+            </Label>
+            <GridPane layoutX="345.0" layoutY="166.0" opacity="0.96" prefHeight="363.0" prefWidth="399.0" style="-fx-background-color: #1DA3F3; -fx-background-radius: 10;">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="175.0" minWidth="10.0" prefWidth="124.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="239.0" minWidth="10.0" prefWidth="235.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints maxHeight="96.0" minHeight="10.0" prefHeight="73.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="76.0" minHeight="10.0" prefHeight="72.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="76.0" minHeight="10.0" prefHeight="72.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="76.0" minHeight="10.0" prefHeight="72.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="76.0" minHeight="10.0" prefHeight="72.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <PasswordField fx:id="signInPassword" focusTraversable="false" prefHeight="32.0" prefWidth="212.0" promptText="Enter your password" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <GridPane.margin>
+                        <Insets right="20.0" />
+                     </GridPane.margin>
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </PasswordField>
+                  <TextField fx:id="signInTextField" focusTraversable="false" prefHeight="34.0" prefWidth="219.0" promptText="Enter your username" GridPane.columnIndex="1">
+                     <GridPane.margin>
+                        <Insets right="20.0" />
+                     </GridPane.margin>
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </TextField>
+                  <Label prefHeight="41.0" prefWidth="147.0" text="Username" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="22.0" />
+                     </font>
+                     <GridPane.margin>
+                        <Insets left="20.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <Label layoutX="10.0" layoutY="38.0" prefHeight="41.0" prefWidth="147.0" text="Password" textFill="WHITE" GridPane.rowIndex="1">
+                     <font>
+                        <Font name="System Bold" size="22.0" />
+                     </font>
+                     <GridPane.margin>
+                        <Insets left="20.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <Label prefHeight="41.0" prefWidth="147.0" text="Email" textFill="WHITE" GridPane.rowIndex="2">
+                     <font>
+                        <Font name="System Bold" size="22.0" />
+                     </font>
+                     <GridPane.margin>
+                        <Insets left="20.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <Label prefHeight="41.0" prefWidth="147.0" text="First Name" textFill="WHITE" GridPane.rowIndex="3">
+                     <font>
+                        <Font name="System Bold" size="22.0" />
+                     </font>
+                     <GridPane.margin>
+                        <Insets left="20.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <Label prefHeight="41.0" prefWidth="147.0" text="Last Name" textFill="WHITE" GridPane.rowIndex="4">
+                     <font>
+                        <Font name="System Bold" size="22.0" />
+                     </font>
+                     <GridPane.margin>
+                        <Insets left="20.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <TextField fx:id="email" focusTraversable="false" prefHeight="34.0" prefWidth="238.0" promptText="Enter your email" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                     <GridPane.margin>
+                        <Insets right="20.0" />
+                     </GridPane.margin>
+                  </TextField>
+                  <TextField fx:id="fName" focusTraversable="false" prefHeight="34.0" prefWidth="88.0" promptText="Enter your first name" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                     <GridPane.margin>
+                        <Insets right="20.0" />
+                     </GridPane.margin>
+                  </TextField>
+                  <TextField fx:id="lName" focusTraversable="false" prefHeight="34.0" prefWidth="219.0" promptText="Enter your last name" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                     <GridPane.margin>
+                        <Insets right="20.0" />
+                     </GridPane.margin>
+                  </TextField>
+               </children>
+            </GridPane>
+            <Button fx:id="signInBtn" layoutX="378.0" layoutY="554.0" mnemonicParsing="false" onAction="#SignIn" prefHeight="50.0" prefWidth="332.0" style="-fx-background-color: #1DA3F3;" text="Sign Up" textFill="WHITE">
+               <font>
+                  <Font name="Segoe UI Bold" size="22.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Label fx:id="incorrect" focusTraversable="false" layoutX="378.0" layoutY="592.0" prefHeight="81.0" prefWidth="359.0" text="Field is empty or Username isn't valid!" textFill="#ff0202" visible="false">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
