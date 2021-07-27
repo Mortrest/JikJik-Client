@@ -1,11 +1,7 @@
 package client.Controllers;
 
-import client.Config;
-import client.Manager;
 import client.Models.User;
 import client.network.ClientManager;
-import client.shared.SignInResponse;
-import client.utils.ChangeScene;
 import com.google.gson.Gson;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -14,9 +10,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 
-import java.io.IOException;
-
-public class SignIn {
+public class MainCo {
     Gson gson;
     ClientManager clientManager;
     User currentUser;
@@ -33,14 +27,14 @@ public class SignIn {
     @FXML
     Button signInBtn, btnT1;
 
-
-    public void initialize() throws IOException {
-        gson = new Gson();
-        clientManager = Manager.getClientManager();
-        currentUser = Manager.getUser();
-
-        // Check wether current user == null or not
-
+//
+//    public void initialize() throws IOException {
+//        gson = new Gson();
+//        clientManager = Manager.getClientManager();
+//        currentUser = Manager.getUser();
+//
+//        // Check wether current user == null or not
+//
 //        clientManager.sendUsers("GET_PROFILE");
 //        String str = clientManager.read();
 //        if (str.equals("NULL")){
@@ -94,36 +88,36 @@ public class SignIn {
 //        }
 //        Pages.getPages().addLast(homePage);
 //        currentPage = homePage;
-    }
-
-    public void refresh() throws IOException {
-        new ChangeScene(Config.getConfig("mainConfig").getProperty((String.class), "Sample"), signInBtn);
-    }
-
-    public void SignIn() throws IOException {
-        if (!signInTextField.getText().equals("") && !signInPassword.getText().equals("")) {
-            clientManager.sendClicked("SIGN_IN");
-            Gson gson = new Gson();
-            SignInResponse sr = new SignInResponse(signInTextField.getText(),signInPassword.getText());
-            clientManager.sendClicked(gson.toJson(sr));
-            String res = clientManager.read();
-            if (res.equals("Signed In")) {
-                Manager.setAuthToken(clientManager.read());
-                String us = clientManager.read();
-                User user = gson.fromJson(us, User.class);
-                Manager.setUser(user);
-                new ChangeScene("../FXML/mainHub.fxml", signInBtn);
-//                setHomePage();
-            } else {
-                incorrect.setVisible(true);
-            }
-        }
-    }
-
-
-    public void SignUp() throws IOException {
-        new ChangeScene("../FXML/signUp.fxml", signInBtn);
-    }
+//    }
+//
+//    public void refresh() throws IOException {
+//        new ChangeScene(Config.getConfig("mainConfig").getProperty((String.class), "Sample"), signInBtn);
+//    }
+//
+//    public void SignIn() throws IOException {
+//        if (!signInTextField.getText().equals("") && !signInPassword.getText().equals("")) {
+//            clientManager.sendClicked("SIGN_IN");
+//            Gson gson = new Gson();
+//            SignInResponse sr = new SignInResponse(signInTextField.getText(),signInPassword.getText());
+//            clientManager.sendClicked(gson.toJson(sr));
+//            String res = clientManager.read();
+//            if (res.equals("Signed In")) {
+//                Manager.setAuthToken(clientManager.read());
+//                String us = clientManager.read();
+//                User user = gson.fromJson(us, User.class);
+//                Manager.setUser(user);
+//                new ChangeScene("../FXML/home.fxml", signInBtn);
+////                setHomePage();
+//            } else {
+//                incorrect.setVisible(true);
+//            }
+//        }
+//    }
+//
+//
+//    public void SignUp() throws IOException {
+//        new ChangeScene("../FXML/signUp.fxml", signInBtn);
+//    }
 //
 //    public void setHomePage() {
 //        currentPage.setVisible(false);

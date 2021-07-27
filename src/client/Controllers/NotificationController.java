@@ -1,12 +1,11 @@
 package client.Controllers;
 
 import client.Config;
+import client.Manager;
 import client.Models.Notif;
 import client.Models.User;
 import client.network.ClientManager;
-import client.shared.NotifResponse;
 import client.utils.LoadComponent;
-import client.Manager;
 import com.google.gson.Gson;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -33,16 +32,13 @@ public class NotificationController {
         usera = Manager.getUser();
         Thread thread = new Thread(() -> {
             while (true) {
-                try {
-                    clientManager.sendClicked("NOTIF");
-                    NotifResponse notifResponse = gson.fromJson(clientManager.read(), NotifResponse.class);
-                    this.notifs = notifResponse.getNotifs();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                //                    clientManager.sendClicked("NOTIF");
+//                    NotifResponse notifResponse = gson.fromJson(clientManager.read(), NotifResponse.class);
+//                    this.notifs = notifResponse.getNotifs();
+                this.notifs = Manager.getNotifs();
                 try {
                     loadData();
-                    Thread.sleep(500);
+                    Thread.sleep(1000);
                 } catch (InterruptedException | IOException e) {
                     e.printStackTrace();
                 }

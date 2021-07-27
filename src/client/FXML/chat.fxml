@@ -16,7 +16,7 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="673.0" prefWidth="1036.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.Controllers.ChatController">
+<AnchorPane prefHeight="673.0" prefWidth="1036.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.Controllers.ChatController">
    <children>
       <Pane prefHeight="673.0" prefWidth="1069.0" style="-fx-background-color: #f0f4f5;">
          <children>
@@ -32,7 +32,7 @@
                </cursor></Button>
             <Pane layoutX="1.0" layoutY="609.0" prefHeight="65.0" prefWidth="1069.0" style="-fx-region-border: #fffff;">
                <children>
-                  <TextArea fx:id="textArea" focusTraversable="false" layoutX="-1.0" prefHeight="65.0" prefWidth="989.0" promptText="Enter Your Message" style="-fx-background-color: transparent;">
+                  <TextArea fx:id="textArea" focusTraversable="false" layoutX="-1.0" prefHeight="65.0" prefWidth="873.0" promptText="Enter Your Message" style="-fx-background-color: transparent; -fx-background-radius: 20;">
                      <font>
                         <Font size="17.0" />
                      </font>
@@ -49,6 +49,16 @@
                      </cursor>
                   </Button>
                   <FontAwesomeIconView fx:id="attach" fill="#94898f" glyphName="PAPERCLIP" layoutX="940.0" layoutY="45.0" onMouseClicked="#attach" size="37" wrappingWidth="28.0">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </FontAwesomeIconView>
+                  <FontAwesomeIconView fx:id="timeOff" fill="#94898f" glyphName="HISTORY" layoutX="887.0" layoutY="43.0" onMouseClicked="#time" size="30" text="">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </FontAwesomeIconView>
+                  <FontAwesomeIconView fx:id="timeOn" fill="#fa3986" glyphName="HISTORY" layoutX="887.0" layoutY="43.0" onMouseClicked="#time" size="30" text="" visible="false">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>

@@ -1,231 +1,278 @@
-//package sample.Controllers;
-//
-//import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
-//import javafx.fxml.FXML;
-//import javafx.geometry.Insets;
-//import javafx.scene.control.Button;
-//import javafx.scene.control.Label;
-//import javafx.scene.control.TextArea;
-//import javafx.scene.image.Image;
-//import javafx.scene.layout.AnchorPane;
-//import javafx.scene.layout.GridPane;
-//import javafx.scene.layout.Pane;
-//import javafx.scene.paint.ImagePattern;
-//import javafx.scene.shape.Circle;
-//import sample.Config;
-//import sample.Logic.Chats;
-//import sample.Logic.Tweets;
-//import sample.Models.User;
-//import sample.Logic.Users;
-//import sample.utils.ChangeScene;
-//import sample.utils.LoadComponent;
-//import sample.utils.TweetLoad;
-//
-//import java.io.IOException;
-//import java.util.LinkedList;
-//
-//public class ProfileController {
-//    @FXML
-//    public Label followersLabel, followingsLabel;
-//    public GridPane overlayGrid;
-//    @FXML
-//    public Circle profilePic;
-//    @FXML
-//    public AnchorPane editPage;
-//    @FXML
-//    public AnchorPane Salam;
-//    @FXML
-//    public AnchorPane profilePage;
-//    public Button blockBtn;
-//    @FXML
-//    public FontAwesomeIconView message;
-//    public FontAwesomeIconView lock;
-//    public Label privateAcc;
-//    public Pane overlay2;
-//    public GridPane overlayGrid1;
-//    public Button sendMsg2;
-//    @FXML
-//    private Label fNames;
-//
-//    @FXML
-//    private Label username;
-//
-//    @FXML
-//    private Label bio;
-//
-//    @FXML
-//    private Label flwrsCount;
-//
-//    @FXML
-//    private Label flwingCount;
-//
-//    @FXML
-//    private Button followBtn;
-//
-//    @FXML
-//    private Label isFollowing;
-//
-//    @FXML
-//    private GridPane grid;
-//    @FXML
-//    private TextArea textArea, overlayText;
-//
-//    @FXML
-//    private Pane overlay, overlay1;
-//
-//
-//    public void initialize() throws IOException {
+package client.Controllers;
+
+import client.Config;
+import client.Manager;
+import client.Models.User;
+import client.network.ClientManager;
+import client.shared.MakeTweetResponse;
+import client.utils.ChangeScene;
+import client.utils.LoadComponent;
+import client.utils.TweetLoad;
+import com.google.gson.Gson;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
+import javafx.fxml.FXML;
+import javafx.geometry.Insets;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.image.Image;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Circle;
+
+import java.io.IOException;
+import java.util.LinkedList;
+
+public class ProfileController {
+    User currentUser;
+    ClientManager clientManager;
+    Gson gson;
+    User profile;
+    @FXML
+    public Label followersLabel, followingsLabel;
+    public GridPane overlayGrid;
+    @FXML
+    public Circle profilePic;
+    @FXML
+    public AnchorPane editPage;
+    @FXML
+    public AnchorPane Salam;
+    @FXML
+    public AnchorPane profilePage;
+    public Button blockBtn;
+    @FXML
+    public FontAwesomeIconView message;
+    public FontAwesomeIconView lock;
+    public Label privateAcc;
+    public Pane overlay2;
+    public GridPane overlayGrid1;
+    public Button sendMsg2;
+    @FXML
+    private Label fNames;
+
+    @FXML
+    private Label username;
+
+    @FXML
+    private Label bio;
+
+    @FXML
+    private Label flwrsCount;
+
+    @FXML
+    private Label flwingCount;
+
+    @FXML
+    private Button followBtn;
+
+    @FXML
+    private Label isFollowing;
+
+    @FXML
+    private GridPane grid;
+    @FXML
+    private TextArea textArea, overlayText;
+
+    @FXML
+    private Pane overlay, overlay1;
+
+
+    public void initialize() throws IOException {
+        this.clientManager = Manager.getClientManager();
+        this.currentUser = Manager.getUser();
+        this.gson = new Gson();
+        clientManager.sendUsers("GET_PROFILE");
+        this.profile = gson.fromJson(clientManager.read(),User.class);
 //        User user = Users.getProfile();
-//        username.setText("@" + user.getUsername());
-//        if (user.getInfo() != null) {
-//            bio.setText(user.getInfo());
-//        } else {
-//            bio.setText("No bio");
-//        }
-//        message.setOnMouseClicked(e -> sendMsg());
-//        fNames.setText(user.getFirstName() + " " + user.getLastName());
-//        if (Users.getProfile().getProfilePic() != null) {
-//            Image image = new Image(Users.getProfile().getProfilePic());
-//            profilePic.setFill(new ImagePattern(image));
-//        }
-//        flwrsCount.setText(Integer.toString(user.getFollowers().size()));
-//        flwingCount.setText(Integer.toString(user.getFollowing().size()));
-//        if (user.getUsername().equals(Users.getCurrentUser().getUsername())) {
-//            followBtn.setVisible(false);
-//            isFollowing.setText("It's you bro");
-//        } else {
-//            followBtn.setVisible(true);
-//            blockBtn.setVisible(true);
-//            if (Users.getCurrentUser().getBlackList().contains(Users.getProfile().getUsername())) {
-//                blockBtn.setText("Unblock");
-//            }
-//            if (Users.getCurrentUser().getFollowers().contains(user.getUsername())) {
-//                isFollowing.setText(user.getUsername() + " is Following You!");
-//            } else {
-//                isFollowing.setText(user.getUsername() + " isn't Following You!");
-//            }
-//            if (Users.getCurrentUser().getFollowing().contains(user.getUsername())) {
-//                followBtn.setText("Unfollow");
-//            } else {
-//                followBtn.setText("Follow");
-//            }
-//        }
-//        loadData();
-//        grid.setLayoutY(90);
-//        grid.setLayoutX(-40);
-//    }
-//
-//    private void sendMsg() {
-//        if (Chats.searchRoom(Users.getCurrentUser().getUsername(), Users.getProfile().getUsername()) == null) {
-//            if (Users.getProfile().isPrivate()) {
-//                if (Users.getProfile().getFollowers().contains(Users.getCurrentUser().getUsername())) {
-//                    Chats.makeRoom(Users.getCurrentUser().getUsername(), Users.getProfile().getUsername());
-//                }
-//            } else {
-//                Chats.makeRoom(Users.getCurrentUser().getUsername(), Users.getProfile().getUsername());
-//            }
-//        }
-//    }
-//
-//    public void back() throws IOException {
-//        Users.setProfile(Users.getCurrentUser());
-//        new ChangeScene(Config.getConfig("mainConfig").getProperty((String.class), "Sample"), grid);
-//    }
-//
-//    public void loadData() throws IOException {
-//        if (Users.getCurrentUser().getFollowing().contains(Users.getProfile().getUsername()) || !Users.getProfile().isPrivate() || Users.getProfile().getUsername().equals(Users.getCurrentUser().getUsername())) {
-//            privateAcc.setVisible(false);
-//            lock.setVisible(false);
-////            new TweetLoad(grid, textArea, 4, overlay, 1).load();
-//            new TweetLoad(grid, textArea, 4, overlay,overlay2,overlayGrid1,sendMsg2,1).load();
-//
-//        }
-//    }
-//
-//    public void closeOverlay() {
-//        overlay.setVisible(false);
-//        overlay1.setVisible(false);
-//        overlay2.setVisible(false);
-//    }
-//
-//    public void sendComment() throws IOException {
-//        if (overlayText.getText() != null) {
-//            overlay.setVisible(false);
-//            Tweets.makeTweet(overlayText.getText(), Tweets.getComment(), Users.getCurrentUser().getUsername(), Users.getCurrentUser().getFollowers());
-//            grid.getChildren().clear();
-//            loadData();
-//        }
-//    }
-//
-//    public void editProfile() {
-//        editPage.setVisible(true);
-////        Salam.setVisible(false);
-//    }
-//
-//    public void followersOverlay() throws IOException {
-//        loadFlw(1);
-//    }
-//
-//    public void followingsOverlay() throws IOException {
-//        loadFlw(2);
-//    }
-//
-//    public void blackOverlay() throws IOException {
-//        loadFlw(3);
-//    }
-//
-//    // 1 Followers 2 Followings
-//    public void loadFlw(int type) throws IOException {
-//        overlay1.setVisible(true);
-//        overlayGrid.getChildren().clear();
-//        LinkedList<String> users;
-//        if (type == 1) {
-//            users = Users.getProfile().getFollowers();
-//        } else if (type == 2) {
-//            users = Users.getProfile().getFollowing();
-//        } else {
-//            users = Users.getProfile().getBlackList();
-//        }
-//        for (String str : users) {
-//            LoadComponent loadComponent = new LoadComponent(Config.getConfig("mainConfig").getProperty((String.class), "FollowersComponent"));
-//            AnchorPane anchorPane = loadComponent.loadAnchor();
-//            FollowerComponentController item = loadComponent.loadFxml().getController();
-//            item.setName("@" + str);
-//            item.getPane().setOnMouseClicked(e -> {
-//                try {
-//                    goToPage(str);
-//                } catch (IOException ioException) {
-//                    ioException.printStackTrace();
-//                }
-//            });
-//            overlayGrid.add(anchorPane, 1, overlayGrid.getRowCount() + 1);
-//            overlayGrid.setLayoutX(-150);
-//            overlayGrid.setLayoutY(-25);
-//            GridPane.setMargin(anchorPane, new Insets(-25));
-//        }
-//    }
-//
-//    public void goToPage(String str) throws IOException {
+        username.setText("@" + profile.getUsername());
+        if (profile.getInfo() != null) {
+            bio.setText(profile.getInfo());
+        } else {
+            bio.setText("No bio");
+        }
+        message.setOnMouseClicked(e -> {
+            try {
+                sendMsg();
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
+        });
+        fNames.setText(profile.getFirstName() + " " + profile.getLastName());
+        if (profile.getProfilePic() != null) {
+            Image image = new Image(profile.getProfilePic());
+            profilePic.setFill(new ImagePattern(image));
+        }
+        flwrsCount.setText(Integer.toString(profile.getFollowers().size()));
+        flwingCount.setText(Integer.toString(profile.getFollowing().size()));
+        if (profile.getUsername().equals(currentUser.getUsername())) {
+            followBtn.setVisible(false);
+            isFollowing.setText("It's you bro");
+        } else {
+            followBtn.setVisible(true);
+            blockBtn.setVisible(true);
+            if (currentUser.getBlackList().contains(profile.getUsername())) {
+                blockBtn.setText("Unblock");
+            }
+            if (currentUser.getFollowers().contains(profile.getUsername())) {
+                isFollowing.setText(profile.getUsername() + " is Following You!");
+            } else {
+                isFollowing.setText(profile.getUsername() + " isn't Following You!");
+            }
+            if (currentUser.getFollowing().contains(profile.getUsername())) {
+                followBtn.setText("Unfollow");
+            } else {
+                followBtn.setText("Follow");
+            }
+        }
+        loadData();
+        grid.setLayoutY(90);
+        grid.setLayoutX(-40);
+    }
+
+    private void sendMsg() throws IOException {
+        clientManager.sendChats("SEARCH_ROOM2");
+        clientManager.sendClicked(profile.getUsername());
+        String str = clientManager.read();
+        if (str.equals("NULL")) {
+            if (profile.isPrivate()) {
+                if (profile.getFollowers().contains(currentUser.getUsername())) {
+                    clientManager.sendChats("MAKE_ROOM");
+                    clientManager.sendClicked(profile.getUsername());
+//                    Chats.makeRoom(currentUser.getUsername(), profile.getUsername());
+                }
+            }
+            else {
+                clientManager.sendChats("MAKE_ROOM");
+                clientManager.sendClicked(profile.getUsername());
+
+//                Chats.makeRoom(currentUser.getUsername(), profile.getUsername());
+            }
+        }
+    }
+
+    public void back() throws IOException {
+        clientManager.sendUsers("SET_PROFILE");
+        clientManager.sendClicked(gson.toJson(currentUser));
+//        Users.setProfile(currentUser);
+        new ChangeScene(Config.getConfig("mainConfig").getProperty((String.class), "Sample"), grid);
+    }
+
+    public void loadData() throws IOException {
+        clientManager.sendUsers("GET_PROFILE");
+        User profile = gson.fromJson(clientManager.read(),User.class);
+
+        if (currentUser.getFollowing().contains(profile.getUsername()) || !profile.isPrivate() || profile.getUsername().equals(currentUser.getUsername())) {
+            privateAcc.setVisible(false);
+            lock.setVisible(false);
+//            new TweetLoad(grid, textArea, 4, overlay, 1).load();
+            new TweetLoad(grid, textArea, 4, overlay,overlay2,overlayGrid1,sendMsg2,1,clientManager,currentUser).load();
+
+        }
+    }
+
+    public void closeOverlay() {
+        overlay.setVisible(false);
+        overlay1.setVisible(false);
+        overlay2.setVisible(false);
+    }
+
+    public void sendComment() throws IOException {
+        if (overlayText.getText() != null) {
+            overlay.setVisible(false);
+            clientManager.sendTweets("GET_COMMENT");
+            String str = clientManager.read();
+            MakeTweetResponse mk = new MakeTweetResponse(overlayText.getText(),str,currentUser.getUsername(),currentUser.getFollowers(),null,false);
+            clientManager.sendTweets("MAKE_TWEET");
+            clientManager.sendClicked(gson.toJson(mk));
+//            Tweets.makeTweet(overlayText.getText(), str, currentUser.getUsername(), currentUser.getFollowers());
+            grid.getChildren().clear();
+            loadData();
+        }
+    }
+
+    public void editProfile() {
+        editPage.setVisible(true);
+//        Salam.setVisible(false);
+    }
+
+    public void followersOverlay() throws IOException {
+        loadFlw(1);
+    }
+
+    public void followingsOverlay() throws IOException {
+        loadFlw(2);
+    }
+
+    public void blackOverlay() throws IOException {
+        loadFlw(3);
+    }
+
+    // 1 Followers 2 Followings
+    public void loadFlw(int type) throws IOException {
+        overlay1.setVisible(true);
+        overlayGrid.getChildren().clear();
+        LinkedList<String> users;
+        clientManager.sendUsers("GET_PROFILE");
+        User profile = gson.fromJson(clientManager.read(),User.class);
+        if (type == 1) {
+            users = profile.getFollowers();
+        } else if (type == 2) {
+            users = profile.getFollowing();
+        } else {
+            users = profile.getBlackList();
+        }
+        for (String str : users) {
+            LoadComponent loadComponent = new LoadComponent(Config.getConfig("mainConfig").getProperty((String.class), "FollowersComponent"));
+            AnchorPane anchorPane = loadComponent.loadAnchor();
+            FollowerComponentController item = loadComponent.loadFxml().getController();
+            item.setName("@" + str);
+            item.getPane().setOnMouseClicked(e -> {
+                try {
+                    goToPage(str);
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
+            });
+            overlayGrid.add(anchorPane, 1, overlayGrid.getRowCount() + 1);
+            overlayGrid.setLayoutX(-150);
+            overlayGrid.setLayoutY(-25);
+            GridPane.setMargin(anchorPane, new Insets(-25));
+        }
+    }
+
+    public void goToPage(String str) throws IOException {
+        User us = Manager.getUser(str);
+        clientManager.sendUsers("SET_PROFILE");
+        clientManager.sendClicked(gson.toJson(us));
 //        Users.setProfile(Users.searchUsername(str));
-//        new ChangeScene("../FXML/sample.fxml", grid);
-//    }
-//
-//    public void blockProfile() {
-//        if (blockBtn.getText().equals("Block")) {
-//            blockBtn.setText("Unblock");
-//        } else {
-//            blockBtn.setText("Block");
-//        }
-//        Users.blockProfile(Users.getCurrentUser(), Users.getProfile().getUsername());
-//    }
-//
-//    public void follow() {
-//        Users.followProfile(Users.getCurrentUser(), Users.getProfile().getUsername());
-//        if (followBtn.getText().equals("Unfollow")) {
-//            followBtn.setText("Follow");
-//        } else {
-//            followBtn.setText("Unfollow");
-//        }
-//    }
-//}
-//
+        new ChangeScene("../FXML/sample.fxml", grid);
+    }
+
+    public void blockProfile() throws IOException {
+        if (blockBtn.getText().equals("Block")) {
+            blockBtn.setText("Unblock");
+        } else {
+            blockBtn.setText("Block");
+        }
+        clientManager.sendUsers("GET_PROFILE");
+        User profile = gson.fromJson(clientManager.read(),User.class);
+        clientManager.sendUsers("BLOCK");
+        clientManager.sendClicked(profile.getUsername());
+//        Users.blockProfile(currentUser, profile.getUsername());
+    }
+
+    public void follow() throws IOException {
+        User profile = gson.fromJson(clientManager.read(),User.class);
+        clientManager.sendUsers("FOLLOW");
+        clientManager.sendClicked(profile.getUsername());
+//        Users.followProfile(currentUser, profile.getUsername());
+        if (followBtn.getText().equals("Unfollow")) {
+            followBtn.setText("Follow");
+        } else {
+            followBtn.setText("Unfollow");
+        }
+    }
+}
+

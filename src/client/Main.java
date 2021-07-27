@@ -16,7 +16,7 @@ public class Main extends Application {
 //        Platform.runLater(()-> {
             Parent root = null;
             try {
-                root = FXMLLoader.load(getClass().getResource("FXML/SignIn.fxml"));
+                root = FXMLLoader.load(getClass().getResource("FXML/signIn.fxml"));
             } catch (IOException e) {
                 e.printStackTrace();
             }

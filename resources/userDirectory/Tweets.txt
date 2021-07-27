@@ -1,9 +1,10 @@
 {"text":"How\u0027s today","ID":"48787","parent":"0","date":"1616602437718","owner":"morty","reported":2,"users":["jojo","jojo","sadat","erfan"],"likes":["morty","erfan"],"isRet":false}
 {"text":"Heeeey world","ID":"21731","parent":"0","date":"1616659033454","owner":"morty","reported":0,"users":["jojo","jojo","sadat","erfan"],"likes":[],"isRet":false}
-{"text":"Dickam dahane iman","ID":"217312","parent":"0","date":"1616659033454","owner":"morty","reported":0,"users":["jojo","jojo","sadat","erfan"],"likes":[],"isRet":false}
+{"text":"Dickam iman","ID":"217312","parent":"0","date":"1616659033454","owner":"morty","reported":0,"users":["jojo","jojo","sadat","erfan"],"likes":[],"isRet":false}
 {"text":"Khob ke chi?","ID":"71946","parent":"21731","date":"1616827205471","owner":"morty","reported":0,"users":["jojo","jojo","sadat","erfan"],"likes":[],"isRet":false}
 {"text":"heh?","ID":"719462","parent":"71946","date":"1616827205471","owner":"morty","reported":0,"users":["jojo","jojo","sadat","erfan"],"likes":[],"isRet":false}
 {"text":"Khosh behalet","ID":"65910","parent":"21731","date":"1616827218101","owner":"morty","reported":0,"users":["jojo","jojo","sadat","erfan"],"likes":[],"isRet":false}
 {"text":"Hichi dawsh rahat bash","ID":"39368","parent":"71946","date":"1616827228491","owner":"morty","reported":0,"users":["jojo","jojo","sadat","erfan"],"likes":[],"isRet":false}
 {"text":"Heeeey world","ID":"9","parent":"0","date":"1619495907454","owner":"morty","reported":0,"users":["jojo","Mojo","gojo","sadat","erfan"],"likes":[],"isRet":true}
-{"text":"Dickam dahane iman","ID":"10","parent":"0","date":"1619496086479","owner":"morty","reported":0,"users":["jojo","Mojo","gojo","sadat","erfan"],"likes":[],"isRet":true}
+{"text":"Dickam imoin","ID":"10","parent":"0","date":"1619496086479","owner":"morty","reported":0,"users":["jojo","Mojo","gojo","sadat","erfan"],"likes":[],"isRet":true}
+{"text":"Dickam ko iman","ID":"123","parent":"217312","date":"1619496086479","owner":"morty","reported":0,"users":["jojo","Mojo","gojo","sadat","erfan"],"likes":[],"isRet":true}

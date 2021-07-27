@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="673.0" prefWidth="1069.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.Controllers.MainHub">
+    <children>
+        <AnchorPane prefHeight="673.0" prefWidth="231.0" style="-fx-background-color: #FFFFFF;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <VBox layoutY="170.0" prefHeight="471.0" prefWidth="219.0" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="188.0">
+                    <children>
+                        <Button fx:id="btnT1" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#loadHome" prefHeight="64.0" prefWidth="215.0" style="-fx-background-radius: 23; -fx-background-color: #eff1f2;" text="Home" textFill="#41acda">
+                            <VBox.margin>
+                                <Insets bottom="10.0" left="-20.0" top="10.0" />
+                            </VBox.margin>
+                            <font>
+                                <Font name="System Bold" size="27.0" />
+                            </font>
+                            <cursor>
+                                <Cursor fx:constant="HAND" />
+                            </cursor></Button>
+                        <Button fx:id="btnT2" layoutX="20.0" layoutY="20.0" mnemonicParsing="false" onAction="#loadExplore" prefHeight="64.0" prefWidth="215.0" style="-fx-background-radius: 23; -fx-background-color: #eff1f2;" text="Explore" textFill="#41acda">
+                            <font>
+                                <Font name="System Bold" size="27.0" />
+                            </font>
+                            <VBox.margin>
+                                <Insets bottom="10.0" left="-20.0" top="10.0" />
+                            </VBox.margin>
+                            <cursor>
+                                <Cursor fx:constant="HAND" />
+                            </cursor>
+                        </Button>
+                        <Button fx:id="btnT3" layoutX="10.0" layoutY="84.0" mnemonicParsing="false" onAction="#loadNotif" prefHeight="64.0" prefWidth="215.0" style="-fx-background-radius: 23; -fx-background-color: #eff1f2;" text="Notifications" textFill="#41acda">
+                            <font>
+                                <Font name="System Bold" size="27.0" />
+                            </font>
+                            <VBox.margin>
+                                <Insets bottom="10.0" left="-20.0" top="10.0" />
+                            </VBox.margin>
+                            <cursor>
+                                <Cursor fx:constant="HAND" />
+                            </cursor>
+                        </Button>
+                        <Button fx:id="btnT4" layoutX="20.0" layoutY="188.0" mnemonicParsing="false" onAction="#loadRooms" prefHeight="64.0" prefWidth="215.0" style="-fx-background-radius: 23; -fx-background-color: #eff1f2;" text="Messages" textFill="#41acda">
+                            <font>
+                                <Font name="System Bold" size="27.0" />
+                            </font>
+                            <VBox.margin>
+                                <Insets bottom="10.0" left="-20.0" top="10.0" />
+                            </VBox.margin>
+                            <cursor>
+                                <Cursor fx:constant="HAND" />
+                            </cursor>
+                        </Button>
+                        <Button fx:id="btnT11111" layoutX="10.0" layoutY="262.0" mnemonicParsing="false" onAction="#loadProfile" prefHeight="64.0" prefWidth="215.0" style="-fx-background-radius: 23; -fx-background-color: #eff1f2;" text="Profile" textFill="#41acda">
+                            <font>
+                                <Font name="System Bold" size="27.0" />
+                            </font>
+                            <VBox.margin>
+                                <Insets bottom="10.0" left="-20.0" top="10.0" />
+                            </VBox.margin>
+                            <cursor>
+                                <Cursor fx:constant="HAND" />
+                            </cursor>
+                        </Button>
+                        <Button fx:id="btnT111111" layoutX="10.0" layoutY="326.0" mnemonicParsing="false" onAction="#loadSettings" prefHeight="64.0" prefWidth="215.0" style="-fx-background-radius: 23; -fx-background-color: #eff1f2;" text="Settings" textFill="#41acda">
+                            <font>
+                                <Font name="System Bold" size="27.0" />
+                            </font>
+                            <VBox.margin>
+                                <Insets bottom="10.0" left="-20.0" top="10.0" />
+                            </VBox.margin>
+                            <cursor>
+                                <Cursor fx:constant="HAND" />
+                            </cursor>
+                        </Button>
+                    </children></VBox>
+
+                <Label layoutX="51.0" layoutY="24.0" prefHeight="81.0" prefWidth="117.0" text="JikJik" textFill="#4f96c6">
+                    <font>
+                        <Font size="48.0" />
+                    </font>
+                </Label>
+                <ImageView fitHeight="81.0" fitWidth="105.0" layoutX="59.0" layoutY="105.0" onMouseClicked="#refresh" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@download.jpg" />
+                    </image>
+                </ImageView>
+            </children></AnchorPane>
+      <AnchorPane fx:id="mainScene" layoutX="223.0" prefHeight="673.0" prefWidth="858.0" style="-fx-background-color: BLACK;" />
+
+
+
+    </children>
+</AnchorPane>

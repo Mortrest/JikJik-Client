@@ -7,7 +7,6 @@ import client.Models.Room;
 import client.Models.User;
 import client.network.ClientManager;
 import client.shared.CreateGroupResponse;
-import client.shared.RoomResponse;
 import client.shared.ShowChatResponse;
 import client.utils.ChangeScene;
 import client.utils.LoadComponent;
@@ -32,6 +31,7 @@ public class RoomsController {
     LinkedList<LinkedList<String>> catg;
     LinkedList<Room> tw;
     Gson gson;
+    boolean isRunning;
     User currentUser;
     @FXML
     public TextField groupName;
@@ -48,22 +48,18 @@ public class RoomsController {
         this.gson = new Gson();
         this.currentUser = Manager.getUser();
         this.clientManager = Manager.getClientManager();
-
+        this.isRunning = true;
 //        clientManager.sendClicked("MSG");
 //        String str = clientManager.read();
 //        RoomResponse rs = gson.fromJson(str, RoomResponse.class);
 //        this.tw = rs.getRooms();
 //        loadData();
         Thread thread = new Thread(() -> {
-            while (true) {
-                try {
-                    clientManager.sendClicked("MSG");
-                    clientManager.sendClicked("DATA");
-                    RoomResponse rs = gson.fromJson(clientManager.read(), RoomResponse.class);
-                    this.tw = rs.getRooms();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+            while (isRunning) {
+                //                    clientManager.sendClicked("MSG");
+//                    clientManager.sendClicked("DATA");
+//                    RoomResponse rs = gson.fromJson(clientManager.read(), RoomResponse.class);
+                this.tw = Manager.getRooms();
                 try {
                     loadData();
                     Thread.sleep(1000);
@@ -111,6 +107,7 @@ public class RoomsController {
     public void chatPage(String id) throws IOException {
 //        Chats.setRoomID(id);
         clientManager.sendChats(id);
+        isRunning = false;
         new ChangeScene("../FXML/chat.fxml", grid);
     }
 

@@ -43,4 +43,16 @@ public class ClientManager extends Thread{
         dataOutputStream.writeUTF(str);
     }
 
+    public void sendUsers(String str) throws IOException {
+        dataOutputStream.writeUTF("USERS");
+        dataOutputStream.writeUTF(str);
+    }
+
+    public void sendTweets(String str) throws IOException {
+        dataOutputStream.writeUTF("TWEETS");
+        dataOutputStream.writeUTF(str);
+    }
+
+
+
 }
