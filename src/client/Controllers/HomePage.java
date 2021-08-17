@@ -67,32 +67,36 @@ public class HomePage {
     }
 
     public void addTweet() throws IOException {
-        clientManager.sendTweets("GET_IMAGE");
-        String str = clientManager.read();
-        if (str == null) {
-            MakeTweetResponse mk = new MakeTweetResponse(textArea.getText(),"0",currentUser.getUsername(),currentUser.getFollowers(),null,false);
-            clientManager.sendTweets("MAKE_TWEET");
-            clientManager.sendClicked(gson.toJson(mk));
+        if (clientManager.getConnected()) {
+            clientManager.sendTweets("GET_IMAGE");
+            String str = clientManager.read();
+            if (str == null) {
+                MakeTweetResponse mk = new MakeTweetResponse(textArea.getText(), "0", currentUser.getUsername(), currentUser.getFollowers(), null, false);
+                clientManager.sendTweets("MAKE_TWEET");
+                clientManager.sendClicked(gson.toJson(mk));
 //            Tweets.makeTweet(textArea.getText(), "0", currentUser.getUsername(), currentUser.getFollowers());
-            grid.getChildren().clear();
-            loadData();
-            textArea.setText("");
-        } else {
+                grid.getChildren().clear();
+                loadData();
+                textArea.setText("");
+            } else {
 //            File file = new File(Tweets.getImage());
 //            File file = new File(str);
 //            Image image = new Image(file.toURI().toString());
-            MakeTweetResponse mk = new MakeTweetResponse(textArea.getText(),"0",currentUser.getUsername(),currentUser.getFollowers(),str,true);
-            clientManager.sendTweets("MAKE_TWEET");
-            clientManager.sendClicked(gson.toJson(mk));
+                MakeTweetResponse mk = new MakeTweetResponse(textArea.getText(), "0", currentUser.getUsername(), currentUser.getFollowers(), str, true);
+                clientManager.sendTweets("MAKE_TWEET");
+                clientManager.sendClicked(gson.toJson(mk));
 //            Tweets.makeTweetImage(textArea.getText(), image.getUrl(), "0", currentUser.getUsername(), currentUser.getFollowers());
-            grid.getChildren().clear();
-            loadData();
-            textArea.setText("");
+                grid.getChildren().clear();
+                loadData();
+                textArea.setText("");
+            }
         }
     }
 
     public void attach() throws IOException {
-        new ChangeProfilePicture(textArea,1);
+        if (clientManager.getConnected()) {
+            new ChangeProfilePicture(textArea, 1);
+        }
     }
 
     public void loadData() throws IOException {
@@ -112,18 +116,20 @@ public class HomePage {
 //        }
 //    }
 public void sendComment() throws IOException {
-    if (overlayText.getText() != null){
-        overlay.setVisible(false);
-        clientManager.sendTweets("COMMENT_ID");
-        String ID = clientManager.read();
-        MakeTweetResponse mk = new MakeTweetResponse(overlayText.getText(),ID,currentUser.getUsername(),currentUser.getFollowers(),null,false);
-        clientManager.sendTweets("MAKE_TWEET");
-        Gson gson = new Gson();
-        clientManager.sendClicked(gson.toJson(mk));
+        if (clientManager.getConnected()) {
+            if (overlayText.getText() != null) {
+                overlay.setVisible(false);
+                clientManager.sendTweets("COMMENT_ID");
+                String ID = clientManager.read();
+                MakeTweetResponse mk = new MakeTweetResponse(overlayText.getText(), ID, currentUser.getUsername(), currentUser.getFollowers(), null, false);
+                clientManager.sendTweets("MAKE_TWEET");
+                Gson gson = new Gson();
+                clientManager.sendClicked(gson.toJson(mk));
 //            Tweets.makeTweet(overlayText.getText(),Tweets.getComment(),Users.getCurrentUser().getUsername(),Users.getCurrentUser().getFollowers());
-        grid.getChildren().clear();
-        loadData();
-    }
+                grid.getChildren().clear();
+                loadData();
+            }
+        }
 }
 
 }

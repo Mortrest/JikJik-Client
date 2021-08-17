@@ -113,18 +113,25 @@ public class ClientManager extends Thread {
     public void offShits() throws IOException {
         System.out.println(Manager.settingOffline);
         boolean a = false;
-        for (String str : Manager.settingOffline) {
-            if (str.equals("CHANGE_PASSWORD")) {
-                a = true;
-                dataOutputStream.writeUTF("USERS");
-                dataOutputStream.writeUTF(str);
-            }
-            else if (a) {
-                dataOutputStream.writeUTF(str);
-                a = false;
+        if (Manager.settingOffline != null) {
+            for (String str : Manager.settingOffline) {
+                if (str.equals("CHANGE_PASSWORD")) {
+                    a = true;
+                    dataOutputStream.writeUTF("USERS");
+                    dataOutputStream.writeUTF(str);
+                } else if (a) {
+                    dataOutputStream.writeUTF(str);
+                    a = false;
 
-            } else {
-                dataOutputStream.writeUTF("USERS");
+                } else {
+                    dataOutputStream.writeUTF("USERS");
+                    dataOutputStream.writeUTF(str);
+                }
+            }
+        }
+        if (Manager.offlineChats != null) {
+            System.out.println(Manager.offlineChats);
+            for (String str : Manager.offlineChats) {
                 dataOutputStream.writeUTF(str);
             }
         }

@@ -107,10 +107,18 @@ public class RoomsController {
     }
 
     public void chatPage(String id) throws IOException {
+        if (clientManager.getConnected()) {
 //        Chats.setRoomID(id);
-        clientManager.sendChats(id);
-        isRunning = false;
-        new ChangeScene("../FXML/chat.fxml", grid);
+            clientManager.sendChats(id);
+            isRunning = false;
+            new ChangeScene("../FXML/chat.fxml", grid);
+        } else {
+            if (Manager.roomStuffMap.containsKey(id)){
+                Manager.setRoomID(id);
+                isRunning = false;
+                new ChangeScene("../FXML/chat.fxml", grid);
+            }
+        }
     }
 
     public void closeOverlay() {
@@ -183,7 +191,6 @@ public class RoomsController {
                             User target = null;
                             try {
                                 target = Manager.getUser(tw.get(i).getOwner2());
-                                System.out.println(target.getFirstName());
                             } catch (IOException e) {
                                 System.out.println("nis ke");
                                 e.printStackTrace();

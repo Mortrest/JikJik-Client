@@ -5,6 +5,7 @@ import client.Models.User;
 import client.network.ClientManager;
 import client.shared.NotifResponse;
 import client.shared.RoomResponse;
+import client.shared.ShowTweetResponse;
 import client.utils.Manager;
 import com.google.gson.Gson;
 import javafx.fxml.FXML;
@@ -25,6 +26,7 @@ public class MainHub {
 
     @FXML
     private AnchorPane mainScene;
+
     @FXML
     void refresh() {
     }
@@ -45,26 +47,35 @@ public class MainHub {
                         if (read != null) {
                             try {
                                 rs = gson.fromJson(read, RoomResponse.class);
-                            } catch (Exception e){
+                            } catch (Exception e) {
                                 System.out.println(e);
                                 System.out.println(read);
                             }
-                            clientManager.sendClicked("NOTIF");
-                            read = clientManager.read();
-                            if (read != null) {
-                                NotifResponse notifResponse = gson.fromJson(read, NotifResponse.class);
-                                Manager.setNotifs(notifResponse.getNotifs());
-                                Manager.setRooms(rs.getRooms());
-                                if (Manager.getTweetID() != null) {
-                                    tweetPage();
-                                }
-                            }
                         }
+                        clientManager.sendClicked("NOTIF");
+                        read = clientManager.read();
+                        if (read != null) {
+                            NotifResponse notifResponse = gson.fromJson(read, NotifResponse.class);
+                            Manager.setNotifs(notifResponse.getNotifs());
+                        }
+                        clientManager.sendClicked("TW");
+                        read = clientManager.read();
+                        if (read != null){
+                            ShowTweetResponse st = gson.fromJson(read,ShowTweetResponse.class);
+                            Manager.setHomeTweets(st.getHomeTweets());
+                            Manager.setExploreTweets(st.getExploreTweets());
+                            Manager.setProfileTweets(st.getProfileTweets());
+                        }
+                        assert rs != null;
+                        Manager.setRooms(rs.getRooms());
+                        if (Manager.getTweetID() != null) {
+                            tweetPage();
+                        }
+
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                }
-                else {
+                } else {
                     offline.setVisible(true);
                 }
                 try {
@@ -96,11 +107,14 @@ public class MainHub {
     }
 
     private void eachTweet() throws IOException {
-        clientManager.sendTweets("GET_TWEET_ID");
-        String ID = clientManager.read();
-        if (!ID.equals("NULL")){
-            mainScene.getChildren().setAll((Node) FXMLLoader.
-                    load(Objects.requireNonNull(getClass().getResource(Config.getConfig("mainConfig").getProperty((String.class), "EachTweet")))));
+        // Is it right?
+        if (clientManager.getConnected()) {
+            clientManager.sendTweets("GET_TWEET_ID");
+            String ID = clientManager.read();
+            if (!ID.equals("NULL")) {
+                mainScene.getChildren().setAll((Node) FXMLLoader.
+                        load(Objects.requireNonNull(getClass().getResource(Config.getConfig("mainConfig").getProperty((String.class), "EachTweet")))));
+            }
         }
     }
 
@@ -119,11 +133,13 @@ public class MainHub {
         mainScene.getChildren().setAll((Node) FXMLLoader.
                 load(Objects.requireNonNull(getClass().getResource(Config.getConfig("mainConfig").getProperty((String.class), "Rooms")))));
     }
+
     public void loadProfile() throws IOException {
         mainScene.getChildren().setAll((Node) FXMLLoader.
                 load(Objects.requireNonNull(getClass().getResource(Config.getConfig("mainConfig").getProperty((String.class), "Profile")))));
         eachTweet();
     }
+
     public void loadSettings() throws IOException {
         mainScene.getChildren().setAll((Node) FXMLLoader.
                 load(Objects.requireNonNull(getClass().getResource(Config.getConfig("mainConfig").getProperty((String.class), "Settings")))));

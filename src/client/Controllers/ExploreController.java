@@ -41,7 +41,6 @@ public class ExploreController {
         this.gson = new Gson();
         this.clientManager = Manager.getClientManager();
         this.currentUser = Manager.getUser();
-
         // Thread
 
         loadData();
@@ -74,16 +73,18 @@ public class ExploreController {
     }
 
     public void sendComment() throws IOException {
-        if (overlayText.getText() != null && clientManager.getConnected()){
-            overlay.setVisible(false);
-            clientManager.sendTweets("COMMENT_ID");
-            String ID = clientManager.read();
-            MakeTweetResponse mk = new MakeTweetResponse(overlayText.getText(),ID,currentUser.getUsername(),currentUser.getFollowers(),null,false);
-            clientManager.sendTweets("MAKE_TWEET");
-            Gson gson = new Gson();
-            clientManager.sendClicked(gson.toJson(mk));
-            grid.getChildren().clear();
-            loadData();
+        if (clientManager.getConnected()) {
+            if (overlayText.getText() != null && clientManager.getConnected()) {
+                overlay.setVisible(false);
+                clientManager.sendTweets("COMMENT_ID");
+                String ID = clientManager.read();
+                MakeTweetResponse mk = new MakeTweetResponse(overlayText.getText(), ID, currentUser.getUsername(), currentUser.getFollowers(), null, false);
+                clientManager.sendTweets("MAKE_TWEET");
+                Gson gson = new Gson();
+                clientManager.sendClicked(gson.toJson(mk));
+                grid.getChildren().clear();
+                loadData();
+            }
         }
     }
 }

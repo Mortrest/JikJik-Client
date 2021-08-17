@@ -83,12 +83,16 @@ public class ProfileController {
         this.clientManager = Manager.getClientManager();
         this.currentUser = Manager.getUser();
         this.gson = new Gson();
-        clientManager.sendUsers("GET_PROFILE");
-        String a = clientManager.read();
-        if (a.equals("NULL")){
+        if (clientManager.getConnected()) {
+            clientManager.sendUsers("GET_PROFILE");
+            String a = clientManager.read();
+            if (a.equals("NULL")) {
+                this.profile = currentUser;
+            } else {
+                this.profile = gson.fromJson(a, User.class);
+            }
+        } else {
             this.profile = currentUser;
-        }else {
-            this.profile = gson.fromJson(a, User.class);
         }
 //        User user = Users.getProfile();
         username.setText("@" + profile.getUsername());
@@ -137,29 +141,32 @@ public class ProfileController {
     }
 
     private void sendMsg() throws IOException {
-        clientManager.sendChats("SEARCH_ROOM2");
-        clientManager.sendClicked(profile.getUsername());
-        String str = clientManager.read();
-        if (str.equals("NULL")) {
-            if (profile.isPrivate()) {
-                if (profile.getFollowers().contains(currentUser.getUsername())) {
+        if (clientManager.getConnected()) {
+            clientManager.sendChats("SEARCH_ROOM2");
+            clientManager.sendClicked(profile.getUsername());
+            String str = clientManager.read();
+            if (str.equals("NULL")) {
+                if (profile.isPrivate()) {
+                    if (profile.getFollowers().contains(currentUser.getUsername())) {
+                        clientManager.sendChats("MAKE_ROOM");
+                        clientManager.sendClicked(profile.getUsername());
+//                    Chats.makeRoom(currentUser.getUsername(), profile.getUsername());
+                    }
+                } else {
                     clientManager.sendChats("MAKE_ROOM");
                     clientManager.sendClicked(profile.getUsername());
-//                    Chats.makeRoom(currentUser.getUsername(), profile.getUsername());
-                }
-            }
-            else {
-                clientManager.sendChats("MAKE_ROOM");
-                clientManager.sendClicked(profile.getUsername());
 
 //                Chats.makeRoom(currentUser.getUsername(), profile.getUsername());
+                }
             }
         }
     }
 
     public void back() throws IOException {
-        clientManager.sendUsers("SET_PROFILE");
-        clientManager.sendClicked(gson.toJson(currentUser));
+        if (clientManager.getConnected()) {
+            clientManager.sendUsers("SET_PROFILE");
+            clientManager.sendClicked(gson.toJson(currentUser));
+        }
 //        Users.setProfile(currentUser);
         new ChangeScene(Config.getConfig("mainConfig").getProperty((String.class), "MainHub"), grid);
     }
@@ -167,7 +174,6 @@ public class ProfileController {
     public void loadData() throws IOException {
 //        clientManager.sendUsers("GET_PROFILE");
 //        User profile = gson.fromJson(clientManager.read(),User.class);
-
         if (currentUser.getFollowing().contains(profile.getUsername()) || !profile.isPrivate() || profile.getUsername().equals(currentUser.getUsername())) {
             privateAcc.setVisible(false);
             lock.setVisible(false);
@@ -185,16 +191,18 @@ public class ProfileController {
     }
 
     public void sendComment() throws IOException {
+        if (clientManager.getConnected()){
         if (overlayText.getText() != null) {
             overlay.setVisible(false);
             clientManager.sendTweets("GET_COMMENT");
             String str = clientManager.read();
-            MakeTweetResponse mk = new MakeTweetResponse(overlayText.getText(),str,currentUser.getUsername(),currentUser.getFollowers(),null,false);
+            MakeTweetResponse mk = new MakeTweetResponse(overlayText.getText(), str, currentUser.getUsername(), currentUser.getFollowers(), null, false);
             clientManager.sendTweets("MAKE_TWEET");
             clientManager.sendClicked(gson.toJson(mk));
 //            Tweets.makeTweet(overlayText.getText(), str, currentUser.getUsername(), currentUser.getFollowers());
             grid.getChildren().clear();
             loadData();
+        }
         }
     }
 
@@ -217,11 +225,12 @@ public class ProfileController {
 
     // 1 Followers 2 Followings
     public void loadFlw(int type) throws IOException {
+//        if (clientManager.getConnected())
         overlay1.setVisible(true);
         overlayGrid.getChildren().clear();
         LinkedList<String> users;
-        clientManager.sendUsers("GET_PROFILE");
-        User profile = gson.fromJson(clientManager.read(),User.class);
+//        clientManager.sendUsers("GET_PROFILE");
+//        User profile = gson.fromJson(clientManager.read(),User.class);
         if (type == 1) {
             users = profile.getFollowers();
         } else if (type == 2) {
@@ -249,37 +258,43 @@ public class ProfileController {
     }
 
     public void goToPage(String str) throws IOException {
-        User us = Manager.getUser(str);
-        clientManager.sendUsers("SET_PROFILE");
-        clientManager.sendClicked(gson.toJson(us));
+        if (clientManager.getConnected()) {
+            User us = Manager.getUser(str);
+            clientManager.sendUsers("SET_PROFILE");
+            clientManager.sendClicked(gson.toJson(us));
 //        Users.setProfile(Users.searchUsername(str));
-        new ChangeScene("../FXML/mainHub.fxml", grid);
+            new ChangeScene("../FXML/mainHub.fxml", grid);
+        }
     }
 
     public void blockProfile() throws IOException {
-        if (blockBtn.getText().equals("Block")) {
-            blockBtn.setText("Unblock");
-        } else {
-            blockBtn.setText("Block");
-        }
-        clientManager.sendUsers("GET_PROFILE");
-        User profile = gson.fromJson(clientManager.read(),User.class);
-        clientManager.sendUsers("BLOCK");
-        clientManager.sendClicked(profile.getUsername());
+        if (clientManager.getConnected()) {
+            if (blockBtn.getText().equals("Block")) {
+                blockBtn.setText("Unblock");
+            } else {
+                blockBtn.setText("Block");
+            }
+            clientManager.sendUsers("GET_PROFILE");
+            User profile = gson.fromJson(clientManager.read(), User.class);
+            clientManager.sendUsers("BLOCK");
+            clientManager.sendClicked(profile.getUsername());
 //        Users.blockProfile(currentUser, profile.getUsername());
+        }
     }
 
     public void follow() throws IOException {
-        clientManager.sendUsers("GET_PROFILE");
-        User profile = gson.fromJson(clientManager.read(),User.class);
-        clientManager.sendUsers("FOLLOW");
-        System.out.println(profile);
-        clientManager.sendClicked(profile.getUsername());
+        if (clientManager.getConnected()) {
+            clientManager.sendUsers("GET_PROFILE");
+            User profile = gson.fromJson(clientManager.read(), User.class);
+            clientManager.sendUsers("FOLLOW");
+            System.out.println(profile);
+            clientManager.sendClicked(profile.getUsername());
 //        Users.followProfile(currentUser, profile.getUsername());
-        if (followBtn.getText().equals("Unfollow")) {
-            followBtn.setText("Follow");
-        } else {
-            followBtn.setText("Unfollow");
+            if (followBtn.getText().equals("Unfollow")) {
+                followBtn.setText("Follow");
+            } else {
+                followBtn.setText("Unfollow");
+            }
         }
     }
 }
