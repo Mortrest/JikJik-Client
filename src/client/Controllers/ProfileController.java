@@ -1,13 +1,13 @@
 package client.Controllers;
 
 import client.Config;
-import client.Manager;
+import client.utils.Manager;
 import client.Models.User;
 import client.network.ClientManager;
 import client.shared.MakeTweetResponse;
 import client.utils.ChangeScene;
 import client.utils.LoadComponent;
-import client.utils.TweetLoad;
+import client.shared.TweetLoad;
 import com.google.gson.Gson;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.fxml.FXML;
@@ -84,7 +84,12 @@ public class ProfileController {
         this.currentUser = Manager.getUser();
         this.gson = new Gson();
         clientManager.sendUsers("GET_PROFILE");
-        this.profile = gson.fromJson(clientManager.read(),User.class);
+        String a = clientManager.read();
+        if (a.equals("NULL")){
+            this.profile = currentUser;
+        }else {
+            this.profile = gson.fromJson(a, User.class);
+        }
 //        User user = Users.getProfile();
         username.setText("@" + profile.getUsername());
         if (profile.getInfo() != null) {
@@ -156,17 +161,18 @@ public class ProfileController {
         clientManager.sendUsers("SET_PROFILE");
         clientManager.sendClicked(gson.toJson(currentUser));
 //        Users.setProfile(currentUser);
-        new ChangeScene(Config.getConfig("mainConfig").getProperty((String.class), "Sample"), grid);
+        new ChangeScene(Config.getConfig("mainConfig").getProperty((String.class), "MainHub"), grid);
     }
 
     public void loadData() throws IOException {
-        clientManager.sendUsers("GET_PROFILE");
-        User profile = gson.fromJson(clientManager.read(),User.class);
+//        clientManager.sendUsers("GET_PROFILE");
+//        User profile = gson.fromJson(clientManager.read(),User.class);
 
         if (currentUser.getFollowing().contains(profile.getUsername()) || !profile.isPrivate() || profile.getUsername().equals(currentUser.getUsername())) {
             privateAcc.setVisible(false);
             lock.setVisible(false);
 //            new TweetLoad(grid, textArea, 4, overlay, 1).load();
+            System.out.println(currentUser.getUsername());
             new TweetLoad(grid, textArea, 4, overlay,overlay2,overlayGrid1,sendMsg2,1,clientManager,currentUser).load();
 
         }
@@ -247,7 +253,7 @@ public class ProfileController {
         clientManager.sendUsers("SET_PROFILE");
         clientManager.sendClicked(gson.toJson(us));
 //        Users.setProfile(Users.searchUsername(str));
-        new ChangeScene("../FXML/sample.fxml", grid);
+        new ChangeScene("../FXML/mainHub.fxml", grid);
     }
 
     public void blockProfile() throws IOException {
@@ -264,8 +270,10 @@ public class ProfileController {
     }
 
     public void follow() throws IOException {
+        clientManager.sendUsers("GET_PROFILE");
         User profile = gson.fromJson(clientManager.read(),User.class);
         clientManager.sendUsers("FOLLOW");
+        System.out.println(profile);
         clientManager.sendClicked(profile.getUsername());
 //        Users.followProfile(currentUser, profile.getUsername());
         if (followBtn.getText().equals("Unfollow")) {

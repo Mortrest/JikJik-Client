@@ -1,7 +1,7 @@
 package client.Controllers;
 
 import client.Config;
-import client.Manager;
+import client.utils.Manager;
 import client.Models.User;
 import client.network.ClientManager;
 import client.shared.SignInResponse;

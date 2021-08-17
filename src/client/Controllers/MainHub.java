@@ -1,57 +1,92 @@
 package client.Controllers;
 
 import client.Config;
-import client.Manager;
 import client.Models.User;
 import client.network.ClientManager;
 import client.shared.NotifResponse;
 import client.shared.RoomResponse;
+import client.utils.Manager;
 import com.google.gson.Gson;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
 import java.util.Objects;
 
 public class MainHub {
+    public ImageView offline;
     private Gson gson;
     private ClientManager clientManager;
     private User currentUser;
     private String whichPage;
+
     @FXML
     private AnchorPane mainScene;
     @FXML
     void refresh() {
     }
 
-    public void initialize() throws IOException {
+    public void initialize() {
         this.gson = new Gson();
         this.currentUser = Manager.getUser();
         this.clientManager = Manager.getClientManager();
         Thread thread = new Thread(() -> {
             while (true) {
-                try {
-                    clientManager.sendClicked("MSG");
-                    clientManager.sendClicked("DATA");
-                    RoomResponse rs = gson.fromJson(clientManager.read(), RoomResponse.class);
-                    clientManager.sendClicked("NOTIF");
-                    NotifResponse notifResponse = gson.fromJson(clientManager.read(), NotifResponse.class);
-                    Manager.setNotifs(notifResponse.getNotifs());
-                    Manager.setRooms(rs.getRooms());
-                } catch (IOException e) {
-                    e.printStackTrace();
+                if (clientManager.getConnected()) {
+                    offline.setVisible(false);
+                    try {
+                        clientManager.sendClicked("MSG");
+                        clientManager.sendClicked("DATA");
+                        String read = clientManager.read();
+                        RoomResponse rs = null;
+                        if (read != null) {
+                            try {
+                                rs = gson.fromJson(read, RoomResponse.class);
+                            } catch (Exception e){
+                                System.out.println(e);
+                                System.out.println(read);
+                            }
+                            clientManager.sendClicked("NOTIF");
+                            read = clientManager.read();
+                            if (read != null) {
+                                NotifResponse notifResponse = gson.fromJson(read, NotifResponse.class);
+                                Manager.setNotifs(notifResponse.getNotifs());
+                                Manager.setRooms(rs.getRooms());
+                                if (Manager.getTweetID() != null) {
+                                    tweetPage();
+                                }
+                            }
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                else {
+                    offline.setVisible(true);
                 }
                 try {
-                    Thread.sleep(2000);
+                    Thread.sleep(2347);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             }
         });
         thread.start();
-        loadHome();
+        try {
+            loadHome();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void tweetPage() throws IOException {
+        clientManager.sendTweets("SET_TWEET_ID");
+        clientManager.sendClicked(Manager.getTweetID());
+        Manager.setTweetID(null);
+        eachTweet();
     }
 
     public void loadHome() throws IOException {
@@ -73,19 +108,16 @@ public class MainHub {
         mainScene.getChildren().setAll((Node) FXMLLoader.
                 load(Objects.requireNonNull(getClass().getResource(Config.getConfig("mainConfig").getProperty((String.class), "Explore")))));
         eachTweet();
-
     }
 
     public void loadNotif() throws IOException {
         mainScene.getChildren().setAll((Node) FXMLLoader.
                 load(Objects.requireNonNull(getClass().getResource(Config.getConfig("mainConfig").getProperty((String.class), "Notifs")))));
-
     }
 
     public void loadRooms() throws IOException {
         mainScene.getChildren().setAll((Node) FXMLLoader.
                 load(Objects.requireNonNull(getClass().getResource(Config.getConfig("mainConfig").getProperty((String.class), "Rooms")))));
-
     }
     public void loadProfile() throws IOException {
         mainScene.getChildren().setAll((Node) FXMLLoader.

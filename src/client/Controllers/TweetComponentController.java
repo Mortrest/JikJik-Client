@@ -1,6 +1,6 @@
 package client.Controllers;
 
-import client.Manager;
+import client.utils.Manager;
 import client.Models.Tweet;
 import client.Models.User;
 import client.network.ClientManager;
@@ -39,6 +39,10 @@ public class TweetComponentController {
 
     public void setNameLabel(String str){
         nameLabel.setText(str);
+    }
+
+    public Label getNameLabel() {
+        return nameLabel;
     }
 
     public void setTweetLabel(String str){
@@ -134,12 +138,8 @@ public class TweetComponentController {
             } catch (IOException ioException) {
                 ioException.printStackTrace();
             }
-            try {
-                clientManager.sendClicked(tweet.getOwner());
-            } catch (IOException ioException) {
-                ioException.printStackTrace();
-            }
-//            Users.blockProfile(currentUser,tweet.getOwner());
+            clientManager.sendClicked(tweet.getOwner());
+            //            Users.blockProfile(currentUser,tweet.getOwner());
             block1.setVisible(!block1.isVisible());
 
         });
@@ -150,12 +150,8 @@ public class TweetComponentController {
             } catch (IOException ioException) {
                 ioException.printStackTrace();
             }
-            try {
-                clientManager.sendClicked(tweet.getOwner());
-            } catch (IOException ioException) {
-                ioException.printStackTrace();
-            }
-//            Users.muteProfile(currentUser,tweet.getOwner());
+            clientManager.sendClicked(tweet.getOwner());
+            //            Users.muteProfile(currentUser,tweet.getOwner());
             mute1.setVisible(!mute1.isVisible());
 
         });
@@ -165,11 +161,7 @@ public class TweetComponentController {
             } catch (IOException ioException) {
                 ioException.printStackTrace();
             }
-            try {
-                clientManager.sendClicked(tweet.getOwner());
-            } catch (IOException ioException) {
-                ioException.printStackTrace();
-            }
+            clientManager.sendClicked(tweet.getOwner());
 
 //            Tweets.reportUser(currentUser,TweetID);
             System.out.println(report1.isVisible());

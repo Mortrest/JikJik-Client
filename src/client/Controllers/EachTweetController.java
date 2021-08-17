@@ -1,8 +1,13 @@
 package client.Controllers;
 
-import client.Manager;
+import client.Config;
+import client.Models.Tweet;
+import client.Models.User;
 import client.network.ClientManager;
 import client.shared.MakeTweetResponse;
+import client.shared.TweetLoad;
+import client.utils.ChangeScene;
+import client.utils.Manager;
 import com.google.gson.Gson;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -13,11 +18,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
-import client.Config;
-import client.Models.Tweet;
-import client.Models.User;
-import client.utils.ChangeScene;
-import client.utils.TweetLoad;
+
 import java.io.IOException;
 
 public class EachTweetController {

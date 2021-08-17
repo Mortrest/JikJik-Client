@@ -1,7 +1,7 @@
 package client.Controllers;
 
 import client.Config;
-import client.Manager;
+import client.utils.Manager;
 import client.Models.User;
 import client.network.ClientManager;
 import javafx.fxml.FXML;
@@ -70,7 +70,11 @@ public class SettingsController {
             currentUser.setLastSeenAvailable(true);
             lastSeenText.setText("Currently Last Seen isn't Private");
         }
-        clientManager.sendUsers("SAVE");
+        if (clientManager.getConnected()) {
+            clientManager.sendUsers("CHANGE_LASTSEEN");
+        } else {
+            Manager.addOffline("CHANGE_LASTSEEN");
+        }
 //        Users.save();
     }
     public void changePrivate() throws IOException {
@@ -81,7 +85,11 @@ public class SettingsController {
             currentUser.setPrivate(true);
             privateText.setText("Currently Contacts Only");
         }
-        clientManager.sendUsers("SAVE");
+        if (clientManager.getConnected()) {
+            clientManager.sendUsers("CHANGE_PRIVATE");
+        } else {
+            Manager.addOffline("CHANGE_PRIVATE");
+        }
 //        Users.save();
     }
 
@@ -105,13 +113,21 @@ public class SettingsController {
 
     public void changePassword() throws IOException {
         if (currentUser.getPassword().equals(pass1.getText()) && pass2.getText() != null){
-            currentUser.setPassword(pass2.getText());
+            if (clientManager.getConnected()) {
+                clientManager.sendUsers("CHANGE_PASSWORD");
+                clientManager.sendClicked(pass2.getText());
+            } else {
+                Manager.addOffline("CHANGE_PASSWORD");
+                Manager.addOffline(pass2.getText());
+            }
+            pass1.setText("");
+            pass2.setText("");
             wrong.setVisible(false);
         } else {
             wrong.setVisible(true);
             pass1.setText("");
         }
-        clientManager.sendUsers("SAVE");
+//        clientManager.sendUsers("SAVE");
 
 //        Users.save();
     }

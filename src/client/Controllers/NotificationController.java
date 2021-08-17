@@ -1,7 +1,7 @@
 package client.Controllers;
 
 import client.Config;
-import client.Manager;
+import client.utils.Manager;
 import client.Models.Notif;
 import client.Models.User;
 import client.network.ClientManager;
@@ -14,9 +14,9 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.ImagePattern;
-
 import java.io.IOException;
 import java.util.LinkedList;
+
 
 public class NotificationController {
     ClientManager clientManager;
@@ -32,17 +32,15 @@ public class NotificationController {
         usera = Manager.getUser();
         Thread thread = new Thread(() -> {
             while (true) {
-                //                    clientManager.sendClicked("NOTIF");
-//                    NotifResponse notifResponse = gson.fromJson(clientManager.read(), NotifResponse.class);
-//                    this.notifs = notifResponse.getNotifs();
-                this.notifs = Manager.getNotifs();
-                try {
-                    loadData();
-                    Thread.sleep(1000);
-                } catch (InterruptedException | IOException e) {
-                    e.printStackTrace();
+//                if (clientManager.getConnected()) {
+                    this.notifs = Manager.getNotifs();
+                    try {
+                        loadData();
+                        Thread.sleep(1590);
+                    } catch (IOException | InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
-            }
         });
         thread.start();
     }
@@ -60,16 +58,20 @@ public class NotificationController {
                 AnchorPane anchorPane = loadComponent.loadAnchor();
                 NotificationComponentController itemController = loadComponent.loadFxml().getController();
 
-                User user = null;
-                try {
-                    user = Manager.getUser(notif.getOwner());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                assert user != null;
-                itemController.setName("@" + user.getUsername() + " - " + user.getName());
-                if (user.getProfilePic() != null) {
-                    itemController.getProfilePicture().setFill(new ImagePattern(new Image(user.getProfilePic())));
+                if (clientManager.getConnected()) {
+                    User user = null;
+                    try {
+                        user = Manager.getUser(notif.getOwner());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    assert user != null;
+                    itemController.setName("@" + user.getUsername() + " - " + user.getName());
+                    if (user.getProfilePic() != null) {
+                        itemController.getProfilePicture().setFill(new ImagePattern(new Image(user.getProfilePic())));
+                    }
+                } else {
+                    itemController.setName("@" + notif.getOwner());
                 }
                 itemController.setText(notif.getText());
                 if (notif.getType().equals("1")) {

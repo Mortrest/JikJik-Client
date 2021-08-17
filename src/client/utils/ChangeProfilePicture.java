@@ -1,12 +1,12 @@
 package client.utils;
 
-import client.Manager;
 import client.Models.User;
 import client.network.ClientManager;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;

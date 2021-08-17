@@ -1,6 +1,6 @@
 package client.Controllers;
 
-import client.Manager;
+import client.utils.Manager;
 import client.Models.Tweet;
 import client.Models.User;
 import client.network.ClientManager;
@@ -138,11 +138,7 @@ public class TweetComponentImageController {
             } catch (IOException ioException) {
                 ioException.printStackTrace();
             }
-            try {
-                clientManager.sendClicked(tweet.getOwner());
-            } catch (IOException ioException) {
-                ioException.printStackTrace();
-            }
+            clientManager.sendClicked(tweet.getOwner());
 
 //            Users.blockProfile(Users.getCurrentUser(),tweet.getOwner());
             block1.setVisible(!block1.isVisible());
@@ -151,15 +147,12 @@ public class TweetComponentImageController {
         mute.setOnMouseClicked(e -> {
             assert tweet != null;
             try {
+
                 clientManager.sendUsers("MUTE");
             } catch (IOException ioException) {
                 ioException.printStackTrace();
             }
-            try {
-                clientManager.sendClicked(tweet.getOwner());
-            } catch (IOException ioException) {
-                ioException.printStackTrace();
-            }
+            clientManager.sendClicked(tweet.getOwner());
 
 //            Users.muteProfile(Users.getCurrentUser(),tweet.getOwner());
             mute1.setVisible(!mute1.isVisible());
@@ -171,11 +164,7 @@ public class TweetComponentImageController {
             } catch (IOException ioException) {
                 ioException.printStackTrace();
             }
-            try {
-                clientManager.sendClicked(tweet.getOwner());
-            } catch (IOException ioException) {
-                ioException.printStackTrace();
-            }
+            clientManager.sendClicked(tweet.getOwner());
 
 //            Tweets.reportUser(Users.getCurrentUser(),TweetID);
             System.out.println(report1.isVisible());

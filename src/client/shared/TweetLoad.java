@@ -1,17 +1,16 @@
-package client.utils;
+package client.shared;
 
 import client.Config;
 import client.Controllers.FollowerComponentController;
 import client.Controllers.TweetComponentController;
 import client.Controllers.TweetComponentImageController;
-import client.Manager;
 import client.Models.Room;
 import client.Models.Tweet;
 import client.Models.User;
 import client.network.ClientManager;
-import client.shared.GetTweetsResponse;
-import client.shared.MakeChatResponse;
-import client.shared.RoomResponse;
+import client.utils.ChangeScene;
+import client.utils.LoadComponent;
+import client.utils.Manager;
 import com.google.gson.Gson;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -40,17 +39,16 @@ public class TweetLoad {
     Button send;
     int type;
     int isComment;
-
-    public TweetLoad(GridPane grid, TextArea textArea, int type, Pane overlay, int isComment,ClientManager clientManager,User currentUser) {
-        this.clientManager = clientManager;
-        this.currentUser = currentUser;
-        this.grid = grid;
-        this.gson = new Gson();
-        this.type = type;
-        this.textArea = textArea;
-        this.overlay = overlay;
-        this.isComment = isComment;
-    }
+//    public TweetLoad(GridPane grid, TextArea textArea, int type, Pane overlay, int isComment,ClientManager clientManager,User currentUser) {
+//        this.clientManager = clientManager;
+//        this.currentUser = currentUser;
+//        this.grid = grid;
+//        this.gson = new Gson();
+//        this.type = type;
+//        this.textArea = textArea;
+//        this.overlay = overlay;
+//        this.isComment = isComment;
+//    }
 
     public TweetLoad(GridPane grid, TextArea textArea, int type, Pane overlay, Pane overlay1, GridPane overlayGrid, Button send, int isComment,ClientManager clientManager,User currentUser) {
         this.grid = grid;
@@ -81,8 +79,7 @@ public class TweetLoad {
                     sendMsg(tws);
                 } catch (IOException ioException) {
                     ioException.printStackTrace();
-                }
-            });
+                } });
         }
         LinkedList<Tweet> tw;
         if (isComment == 1) {
@@ -91,7 +88,6 @@ public class TweetLoad {
                 clientManager.sendClicked("2");
                 GetTweetsResponse gs = gson.fromJson(clientManager.read(), GetTweetsResponse.class);
                 tw = gs.getTweets();
-//                tw = Users.getTweets().showTweetOwnPage(Users.class,Users.getProfile().getUsername(), 2);
             } else {
                 clientManager.sendUsers("SHOW_TWEET");
                 clientManager.sendClicked(String.valueOf(type));
@@ -104,10 +100,8 @@ public class TweetLoad {
             clientManager.sendUsers("GET_COMMENTS");
             clientManager.sendClicked(ID);
             GetTweetsResponse gs = gson.fromJson(clientManager.read(), GetTweetsResponse.class);
-//             Users.getTweets().getComments(ID);
             tw = gs.getTweets();
         }
-
         for (int i = 1; i < tw.size() + 1; i++) {
             if (tw.get(i - 1).getReported() <= 5) {
                 FXMLLoader fxmlLoader = new FXMLLoader();
@@ -149,7 +143,6 @@ public class TweetLoad {
                         try {
                             clientManager.sendTweets("SET_FORWARD_ID");
                             clientManager.sendClicked(tw.get(finalI).getID());
-//                            Tweets.setForwardTweetID(tw.get(finalI).getID());
                             loadFlw();
                         } catch (IOException ioException) {
                             ioException.printStackTrace();
@@ -224,16 +217,11 @@ public class TweetLoad {
                     itemController.setTweetLabel(tw.get(i - 1).getText());
                     grid.add(anchorPane, 1, grid.getRowCount() + 1);
                     GridPane.setMargin(anchorPane, new Insets(10));
-                }
-            }
-        }
-    }
-
+                } } } }
     // Send Messages
 
     public void sendMsg(Tweet tweet) throws IOException {
         for (String user : members) {
-//            Room room1 = Chats.searchRoomID(Chats.searchGroup(user));
             clientManager.sendChats("SEARCH_GROUP");
             clientManager.sendClicked(user);
             String roomID = clientManager.read();
@@ -245,14 +233,10 @@ public class TweetLoad {
                 MakeChatResponse mk = new MakeChatResponse(tweet.getText(), currentUser.getUsername(), room1.getRoomID(), null, false,false);
                 clientManager.sendChats("MAKE_CHAT");
                 clientManager.sendClicked(gson.toJson(mk));
-
-//                Chats.makeChat(tweet.getText(), currentUser.getUsername(), room1.getRoomID());
                 if (tweet.getImage() != null) {
                     MakeChatResponse mks = new MakeChatResponse(tweet.getText(), currentUser.getUsername(), room1.getRoomID(), tweet.getImage(), true,false);
                     clientManager.sendChats("MAKE_CHAT");
                     clientManager.sendClicked(gson.toJson(mks));
-
-//                    Chats.makeImageChat(tweet.getText(), currentUser.getUsername(), room1.getRoomID(), tweet.getImage());
                 }
             } else {
                 System.out.println("2");
@@ -260,7 +244,6 @@ public class TweetLoad {
                 clientManager.sendClicked(user);
                 String str = clientManager.read();
                 if (str.equals("NULL")){
-//                    Chats.makeRoom(currentUser.getUsername(), user);
                     clientManager.sendChats("MAKE_ROOM");
                     clientManager.sendClicked(user);
                 }
@@ -272,15 +255,12 @@ public class TweetLoad {
                 System.out.println("4");
 //                Room room = gson.fromJson(clientManager.read(), Room.class);
                 MakeChatResponse mk = new MakeChatResponse(tweet.getText(), currentUser.getUsername(), room.getRoomID(), null, false,false);
-//                Chats.makeChat(tweet.getText(), currentUser.getUsername(), Chats.searchRoom(currentUser.getUsername(), user).getRoomID());
                 clientManager.sendChats("MAKE_CHAT");
                 clientManager.sendClicked(gson.toJson(mk));
                 if (tweet.getImage() != null) {
                     MakeChatResponse mks = new MakeChatResponse(tweet.getText(), currentUser.getUsername(), room.getRoomID(), tweet.getImage(), true,false);
-//                Chats.makeChat(tweet.getText(), currentUser.getUsername(), Chats.searchRoom(currentUser.getUsername(), user).getRoomID());
                     clientManager.sendChats("MAKE_CHAT");
                     clientManager.sendClicked(gson.toJson(mks));
-//                    Chats.makeImageChat(tweet.getText(), currentUser.getUsername(), user, tweet.getImage());
                 }
             }
         }
@@ -290,8 +270,8 @@ public class TweetLoad {
     public void loadFlw() throws IOException {
         overlay1.setVisible(true);
         overlayGrid.getChildren().clear();
-        clientManager.sendUsers("GET_PROFILE");
-        User us = gson.fromJson(clientManager.read(), User.class);
+//        clientManager.sendUsers("GET_PROFILE");
+//        User us = gson.fromJson(clientManager.read(), User.class);
         clientManager.sendClicked("MSG");
         clientManager.sendClicked("DATA");
         // Inja momkene moshkel dashte bashim
@@ -386,14 +366,11 @@ public class TweetLoad {
         overlay.setVisible(true);
         clientManager.sendTweets("SET_COMMENT_ID");
         clientManager.sendClicked(ID);
-
-//        Tweets.setComment(ID);
     }
 
     public void tweetPage(String ID) throws IOException {
         clientManager.sendTweets("SET_TWEET_ID");
         clientManager.sendClicked(ID);
-//        Tweets.setTweetID(ID);
         new ChangeScene("../FXML/mainHub.fxml", grid);
     }
 
@@ -402,7 +379,6 @@ public class TweetLoad {
     public void retweet(String ID) throws IOException {
         clientManager.sendTweets("RETWEET");
         clientManager.sendClicked(ID);
-//        Tweets.reTweet(Tweets.search(ID), currentUser);
         grid.getChildren().clear();
         load();
     }
@@ -411,8 +387,7 @@ public class TweetLoad {
         User user = Manager.getUser(owner);
         clientManager.sendUsers("SET_PROFILE");
         clientManager.sendClicked(gson.toJson(user));
-//        Users.setProfile(user);
-        new ChangeScene("../FXML/mainHub.fxml", anchorPane);
+         new ChangeScene("../FXML/mainHub.fxml", anchorPane);
 
     }
 }

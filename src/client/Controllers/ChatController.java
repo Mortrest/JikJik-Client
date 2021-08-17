@@ -1,14 +1,15 @@
 package client.Controllers;
 
-import client.Manager;
+import client.Config;
 import client.Models.Chat;
 import client.Models.Room;
 import client.Models.User;
 import client.network.ClientManager;
 import client.shared.MakeChatResponse;
 import client.shared.ShowChatResponse;
-import client.utils.ChangeProfilePicture;
 import client.utils.ChangeScene;
+import client.utils.ChangeProfilePicture;
+import client.utils.Manager;
 import com.google.gson.Gson;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.application.Platform;
@@ -52,7 +53,6 @@ public class ChatController {
     private Label fName, lastSeen;
     @FXML
     private TextArea textArea;
-
     private Room room;
 
     public void initialize() throws IOException {
@@ -74,7 +74,7 @@ public class ChatController {
                             e.printStackTrace();
                         }
                     });
-                    Thread.sleep(1000);
+                    Thread.sleep(5000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -92,7 +92,7 @@ public class ChatController {
         new ChangeScene("../FXML/mainHub.fxml", grid);
     }
 
-    public void time(){
+    public void time() {
         isTimed = !isTimed;
         timeOn.setVisible(!timeOn.isVisible());
     }
@@ -102,65 +102,41 @@ public class ChatController {
         //                clientManager.sendChats("GET_IMAGE");
         String imageStr = null;
         //                imageStr = clientManager.read();
-        try {
-            clientManager.sendChats("GET_ROOMID");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        clientManager.sendChats("GET_ROOMID");
         String roomID = null;
-        try {
-            roomID = clientManager.read();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        roomID = clientManager.read();
+//        if (textArea.getText().charAt(0) == '@'){
+//            textArea.setOnMouseClicked(e -> {
+//                hyperlink(textArea);
+//            });
+//        }
         if (textArea.getText().equals("/left") && !room.getType().equals("PV")) {
             clientManager.sendChats("LEFT");
             clientManager.sendClicked(roomID);
             back();
         }
-        if (textArea.getText().contains("/time")){
+        if (textArea.getText().contains("/time")) {
             String a = textArea.getText().substring(6);
             clientManager.sendClicked("TIME");
             clientManager.sendClicked(a);
             this.time = Integer.parseInt(a);
-        }
-        else {
+        } else {
             if (imageStr != null) {
                 File file = new File(imageStr);
                 Image image = new Image(file.toURI().toString());
-                MakeChatResponse mr = new MakeChatResponse(textArea.getText(), currentUser.getUsername(), roomID, image.getUrl(), true,isTimed);
-                try {
-                    clientManager.sendChats("MAKE_CHAT");
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                try {
-                    clientManager.sendClicked(gson.toJson(mr));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-//            Chats.makeImageChat(textArea.getText(), currentUser.getUsername(), Chats.getRoomID(), image.getUrl());
+                MakeChatResponse mr = new MakeChatResponse(textArea.getText(), currentUser.getUsername(), roomID, image.getUrl(), true, isTimed);
+                clientManager.sendChats("MAKE_CHAT");
+                clientManager.sendClicked(gson.toJson(mr));
+                //            Chats.makeImageChat(textArea.getText(), currentUser.getUsername(), Chats.getRoomID(), image.getUrl());
             } else {
-                MakeChatResponse mr = new MakeChatResponse(textArea.getText(), currentUser.getUsername(), roomID, null, false,isTimed);
-                try {
-                    clientManager.sendChats("MAKE_CHAT");
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                try {
-                    clientManager.sendClicked(gson.toJson(mr));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-//            Chats.makeChat(textArea.getText(), currentUser.getUsername(), Chats.getRoomID());
+                MakeChatResponse mr = new MakeChatResponse(textArea.getText(), currentUser.getUsername(), roomID, null, false, isTimed);
+                clientManager.sendChats("MAKE_CHAT");
+                clientManager.sendClicked(gson.toJson(mr));
+                //            Chats.makeChat(textArea.getText(), currentUser.getUsername(), Chats.getRoomID());
             }
             textArea.setText("");
-            try {
-                clientManager.sendChats("IMAGE_NULL");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-//        Chats.setImage(null);
+            clientManager.sendChats("IMAGE_NULL");
+            //        Chats.setImage(null);
             grid.getChildren().clear();
             try {
                 loadData();
@@ -171,189 +147,146 @@ public class ChatController {
         }
     }
 
+    private void hyperlink(String text) throws IOException {
+        if (text.contains("TWEET")){
+            String fin = text.substring(6);
+            clientManager.sendTweets("ELIGIBLE");
+            clientManager.sendClicked(fin);
+            if (clientManager.read().equals("YES")) {
+                Manager.setTweetID(fin);
+                back();
+            }
+        }
+        if (text.contains("USER")){
+            String fin = text.substring(5);
+            User us = Manager.getUser(fin);
+            if (us != null) {
+                clientManager.sendUsers("SET_PROFILE");
+                clientManager.sendClicked(gson.toJson(us));
+                isRunning = false;
+                new ChangeScene(Config.getConfig("mainConfig").getProperty((String.class), "Profile"), grid);
+            }
+        }
+        if (text.contains("GP")){
+            String fin = text.substring(3);
+
+        }
+    }
+
     public void loadData() throws IOException {
 //        Platform.runLater(() -> {
-
-            grid.getChildren().clear();
-            try {
-                clientManager.sendChats("GET_ROOMID");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            String rid = null;
-            try {
-                rid = clientManager.read();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            try {
-                clientManager.sendChats("SEARCH_ROOM");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            try {
-                clientManager.sendClicked(rid);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
+        grid.getChildren().clear();
+        clientManager.sendChats("GET_ROOMID");
+        String rid = null;
+        rid = clientManager.read();
+        clientManager.sendChats("SEARCH_ROOM");
+        clientManager.sendClicked(rid);
 //            Room room = null;
-            try {
-                this.room = gson.fromJson(clientManager.read(), Room.class);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            if (room != null && room.getType().equals("pv")) {
-                try {
-                    clientManager.sendChats("SEEN");
-                } catch (IOException e) {
-                    e.printStackTrace();
+        this.room = gson.fromJson(clientManager.read(), Room.class);
+        if (room != null && room.getType().equals("pv")) {
+            clientManager.sendChats("SEEN");
+            clientManager.sendClicked(currentUser.getUsername());
+            clientManager.sendClicked(room.getRoomID());
+            if (room.getOwner1().equals(room.getOwner2())) {
+                fName.setText("Saved Messages");
+                if (currentUser.getProfilePic() != null) {
+                    profilePicture.setFill(new ImagePattern(new Image(currentUser.getProfilePic())));
                 }
-                try {
-                    clientManager.sendClicked(currentUser.getUsername());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                try {
-                    clientManager.sendClicked(room.getRoomID());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-//            Chats.seen(currentUser.getUsername(),room.getRoomID());
-                if (room.getOwner1().equals(room.getOwner2())) {
-                    fName.setText("Saved Messages");
-                    if (currentUser.getProfilePic() != null) {
-                        profilePicture.setFill(new ImagePattern(new Image(currentUser.getProfilePic())));
-                    }
-                } else if (room.getOwner1().equals(currentUser.getUsername())) {
-                    User user = null;
-                    try {
-                        user = Manager.getUser(room.getOwner2());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    assert user != null;
-                    if (user.getProfilePic() == null) {
-                        profilePicture.setVisible(true);
-                    } else {
-                        profilePicture.setFill(new ImagePattern(new Image(user.getProfilePic())));
-                    }
-                    fName.setText(room.getOwner2());
+            } else if (room.getOwner1().equals(currentUser.getUsername())) {
+                User user = null;
+                user = Manager.getUser(room.getOwner2());
 
+                assert user != null;
+                if (user.getProfilePic() == null) {
+                    profilePicture.setVisible(true);
                 } else {
-
-                    User user = null;
-                    try {
-                        user = Manager.getUser(room.getOwner1());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    if (user.getProfilePic() != null) {
-                        profilePicture.setFill(new ImagePattern(new Image(user.getProfilePic())));
-                    }
-                    fName.setText(room.getOwner1());
+                    profilePicture.setFill(new ImagePattern(new Image(user.getProfilePic())));
                 }
-            } else if (room != null && room.getType().equals("gp")) {
-                fName.setText(room.getGroupName());
-                lastSeen.setText(room.getMembers().size() + " Members");
+                fName.setText(room.getOwner2());
+            } else {
+//                User user;
+//                user = Manager.getUser(room.getOwner1());
+//                if (user.getProfilePic() != null) {
+//                    profilePicture.setFill(new ImagePattern(new Image(user.getProfilePic())));
+//                }
+                fName.setText(room.getOwner1());
             }
-            try {
-                clientManager.sendChats("GET_ROOMID");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            String roomID = null;
-            try {
-                roomID = clientManager.read();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            try {
-                clientManager.sendClicked("MSG");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            try {
-                clientManager.sendClicked("GET_CHATS");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            try {
-                clientManager.sendClicked(roomID);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            ShowChatResponse sr = null;
-            try {
-                sr = gson.fromJson(clientManager.read(), ShowChatResponse.class);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        } else if (room != null && room.getType().equals("gp")) {
+            fName.setText(room.getGroupName());
+            lastSeen.setText(room.getMembers().size() + " Members");
+        }
+        clientManager.sendChats("GET_ROOMID");
+        String roomID = null;
+        roomID = clientManager.read();
+        clientManager.sendClicked("MSG");
+        clientManager.sendClicked("GET_CHATS");
+        clientManager.sendClicked(roomID);
+        ShowChatResponse sr = null;
+        sr = gson.fromJson(clientManager.read(), ShowChatResponse.class);
         assert sr != null;
         LinkedList<Chat> tw = sr.getChats();
-            for (int i = 0; i < tw.size(); i++) {
-                FXMLLoader fxmlLoader = new FXMLLoader();
-                boolean c = false;
-                if (tw.get(i).getImage() == null) {
-                    fxmlLoader.setLocation(getClass().getResource("../FXML/chatComponent.fxml"));
-                } else {
-                    fxmlLoader.setLocation(getClass().getResource("../FXML/ChatImageComponent.fxml"));
-                    c = true;
-                }
-                AnchorPane anchorPane = null;
-                try {
-                    anchorPane = fxmlLoader.load();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                ChatComponentController itemController = fxmlLoader.getController();
-                itemController.setName(tw.get(i).getOwner());
-                User user = null;
-                try {
-                    user = Manager.getUser(tw.get(i).getOwner());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                assert user != null;
-                if (user.getProfilePic() != null) {
-                    itemController.getCircle().setFill(new ImagePattern(new Image(user.getProfilePic())));
-                }
-                int finalI = i;
-                if (!c) {
-                    itemController.setText(tw.get(i).getText());
-                    itemController.getEdit().setOnAction(e -> {
+        for (int i = 0; i < tw.size(); i++) {
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            boolean c = false;
+            if (tw.get(i).getImage() == null) {
+                fxmlLoader.setLocation(getClass().getResource("../FXML/chatComponent.fxml"));
+            } else {
+                fxmlLoader.setLocation(getClass().getResource("../FXML/ChatImageComponent.fxml"));
+                c = true;
+            }
+            AnchorPane anchorPane = null;
+            anchorPane = fxmlLoader.load();
+            ChatComponentController itemController = fxmlLoader.getController();
+            itemController.setName(tw.get(i).getOwner());
+            User user = null;
+            user = Manager.getUser(tw.get(i).getOwner());
+            assert user != null;
+            if (user.getProfilePic() != null) {
+                itemController.getCircle().setFill(new ImagePattern(new Image(user.getProfilePic())));
+            }
+            int finalI = i;
+            if (!c) {
+                String text = tw.get(i).getText();
+                if (text.charAt(0) == '@'){
+                    itemController.getText().setStyle("-fx-text-fill:#1d99ff");
+                    itemController.getText().setOnMouseClicked(e -> {
                         try {
-                            edit(tw.get(finalI).getID());
+                            hyperlink(text);
                         } catch (IOException ioException) {
                             ioException.printStackTrace();
                         }
                     });
-                    itemController.getDelete().setOnAction(e -> {
-                        try {
-                            delete(tw.get(finalI).getID());
-                        } catch (IOException ioException) {
-                            ioException.printStackTrace();
-                        }
-                    });
-
-                } else {
-                    Image image = new Image(tw.get(i).getImage());
-                    itemController.getRectangle().setFill(new ImagePattern(image));
-
                 }
+                itemController.setText(tw.get(i).getText());
+                itemController.getEdit().setOnAction(e -> {
+                    try {
+                        edit(tw.get(finalI).getID());
+                    } catch (IOException ioException) {
+                        ioException.printStackTrace();
+                    }
+                });
+                itemController.getDelete().setOnAction(e -> {
+                    try {
+                        delete(tw.get(finalI).getID());
+                    } catch (IOException ioException) {
+                        ioException.printStackTrace();
+                    }
+                });
+            } else {
+                Image image = new Image(tw.get(i).getImage());
+                itemController.getRectangle().setFill(new ImagePattern(image));
+            }
 //            if (tw.get(i).getOwner().equals(currentUser.getUsername())) {
 //                ownChat(anchorPane, itemController);
 //            } else {
 
-                grid.add(anchorPane, 1, grid.getRowCount() + 1);
-                grid.setLayoutX(-40);
-                grid.setLayoutY(20);
-                if (c) {
-                    GridPane.setMargin(anchorPane, new Insets(-15, 100, 100, -15));
-                } else {
-                    GridPane.setMargin(anchorPane, new Insets(-15));
-                }
+            grid.add(anchorPane, 1, grid.getRowCount() + 1);grid.setLayoutX(-40);grid.setLayoutY(20);
+            if (c) {
+                GridPane.setMargin(anchorPane, new Insets(-15, 100, 100, -15));
+            } else {
+                GridPane.setMargin(anchorPane, new Insets(-15));
             }
+        }
 //        });
 
     }
@@ -362,7 +295,6 @@ public class ChatController {
     public void delete(String ID) throws IOException {
         clientManager.sendChats("DELETE_CHAT");
         clientManager.sendClicked(ID);
-//        Chats.deleteChat(ID);
         loadData();
     }
 
@@ -373,7 +305,6 @@ public class ChatController {
         overlayText.setText(chat.getText());
         clientManager.sendChats("EDIT_CHAT");
         clientManager.sendClicked(ID);
-//        Chats.setEditID(ID);
         overlay.setVisible(true);
     }
 
@@ -384,7 +315,6 @@ public class ChatController {
         clientManager.sendChats("HANDLE_EDIT");
         clientManager.sendClicked(id);
         clientManager.sendClicked(overlayText.getText());
-//        Chats.editChat(id, overlayText.getText());
         closeOverlay();
         loadData();
     }
@@ -396,12 +326,7 @@ public class ChatController {
     public void closeOverlay() throws IOException {
         overlay.setVisible(false);
         overlayText.setText("");
-//        Chats.setEditID(null);
         clientManager.sendChats("EDIT_NULL");
-    }
-
-    public Circle getProfilePicture() {
-        return profilePicture;
     }
 
 

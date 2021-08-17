@@ -13,7 +13,7 @@ import javafx.scene.layout.Pane;
 
 import java.io.IOException;
 
-import static client.Manager.clientManager;
+import static client.utils.Manager.clientManager;
 
 public class SignUp {
 

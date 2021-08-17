@@ -1,4 +1,4 @@
-package client;
+package client.utils;
 
 import client.Models.Chat;
 import client.Models.Notif;
@@ -16,13 +16,17 @@ public class Manager {
     static public User user;
     static public LinkedList<Room> rooms;
     static public LinkedList<Notif> notifs;
+    static public LinkedList<String> settingOffline;
     static public boolean isRunning;
+    static public String tweetID;
     static Gson gson;
     public Manager() throws IOException {
         gson = new Gson();
         rooms = null;
         notifs = null;
+        tweetID = null;
         isRunning = true;
+        settingOffline = new LinkedList<>();
         user = null;
         clientManager = new ClientManager();
         clientManager.start();
@@ -52,6 +56,10 @@ public class Manager {
         return rooms;
     }
 
+    public static void addOffline(String str){
+        settingOffline.add(str);
+    }
+
     public static void setRooms(LinkedList<Room> rooms) {
         Manager.rooms = rooms;
     }
@@ -63,10 +71,17 @@ public class Manager {
     public static User getUser(String username) throws IOException {
         clientManager.sendClicked("GET_USER");
         clientManager.sendClicked(username);
-        return gson.fromJson(clientManager.read(), User.class);
+        String a = clientManager.read();
+        return gson.fromJson(a, User.class);
     }
 
+    public static String getTweetID() {
+        return tweetID;
+    }
 
+    public static void setTweetID(String tweetID) {
+        Manager.tweetID = tweetID;
+    }
 
     public static Room getRoom(String str) throws IOException {
         clientManager.sendClicked("GET_ROOM");
@@ -79,7 +94,6 @@ public class Manager {
         clientManager.sendClicked(str);
         return gson.fromJson(clientManager.read(), Chat.class);
     }
-
 
     public static void setAuthToken(String authToken) {
         AuthToken = authToken;

@@ -1,11 +1,11 @@
 package client.Controllers;
 
-import client.Manager;
 import client.Models.User;
 import client.network.ClientManager;
 import client.shared.MakeTweetResponse;
+import client.shared.TweetLoad;
 import client.utils.ChangeProfilePicture;
-import client.utils.TweetLoad;
+import client.utils.Manager;
 import com.google.gson.Gson;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -16,8 +16,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
-
-import java.io.File;
 import java.io.IOException;
 
 public class HomePage {
@@ -72,7 +70,7 @@ public class HomePage {
         clientManager.sendTweets("GET_IMAGE");
         String str = clientManager.read();
         if (str == null) {
-            MakeTweetResponse mk = new MakeTweetResponse(overlayText.getText(),"0",currentUser.getUsername(),currentUser.getFollowers(),null,false);
+            MakeTweetResponse mk = new MakeTweetResponse(textArea.getText(),"0",currentUser.getUsername(),currentUser.getFollowers(),null,false);
             clientManager.sendTweets("MAKE_TWEET");
             clientManager.sendClicked(gson.toJson(mk));
 //            Tweets.makeTweet(textArea.getText(), "0", currentUser.getUsername(), currentUser.getFollowers());
@@ -81,12 +79,11 @@ public class HomePage {
             textArea.setText("");
         } else {
 //            File file = new File(Tweets.getImage());
-            File file = new File(str);
-            Image image = new Image(file.toURI().toString());
-            MakeTweetResponse mk = new MakeTweetResponse(overlayText.getText(),"0",currentUser.getUsername(),currentUser.getFollowers(),image,true);
+//            File file = new File(str);
+//            Image image = new Image(file.toURI().toString());
+            MakeTweetResponse mk = new MakeTweetResponse(textArea.getText(),"0",currentUser.getUsername(),currentUser.getFollowers(),str,true);
             clientManager.sendTweets("MAKE_TWEET");
             clientManager.sendClicked(gson.toJson(mk));
-
 //            Tweets.makeTweetImage(textArea.getText(), image.getUrl(), "0", currentUser.getUsername(), currentUser.getFollowers());
             grid.getChildren().clear();
             loadData();

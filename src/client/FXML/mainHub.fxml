@@ -93,6 +93,11 @@
                         <Image url="@download.jpg" />
                     </image>
                 </ImageView>
+                <ImageView fx:id="offline" visible="false" fitHeight="81.0" fitWidth="105.0" layoutX="59.0" layoutY="105.0" onMouseClicked="#refresh" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@offline.jpg" />
+                    </image>
+                </ImageView>
             </children></AnchorPane>
       <AnchorPane fx:id="mainScene" layoutX="223.0" prefHeight="673.0" prefWidth="858.0" style="-fx-background-color: BLACK;" />
 

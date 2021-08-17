@@ -6,6 +6,7 @@
       <root url="jar://$PROJECT_DIR$/fontawesomefx-commons-9.1.2.jar!/" />
       <root url="jar://$PROJECT_DIR$/fontawesomefx-fontawesome-4.7.0-9.1.2.jar!/" />
       <root url="jar://$PROJECT_DIR$/../Backup/ClientBS/gson-2.8.5.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../Twitter-Server/gson-2.8.5.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>
