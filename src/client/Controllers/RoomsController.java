@@ -15,6 +15,7 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
@@ -27,6 +28,7 @@ import java.util.LinkedList;
 import java.util.Objects;
 
 public class RoomsController {
+    public Label onNum;
     ClientManager clientManager;
     LinkedList<String> followers;
     LinkedList<LinkedList<String>> catg;
@@ -55,23 +57,23 @@ public class RoomsController {
 //        RoomResponse rs = gson.fromJson(str, RoomResponse.class);
 //        this.tw = rs.getRooms();
 //        loadData();
-//        Thread thread = new Thread(() -> {
-//            while (isRunning) {
-//                //                    clientManager.sendClicked("MSG");
-////                    clientManager.sendClicked("DATA");
-////                    RoomResponse rs = gson.fromJson(clientManager.read(), RoomResponse.class);
-//                this.tw = Manager.getRooms();
-//                try {
-//                    loadData();
-//                    Thread.sleep(1000);
-//                } catch (InterruptedException | IOException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        });
-//        thread.start();
-        this.tw = Manager.getRooms();
-        loadData();
+        Thread thread = new Thread(() -> {
+            while (Manager.pages.getLast().equals("rooms")) {
+                this.tw = Manager.getRooms();
+                if (!Manager.pages.getLast().equals("rooms")){
+                    break;
+                }
+                try {
+                    loadData();
+                    Thread.sleep(1000);
+                } catch (InterruptedException | IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        thread.start();
+//        this.tw = Manager.getRooms();
+//        loadData();
 
     }
 
@@ -165,7 +167,10 @@ public class RoomsController {
         Platform.runLater(() -> {
             grid.getChildren().clear();
             grid.setLayoutY(40);
-//        LinkedList<Room> tw = Chats.userRoom(currentUser.getUsername());
+            LinkedList<String> onlines = null;
+            clientManager.sendClicked("ONLINE");
+            onlines = gson.fromJson(clientManager.read(), LinkedList.class);
+            onNum.setText(onlines.size()-1 + " Contacts Online ...");
             for (int i = 0; i < tw.size(); i++) {
                 LoadComponent loadComponent = null;
                 try {
@@ -219,30 +224,33 @@ public class RoomsController {
                     itemController.getUnread().setVisible(false);
                     itemController.setNameLabel(tw.get(i).getGroupName());
                 }
-//            Users.getChats().showChats(tw.get(i).getRoomID());
-                if (1 == 2) {
-                    LinkedList<Chat> chat = null;
-                    try {
-                        chat = getUserChat(tw.get(i).getRoomID());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    if (chat.size() != 0) {
-                        if (chat.get(chat.size() - 1).getImage() == null) {
-                            itemController.setLastMsg(chat.get(chat.size() - 1).getText());
+                if (clientManager.getConnected()) {
+//                    System.out.println(onlines);
+                    Room r = tw.get(i);
+                    if (r.getType().equals("pv")) {
+                        if (r.getOwner1().equals(currentUser.getUsername())){
+                            if (onlines.contains(r.getOwner2())){
+                                itemController.setLastMsg("Online");
+                            } else {
+                                itemController.setLastMsg("Offline");
+                            }
                         } else {
-                            itemController.setLastMsg("Photo");
+                            if (onlines.contains(r.getOwner1())){
+                                itemController.setLastMsg("Online");
+                            } else {
+                                itemController.setLastMsg("Offline");
+                            }
                         }
                     } else {
-                        itemController.setLastMsg("No Messages!");
+                        itemController.setLastMsg(r.getMembers().size() + " Members");
                     }
-                } else {
-                    itemController.setLastMsg("You're Offline");
-                }
+//                } else {
+//                    itemController.setLastMsg("You're Offline");
+//                }
                 grid.add(anchorPane, 1, grid.getRowCount() + 1);
                 grid.setLayoutY(grid.getLayoutY() - 4);
                 grid.setLayoutX(-60);
-//            GridPane.setMargin(anchorPane, new Insets(10));
+                }
             }
             try {
                 loadFollowers();

@@ -66,6 +66,7 @@ public class TweetLoad {
 
     // 2 Comment
     public void load() throws IOException {
+        grid.getChildren().clear();
         if (clientManager.getConnected()) {
             clientManager.sendTweets("GET_FORWARD_ID");
             String a = clientManager.read();

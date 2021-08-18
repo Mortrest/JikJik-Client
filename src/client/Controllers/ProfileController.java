@@ -10,6 +10,7 @@ import client.utils.LoadComponent;
 import client.shared.TweetLoad;
 import com.google.gson.Gson;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
@@ -135,7 +136,31 @@ public class ProfileController {
                 followBtn.setText("Follow");
             }
         }
-        loadData();
+
+        Thread thread = new Thread(() -> {
+            while (Manager.pages.getLast().equals("profile")) {
+                try {
+                    if (!Manager.pages.getLast().equals("profile")) {
+                        break;
+                    }
+                    Platform.runLater(() -> {
+                        try {
+                            System.out.println("hello profile");
+                            loadData();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    });
+                    Thread.sleep(1590 );
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        thread.start();
+
+
+//        loadData();
         grid.setLayoutY(90);
         grid.setLayoutX(-40);
     }

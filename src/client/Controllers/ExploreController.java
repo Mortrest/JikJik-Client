@@ -8,6 +8,7 @@ import client.utils.ChangeScene;
 import client.utils.Manager;
 import client.shared.TweetLoad;
 import com.google.gson.Gson;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -42,8 +43,28 @@ public class ExploreController {
         this.clientManager = Manager.getClientManager();
         this.currentUser = Manager.getUser();
         // Thread
+        Thread thread = new Thread(() -> {
+            while (Manager.pages.getLast().equals("explore")) {
+                try {
+                    if (!Manager.pages.getLast().equals("explore")) {
+                        break;
+                    }
+                    Platform.runLater(() -> {
+                        try {
+                            loadData();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    });
+                    Thread.sleep(1590 );
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        thread.start();
 
-        loadData();
+//        loadData();
         grid.setLayoutX(-40);
     }
 

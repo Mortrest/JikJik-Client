@@ -14,6 +14,7 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.ImagePattern;
+
 import java.io.IOException;
 import java.util.LinkedList;
 
@@ -31,16 +32,19 @@ public class NotificationController {
         clientManager = Manager.getClientManager();
         usera = Manager.getUser();
         Thread thread = new Thread(() -> {
-            while (true) {
+            while (Manager.pages.getLast().equals("notif")) {
 //                if (clientManager.getConnected()) {
-                    this.notifs = Manager.getNotifs();
-                    try {
-                        loadData();
-                        Thread.sleep(1590);
-                    } catch (IOException | InterruptedException e) {
-                        e.printStackTrace();
-                    }
+                this.notifs = Manager.getNotifs();
+                if (!Manager.pages.getLast().equals("notif")) {
+                    break;
                 }
+                try {
+                    loadData();
+                    Thread.sleep(1590);
+                } catch (IOException | InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
         });
         thread.start();
     }

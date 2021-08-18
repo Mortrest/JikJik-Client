@@ -7,6 +7,7 @@ import client.shared.TweetLoad;
 import client.utils.ChangeProfilePicture;
 import client.utils.Manager;
 import com.google.gson.Gson;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -46,24 +47,28 @@ public class HomePage {
             proPic.setFill(new ImagePattern(image));
         }
         nameLabel.setText("@" + currentUser.getUsername() + " - " + currentUser.getName());
-//        Thread thread = new Thread(() -> {
-//            while (true) {
-//                try {
-//                    // Send to server i want data bitch
-//                    clientManager.sendClicked("DATA");
-//                    String string = clientManager.read();
-//
-//                    // Then make pipe this data to the Load Data
-//
-//                    loadData();
-//                    Thread.sleep(1000 );
-//                } catch (IOException | InterruptedException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        });
-//        thread.start();
-        loadData();
+        Thread thread = new Thread(() -> {
+            while (Manager.pages.getLast().equals("home")) {
+                try {
+                    if (!Manager.pages.getLast().equals("home")) {
+                        break;
+                    }
+                    System.out.println("moooo");
+                    Platform.runLater(() -> {
+                        try {
+                            loadData();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    });
+                    Thread.sleep(1590 );
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        thread.start();
+//        loadData();
     }
 
     public void addTweet() throws IOException {

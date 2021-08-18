@@ -23,7 +23,7 @@ public class MainHub {
     private ClientManager clientManager;
     private User currentUser;
     private String whichPage;
-
+//    LinkedList<String> Manager.pages;
     @FXML
     private AnchorPane mainScene;
 
@@ -32,6 +32,7 @@ public class MainHub {
     }
 
     public void initialize() {
+//        this.Manager.pages = new LinkedList<>();
         this.gson = new Gson();
         this.currentUser = Manager.getUser();
         this.clientManager = Manager.getClientManager();
@@ -101,6 +102,7 @@ public class MainHub {
     }
 
     public void loadHome() throws IOException {
+        Manager.pages.add("home");
         mainScene.getChildren().setAll((Node) FXMLLoader.
                 load(Objects.requireNonNull(getClass().getResource(Config.getConfig("mainConfig").getProperty((String.class), "Home")))));
         eachTweet();
@@ -119,22 +121,26 @@ public class MainHub {
     }
 
     public void loadExplore() throws IOException {
+        Manager.pages.add("explore");
         mainScene.getChildren().setAll((Node) FXMLLoader.
                 load(Objects.requireNonNull(getClass().getResource(Config.getConfig("mainConfig").getProperty((String.class), "Explore")))));
         eachTweet();
     }
 
     public void loadNotif() throws IOException {
+        Manager.pages.add("notif");
         mainScene.getChildren().setAll((Node) FXMLLoader.
                 load(Objects.requireNonNull(getClass().getResource(Config.getConfig("mainConfig").getProperty((String.class), "Notifs")))));
     }
 
     public void loadRooms() throws IOException {
+        Manager.pages.add("rooms");
         mainScene.getChildren().setAll((Node) FXMLLoader.
                 load(Objects.requireNonNull(getClass().getResource(Config.getConfig("mainConfig").getProperty((String.class), "Rooms")))));
     }
 
     public void loadProfile() throws IOException {
+        Manager.pages.add("profile");
         mainScene.getChildren().setAll((Node) FXMLLoader.
                 load(Objects.requireNonNull(getClass().getResource(Config.getConfig("mainConfig").getProperty((String.class), "Profile")))));
         eachTweet();

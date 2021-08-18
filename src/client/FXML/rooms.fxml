@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="Salam" prefHeight="673.0" prefWidth="858.0" style="-fx-background-color: #51c46f;" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.Controllers.RoomsController">
+<AnchorPane fx:id="Salam" prefHeight="673.0" prefWidth="858.0" style="-fx-background-color: #51c46f;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.Controllers.RoomsController">
    <children>
       <Pane prefHeight="673.0" prefWidth="858.0" style="-fx-background-color: #f0f4f5;">
          <children>
@@ -23,13 +23,13 @@
                   <Font name="System Bold" size="25.0" />
                </font>
             </Label>
-            <ScrollPane fx:id="scroll" layoutY="45.0" prefHeight="632.0" prefWidth="884.0" style="-fx-background-color: transparent;" styleClass="scroll" >
+            <ScrollPane fx:id="scroll" layoutY="45.0" prefHeight="632.0" prefWidth="884.0" style="-fx-background-color: transparent;" styleClass="scroll">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefWidth="841.0">
                      <children>
                         <Pane layoutX="-4.0" layoutY="1.0" prefHeight="57.0" prefWidth="864.0" style="-fx-background-color: #e0e0e0;">
                            <children>
-                              <Label layoutX="24.0" prefHeight="55.0" prefWidth="301.0" text="0 Contacts Online ...">
+                              <Label fx:id="onNum" layoutX="24.0" prefHeight="55.0" prefWidth="301.0" text="0 Contacts Online ...">
                                  <font>
                                     <Font name="System Bold" size="24.0" />
                                  </font>

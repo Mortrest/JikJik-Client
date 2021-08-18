@@ -66,39 +66,31 @@ public class EditProfileController {
         }
     }
 
-    public void changeBio() throws IOException {
+    public void changeBio() {
         currentUser.setInfo(bio.getText());
         bio.setPromptText(bio.getText());
-//        Users.save();
-        Manager.saveUser();
     }
 
-    public void changeEmail() throws IOException {
+    public void changeEmail() {
         currentUser.setEmail(email.getText());
         email.setPromptText(email.getText());
-        Manager.saveUser();
-
     }
 
-    public void changeFName() throws IOException {
+    public void changeFName() {
         currentUser.setFirstName(firstName.getText());
         firstName.setPromptText(firstName.getText());
-        Manager.saveUser();
-
     }
 
 
-    public void changeLName() throws IOException {
+    public void changeLName() {
         currentUser.setLastName(lastName.getText());
         lastName.setPromptText(lastName.getText());
-        Manager.saveUser();
     }
 
 
-    public void changePhoneNumber() throws IOException {
+    public void changePhoneNumber() {
         currentUser.setPhoneNumber(phoneNumber.getText());
         phoneNumber.setPromptText(phoneNumber.getText());
-        Manager.saveUser();
     }
 
 
@@ -113,33 +105,38 @@ public class EditProfileController {
         Parent root = fxmlLoader.load(getClass().getResource("../FXML/categoriesPage.fxml"));
         Stage window = (Stage) proPic.getScene().getWindow();
         window.setScene(new Scene(root));
-
     }
 
-    public void save(){
-        if (bio.getText() != null){
+    public void save() throws IOException {
+        if (!bio.getText().equals("")){
             currentUser.setInfo(bio.getText());
+            bio.setText("");
         }
-        if (email.getText() != null){
+        if (!email.getText().equals("")){
             currentUser.setEmail(email.getText());
+            email.setText("");
         }
-        if (firstName.getText() != null){
+        if (!firstName.getText().equals("")){
             currentUser.setFirstName(firstName.getText());
+            firstName.setText("");
         }
-        if (lastName.getText() != null){
+        if (!lastName.getText().equals("")){
             currentUser.setLastName(lastName.getText());
+            lastName.setText("");
         }
-        if (phoneNumber.getText() != null){
+        if (!phoneNumber.getText().equals("")){
             currentUser.setPhoneNumber(phoneNumber.getText());
+            phoneNumber.setText("");
         }
+        clientManager.sendUsers("SAVE_SETTINGS");
+        clientManager.sendClicked(gson.toJson(currentUser));
         loadData();
     }
 
     public void back() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader();
-        Parent root = fxmlLoader.load(getClass().getResource(Config.getConfig("mainConfig").getProperty((String.class), "Sample")));
+        Parent root = fxmlLoader.load(getClass().getResource(Config.getConfig("mainConfig").getProperty((String.class), "MainHub")));
         Stage window = (Stage) proPic.getScene().getWindow();
         window.setScene(new Scene(root));
-
     }
 }

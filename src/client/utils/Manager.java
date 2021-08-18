@@ -22,6 +22,7 @@ public class Manager {
     static public LinkedList<Tweet> exploreTweets;
     static public LinkedList<Tweet> profileTweets;
 //    static public LinkedList<OffineChat> offlineChats;
+    static public LinkedList<String> pages;
     static public Map<String, RoomStuff> roomStuffMap;
     static public LinkedList<String> settingOffline;
     static public LinkedList<String> offlineChats;
@@ -43,6 +44,7 @@ public class Manager {
         gson = new Gson();
         rooms = null;
         roomID = null;
+        pages = new LinkedList<>();
         offlineChats = new LinkedList<>();
         imageForChat = null;
         notifs = null;

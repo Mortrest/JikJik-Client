@@ -94,18 +94,13 @@ public class SettingsController {
     }
 
     public void backToReality() throws IOException {
-//        Users.save();
         clientManager.sendUsers("SAVE");
         clientManager.sendUsers("PROFILE_NULL");
-//        Users.setCurrentUser(null);
         clientManager.sendChats("NULL");
-//        Chats.setRoomID(null);
-//        Users.setProfile(null);
         clientManager.sendUsers("PROFILE_NULL");
-//        Tweets.setTweetID(null);
         clientManager.sendTweets("TWEET_NULL");
+        clientManager.sendUsers("LOG_OUT");
         FXMLLoader fxmlLoader = new FXMLLoader();
-//        Pages.getPages().clear();
         Parent root = fxmlLoader.load(getClass().getResource(Config.getConfig("mainConfig").getProperty((String.class), "SignIn")));
         Stage window = (Stage) Salam.getScene().getWindow();
         window.setScene(new Scene(root));
